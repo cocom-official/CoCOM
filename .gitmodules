@@ -1,0 +1,3 @@
+[submodule "tools/mingw-bundledlls"]
+	path = tools/mingw-bundledlls
+	url = git@github.com:zt-luo/mingw-bundledlls.git

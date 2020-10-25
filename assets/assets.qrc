@@ -1,0 +1,36 @@
+<RCC>
+  <qresource prefix="/">
+    <file>../assets/icons/expand.svg</file>
+    <file>../assets/icons/fast-backward.svg</file>
+    <file>../assets/icons/fast-forward.svg</file>
+    <file>../assets/icons/github.svg</file>
+    <file>../assets/icons/link.svg</file>
+    <file>../assets/icons/list.svg</file>
+    <file>../assets/icons/pause.svg</file>
+    <file>../assets/icons/play.svg</file>
+    <file>../assets/icons/sliders.svg</file>
+    <file>../assets/icons/stop.svg</file>
+    <file>../assets/icons/sync.svg</file>
+    <file>../assets/icons/unlink.svg</file>
+    <file>../assets/icons/volume-down.svg</file>
+    <file>../assets/icons/volume-off.svg</file>
+    <file>../assets/icons/volume-up.svg</file>
+    <file>../assets/icons/wifi.svg</file>
+    <file>../assets/icons/internet.svg</file>
+    <file>../assets/icons/file.svg</file>
+    <file>../assets/icons/random.svg</file>
+    <file>../assets/icons/repeat.svg</file>
+    <file>../assets/icons/repeat-1.svg</file>
+    <file>../assets/icons/shrink.svg</file>
+    <file>../assets/icons/upload.svg</file>
+    <file>../assets/icons/wrench.svg</file>
+    <file>../assets/icons/screenshare.svg</file>
+    <file>../assets/icons/pushpin.svg</file>
+    <file>../assets/icons/pushpin-ed.svg</file>
+    <file>../assets/icons/exit.svg</file>
+    <file>../assets/icons/file-video.svg</file>
+    <file>../assets/icons/file-audio.svg</file>
+    <file>../assets/icons/side-bar.svg</file>
+    <file>../assets/icons/broom.svg</file>
+  </qresource>
+</RCC>
