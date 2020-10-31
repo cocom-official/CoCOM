@@ -16,7 +16,13 @@
 #include <QSpacerItem>
 #include <QSerialPort>
 #include <QSerialPortInfo>
+#include <QTextDocument>
+#include <QTextCursor>
+#include <QScrollBar>
 
+#ifdef Q_OS_WIN32
+#include <QtWinExtras>
+#endif
 
 namespace Ui {
 class MainWindow;
@@ -32,10 +38,18 @@ public:
 
 private slots:
     void on_inputTabWidget_currentChanged(int index);
-    void on_baudrateComboBox_currentIndexChanged(int index);
+
+    void on_outputTextBrowser_cursorPositionChanged();
+
     void on_baudrateComboBox_currentTextChanged(const QString &text);
+    void on_baudrateComboBox_currentIndexChanged(int index);
+    void on_dataBitsComboBox_currentIndexChanged(int index);
+    void on_parityComboBox_currentIndexChanged(int index);
+    void on_stopBitsComboBox_currentIndexChanged(int index);
+    void on_flowComboBox_currentIndexChanged(int index);
 
     void on_openAction_toggled(bool checked);
+    void on_clearAction_toggled(bool checked);
 
     void on_portSelectComboBox_currentIndexChanged(int index);
     void on_currenPort_readyRead();
@@ -55,6 +69,7 @@ private:
     {
         QSerialPort *port;
         QSerialPortInfo *info;
+        QTextDocument *text;
         int index;
     }Port_t;
 
@@ -66,6 +81,7 @@ private:
     void setStatusBar();
     void enumPorts();
     void configPort(QSerialPort *port);
+    void updatePortConfig();
     QString getPortStr(Port_t *port);
 };
 

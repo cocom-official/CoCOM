@@ -1,7 +1,7 @@
 #!/bin/bash
 
-mkdir build
-cd build
+mkdir release
+cd release
 
 cmake -GNinja -DCMAKE_BUILD_TYPE=Release ..
 ninja -j $(nproc)

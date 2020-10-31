@@ -23,6 +23,11 @@ link_libraries(
     Qt5::SerialPort
     )
 
+if (WIN32)
+find_package(Qt5 COMPONENTS  WinExtras REQUIRED)
+link_libraries(Qt5::WinExtras)
+endif()
+
 qt5_wrap_ui(ui_list
     "ui/mainWindow.ui"
     )

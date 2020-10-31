@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(portSelect, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
             this, &MainWindow::on_portSelectComboBox_currentIndexChanged);
 
-    ui->verticalSplitter->setSizes(QList<int>() << 600 << 100);
+    ui->verticalSplitter->setSizes(QList<int>() << 2000 << 1);
 
     inputTabWidgetHeight
         << ui->basicSendTab->minimumSizeHint().height()
@@ -33,6 +33,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->horizontalSplitter->setSizes(QList<int>() << 700 << 1);
 
     enumPorts();
+
+#ifdef Q_OS_WIN32
+    bool color;
+    qDebug() << QtWin::colorizationColor(&color);
+    qDebug() << color;
+#endif
 }
 
 MainWindow::~MainWindow()
@@ -54,7 +60,7 @@ void MainWindow::setConfigTab()
     ui->baudrateComboBox->addItem("38400");
     ui->baudrateComboBox->addItem("57600");
     ui->baudrateComboBox->addItem("115200");
-    ui->baudrateComboBox->addItem("961200");
+    ui->baudrateComboBox->addItem("921600");
     ui->baudrateComboBox->addItem(tr("Custom"));
     ui->baudrateComboBox->setCurrentIndex(0);
     ui->baudrateComboBox->setEditable(false);
@@ -84,7 +90,6 @@ void MainWindow::setConfigTab()
 
     int minWidth = ui->flowComboBox->width();
 
-    ui->portComboBox->setFixedWidth(minWidth);
     ui->baudrateComboBox->setFixedWidth(minWidth);
     ui->dataBitsComboBox->setFixedWidth(minWidth);
     ui->parityComboBox->setFixedWidth(minWidth);
@@ -105,11 +110,6 @@ void MainWindow::setStatusBar()
 
 void MainWindow::enumPorts()
 {
-    for (int i = 0; i < ui->portComboBox->count(); i++)
-    {
-        ui->portComboBox->removeItem(i);
-    }
-
     if (ports.count())
     {
         qDebug() << "reenum Ports";
@@ -127,10 +127,9 @@ void MainWindow::enumPorts()
 
     for (auto &&comInfo : QSerialPortInfo::availablePorts())
     {
-        ui->portComboBox->addItem(comInfo.portName());
-
         port->port = new QSerialPort(comInfo.portName(), this);
         port->info = new QSerialPortInfo(*port->port);
+        port->text = new QTextDocument(this);
         port->index = index++;
 
         configPort(port->port);
@@ -168,6 +167,15 @@ void MainWindow::configPort(QSerialPort *port)
     port->setParity(indexToParity[ui->parityComboBox->currentIndex()]);
     port->setStopBits(indexToStopBits[ui->stopBitsComboBox->currentIndex()]);
     port->setFlowControl(indexToFlowControl[ui->flowComboBox->currentIndex()]);
+}
+
+void MainWindow::updatePortConfig()
+{
+    if (!ports.isEmpty() &&
+        currentPort.port)
+    {
+        configPort(currentPort.port);
+    }
 }
 
 QString MainWindow::getPortStr(MainWindow::Port_t *port)
@@ -210,6 +218,11 @@ void MainWindow::on_inputTabWidget_currentChanged(int index)
     }
 }
 
+void MainWindow::on_outputTextBrowser_cursorPositionChanged()
+{
+    qDebug() << "on_outputTextBrowser_cursorPositionChanged";
+}
+
 void MainWindow::on_baudrateComboBox_currentIndexChanged(int index)
 {
     if (index == ui->baudrateComboBox->count() - 1)
@@ -225,7 +238,32 @@ void MainWindow::on_baudrateComboBox_currentIndexChanged(int index)
 
 void MainWindow::on_baudrateComboBox_currentTextChanged(const QString &text)
 {
-    qDebug() << text;
+    Q_UNUSED(text);
+    updatePortConfig();
+}
+
+void MainWindow::on_dataBitsComboBox_currentIndexChanged(int index)
+{
+    Q_UNUSED(index);
+    updatePortConfig();
+}
+
+void MainWindow::on_parityComboBox_currentIndexChanged(int index)
+{
+    Q_UNUSED(index);
+    updatePortConfig();
+}
+
+void MainWindow::on_stopBitsComboBox_currentIndexChanged(int index)
+{
+    Q_UNUSED(index);
+    updatePortConfig();
+}
+
+void MainWindow::on_flowComboBox_currentIndexChanged(int index)
+{
+    Q_UNUSED(index);
+    updatePortConfig();
 }
 
 void MainWindow::on_openAction_toggled(bool checked)
@@ -239,9 +277,17 @@ void MainWindow::on_openAction_toggled(bool checked)
     else
     {
         currentPort.port->close();
+        currentPort.text->clear();
     }
 
     enumPorts();
+}
+
+void MainWindow::on_clearAction_toggled(bool checked)
+{
+    qDebug() << "clear";
+    Q_UNUSED(checked);
+    ui->outputTextBrowser->clear();
 }
 
 void MainWindow::on_portSelectComboBox_currentIndexChanged(int index)
@@ -256,6 +302,16 @@ void MainWindow::on_portSelectComboBox_currentIndexChanged(int index)
 
 void MainWindow::on_currenPort_readyRead()
 {
-    ui->outputTextBrowser->append(QString(currentPort.port->read(
+    QTextCursor cursor(currentPort.text);
+    cursor.movePosition(QTextCursor::End);
+    cursor.beginEditBlock();
+    cursor.insertText(QString(currentPort.port->read(
         currentPort.port->bytesAvailable())));
+    cursor.endEditBlock();
+
+    qDebug() << ui->outputTextBrowser->cursor();
+
+    int scrollBarValue = ui->outputTextBrowser->verticalScrollBar()->value();
+    ui->outputTextBrowser->setPlainText(currentPort.text->toPlainText());
+    ui->outputTextBrowser->moveCursor(QTextCursor::End);
 }
