@@ -292,7 +292,7 @@ void MainWindow::on_clearAction_toggled(bool checked)
 
 void MainWindow::on_portSelectComboBox_currentIndexChanged(int index)
 {
-    if (index >= ports.count())
+    if (index >= ports.count()|| index < 0)
     {
         return;
     }
