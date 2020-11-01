@@ -1,5 +1,53 @@
 cmake_minimum_required(VERSION 3.5)
 
+file(STRINGS "${CMAKE_SOURCE_DIR}/makespec/VERSION" CoCOM_VERSION)
+file(STRINGS "${CMAKE_SOURCE_DIR}/makespec/BUILD_VERSION" CoCOM_BUILD_VERSION)
+file(STRINGS "${CMAKE_SOURCE_DIR}/makespec/VERSION_SUFFIX" CoCOM_VERSION_SUFFIX)
+
+set(CoCOM_VERSION_STRING "${CoCOM_VERSION}.${CoCOM_BUILD_VERSION}${CoCOM_VERSION_SUFFIX}")
+
+set(VERSION_LIST ${CoCOM_VERSION})
+string(REPLACE "." ";" VERSION_LIST ${VERSION_LIST})
+separate_arguments(VERSION_LIST)
+
+list(GET VERSION_LIST 0 CMAKE_PROJECT_VERSION_MAJOR)
+list(GET VERSION_LIST 1 CMAKE_PROJECT_VERSION_MINOR)
+list(GET VERSION_LIST 2 CPACK_PACKAGE_VERSION_PATCH)
+
+
+add_definitions(-DCOCOM_VERSION_MAJOR=${CMAKE_PROJECT_VERSION_MAJOR})
+add_definitions(-DCOCOM_VERSION_MINOR=${CMAKE_PROJECT_VERSION_MINOR})
+add_definitions(-DCOCOM_VERSION_BUGFIX=${CPACK_PACKAGE_VERSION_PATCH})
+add_definitions(-DCOCOM_VERSION_BUILD=${CoCOM_BUILD_VERSION})
+add_definitions(-DCOCOM_VERSION_STRING="${CoCOM_VERSION_STRING}")
+
+# For Windows RC file.
+set(rc_flag_major   "-DCOCOM_VERSION_MAJOR=${CMAKE_PROJECT_VERSION_MAJOR}")
+set(rc_flag_minor   "-DCOCOM_VERSION_MINOR=${CMAKE_PROJECT_VERSION_MINOR}")
+set(rc_flag_bugfix  "-DCOCOM_VERSION_BUGFIX=${CPACK_PACKAGE_VERSION_PATCH}")
+set(rc_flag_build   "-DCOCOM_VERSION_BUILD=${CoCOM_BUILD_VERSION}")
+set(rc_flag_ver_str "-DCOCOM_VERSION_STRING=${CoCOM_VERSION_STRING}")
+
+
+message("CoCOM Version: ${rc_flag}")
+message(" ")
+message("CoCOM Version: ${CoCOM_VERSION_STRING}")
+message("CoCOM Build Version: ${CoCOM_BUILD_VERSION}")
+message("┌─────────────────────────────────────────────────────────┐")
+message("│ CoCOM, A Cross Platform Serial port tool.               │")
+message("│ Licenced under GPLv3                                    │")
+message("│                                                         │")
+message("│ You may only use this program to the extent             │")
+message("│ permitted by local law.                                 │")
+message("│                                                         │")
+message("│ See: https://www.gnu.org/licenses/gpl-3.0.html          │")
+message("├─────────────────────────────────────────────────────────┤")
+message("│ Project Homepage: https://github.com/cocom-official     │")
+message("│ Welcome to contribute!                                  │")
+message("└─────────────────────────────────────────────────────────┘")
+message(" ")
+
+
 project(CoCOM LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -72,11 +120,11 @@ if (WIN32)
     set(WINDOWS_RES_FILE ${CMAKE_BINARY_DIR}/resources.obj)
     if (MSVC)
         add_custom_command(OUTPUT ${WINDOWS_RES_FILE}
-        COMMAND rc.exe /fo ${WINDOWS_RES_FILE} ${rc_list}
+        COMMAND rc.exe /fo ${WINDOWS_RES_FILE} ${rc_list} ${rc_flag_major} ${rc_flag_minor} ${rc_flag_bugfix} ${rc_flag_build} ${rc_flag_ver_str}
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
     else()
         add_custom_command(OUTPUT ${WINDOWS_RES_FILE}
-        COMMAND windres.exe ${rc_list} ${WINDOWS_RES_FILE}
+        COMMAND windres.exe ${rc_list} ${WINDOWS_RES_FILE} ${rc_flag_major} ${rc_flag_minor} ${rc_flag_bugfix} ${rc_flag_build} ${rc_flag_ver_str}
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
     endif()
 endif()

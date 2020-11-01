@@ -1,16 +1,21 @@
-IDI_ICON1    ICON    DISCARDABLE    "assets/logos/CoCOM.ico"  //设置程序图标
-
-#if defined(UNDER_CE)
-#include <winbase.h>
-#else
+#ifdef _WIN32
 #include <winver.h>
 
-#endif
+IDI_ICON1    ICON    DISCARDABLE    "assets/logos/CoCOM.ico"
+
+#define str(s) #s
+#define xstr(s) str(s)
+
+#define VER_FILEVERSION         COCOM_VERSION_MAJOR,COCOM_VERSION_MINOR,COCOM_VERSION_BUGFIX,COCOM_VERSION_BUILD
+#define VER_FILEVERSION_STR     xstr(COCOM_VERSION_STRING)
+#define VER_PRODUCTVERSION      VER_FILEVERSION
+#define VER_PRODUCTVERSION_STR  VER_FILEVERSION_STR
 
 VS_VERSION_INFO VERSIONINFO
-    FILEVERSION 0,0,1,0
-    PRODUCTVERSION 0,0,1,0
+    FILEVERSION VER_FILEVERSION
+    PRODUCTVERSION VER_PRODUCTVERSION
     FILEFLAGSMASK 0x3fL
+
 #ifdef _DEBUG
     FILEFLAGS VS_FF_DEBUG
 #else
@@ -24,18 +29,21 @@ VS_VERSION_INFO VERSIONINFO
         BEGIN
             BLOCK "080404b0"
             BEGIN
-                VALUE "CompanyName",      "CoCOM Official"                  //公司名称
-                VALUE "FileDescription",  "CoCOM"       //文件说明
-                VALUE "InternalName",     "CoCOM"                           //内部文件名
-                VALUE "ProductName",      "CoCOM -- Serial Port Utility"    //产品名称
-                VALUE "OriginalFilename", "CoCOM.exe"                       //原始文件名
-                VALUE "LegalCopyright",   "Copyright (C)2020-2020"          //版权
-                VALUE "ProductVersion",   "0.0.1.0"                         //产品版本号
-                VALUE "FileVersion",      "0.0.1.0"                         //文件版本
+                VALUE "CompanyName",      "CoCOM Official\0"
+                VALUE "FileDescription",  "CoCOM\0"
+                VALUE "InternalName",     "CoCOM\0"
+                VALUE "ProductName",      "CoCOM -- Serial Port Utility\0"
+                VALUE "OriginalFilename", "CoCOM.exe\0"
+                VALUE "LegalCopyright",   "CoCOM is being distributed under GPLv3\0"
+                VALUE "ProductVersion",   VER_PRODUCTVERSION_STR
             END
         END
         BLOCK "VarFileInfo"
         BEGIN
+            //VALUE "Translation", 0x409, 1200
             VALUE "Translation", 0x804, 1200
         END
     END
+
+/* End of Version info */
+#endif
