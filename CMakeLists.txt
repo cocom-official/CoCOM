@@ -168,3 +168,30 @@ target_include_directories(
     ${PROJECT_NAME} PRIVATE
     "src/include/"
     )
+
+    # if (CMAKE_BUILD_TYPE STREQUAL Release)
+set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
+set(CPACK_PACKAGE_VENDOR "cocom-official")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "MyLib - CPack Component Installation Example")
+set(CPACK_PACKAGE_VERSION ${CoCOM_VERSION_STRING})
+set(CPACK_PACKAGE_VERSION_MAJOR ${CMAKE_PROJECT_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${CMAKE_PROJECT_VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${CPACK_PACKAGE_VERSION_PATCH})
+set(CPACK_PACKAGE_INSTALL_DIRECTORY ${PROJECT_NAME})
+
+if (WIN32)
+    add_custom_command(
+        TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND bash -c "echo post build"
+        COMMAND bash ${CMAKE_SOURCE_DIR}/tools/gen_release.sh
+    )
+
+    file(GLOB install_files ${CMAKE_BINARY_DIR})
+    install(FILES install_files DESTINATION CoCOM)
+
+    set(CPACK_GENERATOR NSIS)
+    SET(CPACK_NSIS_MODIFY_PATH ON)
+endif()
+
+INCLUDE(CPack)
+# endif()

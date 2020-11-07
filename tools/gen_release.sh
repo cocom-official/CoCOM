@@ -1,12 +1,6 @@
 #!/bin/bash
 
 mkdir release
-cd release
-
-cmake -GNinja -DCMAKE_BUILD_TYPE=Release ..
-ninja -j $(nproc)
-
-mkdir release
 cp CoCOM.exe release
 cd release
 
