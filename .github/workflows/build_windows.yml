@@ -14,8 +14,21 @@ defaults:
 
 
 jobs:
+  get_version:
+    runs-on: windows-latest
+    outputs:
+      output1: ${{ steps.step1.outputs.version }}
+    steps:
+    - id: step1
+    - name: get version
+      run:  |
+        version=$(cat "makespec/VERSION").$(cat "makespec/BUILD_VERSION")
+        echo "::set-output name=version::&(version)"
+
+
   build:
     runs-on: windows-latest
+    needs: get_version
 
     steps:
     - name: setup msys2
@@ -42,9 +55,6 @@ jobs:
         ninja -j $(nproc)
         cpack
 
-    - name: get version
-      run:  version=$(cat "makespec/VERSION").$(cat "makespec/BUILD_VERSION")
-
     - name: Uploading Windows installer
       uses: actions/upload-artifact@master
       with:
@@ -55,10 +65,10 @@ jobs:
       uses: DuckSoft/create-7z-action@v1.0
       with:
         pathSource: ./release/CoCOM/
-        pathTarget: ./CoCOM.7z
+        pathTarget: ./CoCOM-${{needs.get_version.outputs.version}}.7z
 
     - name: Uploading 7z Release
       uses: actions/upload-artifact@master
       with:
-        name: 7z-release
-        path: CoCOM.7z
+        name: CoCOM-${{needs.get_version.outputs.version}}
+        path: CoCOM-${{needs.get_version.outputs.version}}.7z
