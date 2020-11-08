@@ -1,0 +1,64 @@
+name: Build Windows
+
+on:
+  push:
+      branches: [main]
+  pull_request:
+      branches: [main]
+  release:
+      types: [prereleased]
+
+defaults:
+  run:
+    shell: msys2 {0}
+
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: setup msys2
+      uses: msys2/setup-msys2@v2
+      with:
+        msystem: MINGW64
+        update: true
+        install: base-devel git mingw-w64-x86_64-toolchain mingw64/mingw-w64-x86_64-cmake mingw64/mingw-w64-x86_64-ninja mingw64/mingw-w64-x86_64-python mingw64/mingw-w64-x86_64-qt-creator
+
+    - name: checkout source
+      uses: actions/checkout@v2
+
+    - name: fetch submodule
+      run: |
+        cd $GITHUB_WORKSPACE
+        git submodule update --init
+
+    - name: build
+      run: |
+        cd $GITHUB_WORKSPACE
+        mkdir release
+        cd release
+        cmake -GNinja -DCMAKE_BUILD_TYPE=Release ..
+        ninja -j $(nproc)
+        cpack
+
+    - name: get version
+        version=$(cat "makespec/VERSION").$(cat "makespec/BUILD_VERSION")
+
+    - name: Uploading windows installer
+      uses: actions/upload-artifact@master
+      with:
+        name: CoCOM-$version-win64.msi
+        path: CoCOM-$version-win64.msi
+
+    - name: Create 7z Release
+      uses: DuckSoft/create-7z-action@v1.0
+      with:
+        pathSource: ./release/CoCOM/
+        pathTarget: ./CoCOM-$version-win64.7z
+
+    - name: Uploading artifact
+      uses: actions/upload-artifact@master
+      with:
+        name: CoCOM-$version-win64.7z
+        path: CoCOM-$version-win64.7z

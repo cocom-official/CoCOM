@@ -4,7 +4,9 @@ file(STRINGS "${CMAKE_SOURCE_DIR}/makespec/VERSION" CoCOM_VERSION)
 file(STRINGS "${CMAKE_SOURCE_DIR}/makespec/BUILD_VERSION" CoCOM_BUILD_VERSION)
 file(STRINGS "${CMAKE_SOURCE_DIR}/makespec/VERSION_SUFFIX" CoCOM_VERSION_SUFFIX)
 
-set(CoCOM_VERSION_STRING "${CoCOM_VERSION}.${CoCOM_BUILD_VERSION}${CoCOM_VERSION_SUFFIX}")
+set(CoCOM_VERSION_STRING "${CoCOM_VERSION}.${CoCOM_BUILD_VERSION}")
+set(CoCOM_VERSION_STRING_WITH_SUFFIX "${CoCOM_VERSION}.${CoCOM_BUILD_VERSION}${CoCOM_VERSION_SUFFIX}")
+set(CoCOM_VENDER "CoCOM-Official")
 
 set(VERSION_LIST ${CoCOM_VERSION})
 string(REPLACE "." ";" VERSION_LIST ${VERSION_LIST})
@@ -19,22 +21,23 @@ add_definitions(-DCOCOM_VERSION_MAJOR=${CMAKE_PROJECT_VERSION_MAJOR})
 add_definitions(-DCOCOM_VERSION_MINOR=${CMAKE_PROJECT_VERSION_MINOR})
 add_definitions(-DCOCOM_VERSION_BUGFIX=${CPACK_PACKAGE_VERSION_PATCH})
 add_definitions(-DCOCOM_VERSION_BUILD=${CoCOM_BUILD_VERSION})
-add_definitions(-DCOCOM_VERSION_STRING="${CoCOM_VERSION_STRING}")
+add_definitions(-DCoCOM_VERSION_STRING_WITH_SUFFIX="${CoCOM_VERSION_STRING_WITH_SUFFIX}")
 
 # For Windows RC file.
 set(rc_flag_major   "-DCOCOM_VERSION_MAJOR=${CMAKE_PROJECT_VERSION_MAJOR}")
 set(rc_flag_minor   "-DCOCOM_VERSION_MINOR=${CMAKE_PROJECT_VERSION_MINOR}")
 set(rc_flag_bugfix  "-DCOCOM_VERSION_BUGFIX=${CPACK_PACKAGE_VERSION_PATCH}")
 set(rc_flag_build   "-DCOCOM_VERSION_BUILD=${CoCOM_BUILD_VERSION}")
-set(rc_flag_ver_str "-DCOCOM_VERSION_STRING=${CoCOM_VERSION_STRING}")
+set(rc_flag_ver_str "-DCOCOM_VERSION_STRING=${CoCOM_VERSION_STRING_WITH_SUFFIX}")
+set(rc_flag_vender_str "-DCOCOM_VENDER=${CoCOM_VENDER}")
 
 
 message("CoCOM Version: ${rc_flag}")
 message(" ")
-message("CoCOM Version: ${CoCOM_VERSION_STRING}")
+message("CoCOM Version: ${CoCOM_VERSION_STRING_WITH_SUFFIX}")
 message("CoCOM Build Version: ${CoCOM_BUILD_VERSION}")
 message("┌─────────────────────────────────────────────────────────┐")
-message("│ CoCOM, A Cross Platform Serial port tool.               │")
+message("│ CoCOM, A Cross Platform Serial Port Utility.            │")
 message("│ Licenced under GPLv3                                    │")
 message("│                                                         │")
 message("│ You may only use this program to the extent             │")
@@ -120,12 +123,16 @@ if (WIN32)
     set(WINDOWS_RES_FILE ${CMAKE_BINARY_DIR}/resources.obj)
     if (MSVC)
         add_custom_command(OUTPUT ${WINDOWS_RES_FILE}
-        COMMAND rc.exe /fo ${WINDOWS_RES_FILE} ${rc_list} ${rc_flag_major} ${rc_flag_minor} ${rc_flag_bugfix} ${rc_flag_build} ${rc_flag_ver_str}
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+                           COMMAND rc.exe /fo ${WINDOWS_RES_FILE} ${rc_list} 
+                           ${rc_flag_major} ${rc_flag_minor} ${rc_flag_bugfix} ${rc_flag_build} 
+                           ${rc_flag_ver_str} ${rc_flag_vender_str}
+                           WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
     else()
         add_custom_command(OUTPUT ${WINDOWS_RES_FILE}
-        COMMAND windres.exe ${rc_list} ${WINDOWS_RES_FILE} ${rc_flag_major} ${rc_flag_minor} ${rc_flag_bugfix} ${rc_flag_build} ${rc_flag_ver_str}
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+                           COMMAND windres.exe ${rc_list} ${WINDOWS_RES_FILE} 
+                           ${rc_flag_major} ${rc_flag_minor} ${rc_flag_bugfix} ${rc_flag_build} 
+                           ${rc_flag_ver_str} ${rc_flag_vender_str}
+                           WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
     endif()
 endif()
 
@@ -169,29 +176,45 @@ target_include_directories(
     "src/include/"
     )
 
-    # if (CMAKE_BUILD_TYPE STREQUAL Release)
+if (CMAKE_BUILD_TYPE STREQUAL Release)
 set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
-set(CPACK_PACKAGE_VENDOR "cocom-official")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "MyLib - CPack Component Installation Example")
+set(CPACK_PACKAGE_VENDOR ${CoCOM_VENDER})
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "CoCOM -- Serial Port Utility")
 set(CPACK_PACKAGE_VERSION ${CoCOM_VERSION_STRING})
 set(CPACK_PACKAGE_VERSION_MAJOR ${CMAKE_PROJECT_VERSION_MAJOR})
 set(CPACK_PACKAGE_VERSION_MINOR ${CMAKE_PROJECT_VERSION_MINOR})
 set(CPACK_PACKAGE_VERSION_PATCH ${CPACK_PACKAGE_VERSION_PATCH})
 set(CPACK_PACKAGE_INSTALL_DIRECTORY ${PROJECT_NAME})
+set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_SOURCE_DIR}/LICENSE.txt)
+install(FILES ${CMAKE_SOURCE_DIR}/LICENSE.txt DESTINATION /)
+
+set(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/assets/logos\\\\CoCOM.bmp")
+set(CPACK_PACKAGE_EXECUTABLES ${PROJECT_NAME} ${PROJECT_NAME})
+set(CPACK_CREATE_DESKTOP_LINKS ${PROJECT_NAME})
+
 
 if (WIN32)
+    set(pack_dir CoCOM)
     add_custom_command(
         TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND bash -c "echo post build"
-        COMMAND bash ${CMAKE_SOURCE_DIR}/tools/gen_release.sh
+        COMMAND bash -c "mkdir -p ${pack_dir}"
+        COMMAND bash -c "cp CoCOM.exe ${pack_dir}"
+        COMMAND python3 "${CMAKE_SOURCE_DIR}/tools/mingw-bundledlls/mingw-bundledlls" --copy "${CMAKE_BINARY_DIR}/${pack_dir}/CoCOM.exe"
+        COMMAND bash -c "windeployqt ${CMAKE_BINARY_DIR}/${pack_dir}/CoCOM.exe --no-translations"
     )
 
-    file(GLOB install_files ${CMAKE_BINARY_DIR})
-    install(FILES install_files DESTINATION CoCOM)
+    install(DIRECTORY "${CMAKE_BINARY_DIR}/${pack_dir}/" DESTINATION /)
 
-    set(CPACK_GENERATOR NSIS)
-    SET(CPACK_NSIS_MODIFY_PATH ON)
+    set(CPACK_GENERATOR WIX)
+    set(CPACK_WIX_UPGRADE_GUID "58DD5230-1D15-41A7-BAA5-1D1E4DCBBF04")
+    set(CPACK_WIX_MODIFY_PATH ON)
+    set(CPACK_WIX_CULTURES "zh-CN;en-US")
+    set(CPACK_WIX_PRODUCT_ICON "${CMAKE_SOURCE_DIR}/assets/logos/CoCOM.ico")
+    set(CPACK_WIX_UI_BANNER "${CMAKE_SOURCE_DIR}/assets/wix_banner.png")
+    set(CPACK_WIX_UI_DIALOG "${CMAKE_SOURCE_DIR}/assets/wix_dialog.png")
+
 endif()
 
 INCLUDE(CPack)
-# endif()
+endif()
