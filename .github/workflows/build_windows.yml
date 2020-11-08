@@ -48,7 +48,7 @@ jobs:
     - name: Uploading windows installer
       uses: actions/upload-artifact@master
       with:
-        path: *.msi
+        path: ${{ github.workspace }}/release/*.msi
 
     - name: Create 7z Release
       uses: DuckSoft/create-7z-action@v1.0
@@ -59,4 +59,4 @@ jobs:
     - name: Uploading artifact
       uses: actions/upload-artifact@master
       with:
-        path: *.7z
+        path: ${{ github.workspace }}/release/CoCOM.7z
