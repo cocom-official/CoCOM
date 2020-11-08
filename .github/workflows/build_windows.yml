@@ -26,7 +26,7 @@ jobs:
       run:  |
         cd $GITHUB_WORKSPACE
         version=$(cat "makespec/VERSION").$(cat "makespec/BUILD_VERSION")
-        echo "::set-output name=version::$(version)"
+        echo "::set-output name=version::$version"
       shell: bash
 
 
