@@ -312,6 +312,7 @@ void MainWindow::on_currenPort_readyRead()
     qDebug() << ui->outputTextBrowser->cursor();
 
     int scrollBarValue = ui->outputTextBrowser->verticalScrollBar()->value();
+    Q_UNUSED(scrollBarValue);
     ui->outputTextBrowser->setPlainText(currentPort.text->toPlainText());
     ui->outputTextBrowser->moveCursor(QTextCursor::End);
 }
