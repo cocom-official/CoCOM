@@ -43,7 +43,7 @@ jobs:
         cpack
 
     - name: get version
-        version=$(cat "makespec/VERSION").$(cat "makespec/BUILD_VERSION")
+      run:  version=$(cat "makespec/VERSION").$(cat "makespec/BUILD_VERSION")
 
     - name: Uploading windows installer
       uses: actions/upload-artifact@master
