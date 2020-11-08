@@ -24,6 +24,7 @@ jobs:
 
     - id: step1
       run:  |
+        cd $GITHUB_WORKSPACE
         version=$(cat "makespec/VERSION").$(cat "makespec/BUILD_VERSION")
         echo "::set-output name=version::$(version)"
 
