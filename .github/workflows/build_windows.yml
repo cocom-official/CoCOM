@@ -15,7 +15,7 @@ defaults:
 
 jobs:
   get_version:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     outputs:
       output1: ${{ steps.step1.outputs.version }}
     steps:
@@ -27,6 +27,7 @@ jobs:
         cd $GITHUB_WORKSPACE
         version=$(cat "makespec/VERSION").$(cat "makespec/BUILD_VERSION")
         echo "::set-output name=version::$(version)"
+      shell: bash
 
 
   build:
