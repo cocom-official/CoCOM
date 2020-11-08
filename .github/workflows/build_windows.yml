@@ -48,17 +48,15 @@ jobs:
     - name: Uploading windows installer
       uses: actions/upload-artifact@master
       with:
-        name: CoCOM-$version-win64.msi
-        path: CoCOM-$version-win64.msi
+        path: *.msi
 
     - name: Create 7z Release
       uses: DuckSoft/create-7z-action@v1.0
       with:
         pathSource: ./release/CoCOM/
-        pathTarget: ./CoCOM-$version-win64.7z
+        pathTarget: ./CoCOM.7z
 
     - name: Uploading artifact
       uses: actions/upload-artifact@master
       with:
-        name: CoCOM-$version-win64.7z
-        path: CoCOM-$version-win64.7z
+        path: *.7z
