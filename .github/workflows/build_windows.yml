@@ -19,6 +19,9 @@ jobs:
     outputs:
       output1: ${{ steps.step1.outputs.version }}
     steps:
+    - name: checkout source
+      uses: actions/checkout@v2
+
     - id: step1
       run:  |
         version=$(cat "makespec/VERSION").$(cat "makespec/BUILD_VERSION")
