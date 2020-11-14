@@ -5,23 +5,25 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
       portSelect(new QComboBox(this)),
-      statusInfoLeftLabel(new QLabel(this)),
+      statusInfoLabel(new QLabel(this)),
       statusTxLabel(new QLabel(this)),
       statusRxLabel(new QLabel(this)),
-      statusInfoRightLabel(new QLabel(this))
+      baudrateComboBox(new QComboBox(this)),
+      dataBitsComboBox(new QComboBox(this)),
+      parityComboBox(new QComboBox(this)),
+      stopBitsComboBox(new QComboBox(this)),
+      flowComboBox(new QComboBox(this)),
+      rxComboBox(new QComboBox(this)),
+      txComboBox(new QComboBox(this))
 {
     ui->setupUi(this);
 
     setConfigToolBar();
 
-    setConfigTab();
-
     setStatusBar();
 
     connect(portSelect, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
             this, &MainWindow::on_portSelectComboBox_currentIndexChanged);
-
-    ui->verticalSplitter->setSizes(QList<int>() << 2000 << 1);
 
     inputTabWidgetHeight
         << ui->basicSendTab->minimumSizeHint().height()
@@ -53,59 +55,91 @@ void MainWindow::setConfigToolBar()
     ui->configToolBar->addWidget(portSelect);
 }
 
-void MainWindow::setConfigTab()
-{
-    ui->baudrateComboBox->addItem("9600");
-    ui->baudrateComboBox->addItem("19200");
-    ui->baudrateComboBox->addItem("38400");
-    ui->baudrateComboBox->addItem("57600");
-    ui->baudrateComboBox->addItem("115200");
-    ui->baudrateComboBox->addItem("921600");
-    ui->baudrateComboBox->addItem(tr("Custom"));
-    ui->baudrateComboBox->setCurrentIndex(0);
-    ui->baudrateComboBox->setEditable(false);
-
-    ui->dataBitsComboBox->addItem("5");
-    ui->dataBitsComboBox->addItem("6");
-    ui->dataBitsComboBox->addItem("7");
-    ui->dataBitsComboBox->addItem("8");
-    ui->dataBitsComboBox->setCurrentIndex(3);
-
-    ui->parityComboBox->addItem("None");
-    ui->parityComboBox->addItem("Even");
-    ui->parityComboBox->addItem("Odd");
-    ui->parityComboBox->addItem("Space");
-    ui->parityComboBox->addItem("Mark");
-    ui->parityComboBox->setCurrentIndex(0);
-
-    ui->stopBitsComboBox->addItem("1");
-    ui->stopBitsComboBox->addItem("1.5");
-    ui->stopBitsComboBox->addItem("2");
-    ui->stopBitsComboBox->setCurrentIndex(0);
-
-    ui->flowComboBox->addItem("OFF");
-    ui->flowComboBox->addItem("RTX/CTX");
-    ui->flowComboBox->addItem("XON/XOFF");
-    ui->flowComboBox->setCurrentIndex(0);
-
-    int minWidth = ui->flowComboBox->width();
-
-    ui->baudrateComboBox->setFixedWidth(minWidth);
-    ui->dataBitsComboBox->setFixedWidth(minWidth);
-    ui->parityComboBox->setFixedWidth(minWidth);
-    ui->stopBitsComboBox->setFixedWidth(minWidth);
-    ui->flowComboBox->setFixedWidth(minWidth);
-}
-
 void MainWindow::setStatusBar()
 {
     statusTxLabel->setText("Tx: 0");
     statusRxLabel->setText("Rx: 0");
 
-    ui->statusbar->addWidget(statusInfoLeftLabel, 2);
+    baudrateComboBox->addItem("9600");
+    baudrateComboBox->addItem("19200");
+    baudrateComboBox->addItem("38400");
+    baudrateComboBox->addItem("57600");
+    baudrateComboBox->addItem("115200");
+    baudrateComboBox->addItem("921600");
+    baudrateComboBox->addItem("Custom");
+    baudrateComboBox->setCurrentIndex(4);
+    baudrateComboBox->setToolTip(tr("baudrate"));
+
+    dataBitsComboBox->addItem("5");
+    dataBitsComboBox->addItem("6");
+    dataBitsComboBox->addItem("7");
+    dataBitsComboBox->addItem("8");
+    dataBitsComboBox->setCurrentIndex(3);
+    dataBitsComboBox->setToolTip(tr("data bits"));
+
+    parityComboBox->addItem("None");
+    parityComboBox->addItem("Even");
+    parityComboBox->addItem("Odd");
+    parityComboBox->addItem("Space");
+    parityComboBox->addItem("Mark");
+    parityComboBox->setCurrentIndex(0);
+    parityComboBox->setToolTip(tr("parity"));
+
+    stopBitsComboBox->addItem("1");
+    stopBitsComboBox->addItem("1.5");
+    stopBitsComboBox->addItem("2");
+    stopBitsComboBox->setCurrentIndex(0);
+    stopBitsComboBox->setToolTip(tr("stop bits"));
+
+    flowComboBox->addItem("OFF");
+    flowComboBox->addItem("RTX/CTX");
+    flowComboBox->addItem("XON/XOFF");
+    flowComboBox->setCurrentIndex(0);
+    flowComboBox->setToolTip(tr("flow control"));
+
+    rxComboBox->addItem("Rx: Text");
+    rxComboBox->addItem("Rx: HEX");
+    rxComboBox->setCurrentIndex(0);
+    rxComboBox->setToolTip(tr("Rx"));
+
+    txComboBox->addItem("Tx: Text");
+    txComboBox->addItem("Tx: HEX");
+    txComboBox->setCurrentIndex(0);
+    txComboBox->setToolTip(tr("Tx"));
+
+    QWidget *statusWidget = new QWidget(this);
+    QHBoxLayout *statusLayout = new QHBoxLayout(this);
+    statusLayout->setMargin(0);
+    statusLayout->addWidget(baudrateComboBox);
+    statusLayout->addWidget(dataBitsComboBox);
+    statusLayout->addWidget(parityComboBox);
+    statusLayout->addWidget(stopBitsComboBox);
+    statusLayout->addWidget(flowComboBox);
+    statusLayout->addWidget(rxComboBox);
+    statusLayout->addWidget(txComboBox);
+    statusWidget->setLayout(statusLayout);
+
+    ui->statusbar->addWidget(statusWidget, 0);
     ui->statusbar->addWidget(statusTxLabel, 1);
     ui->statusbar->addWidget(statusRxLabel, 1);
-    ui->statusbar->addWidget(statusInfoRightLabel, 3);
+    ui->statusbar->addWidget(statusInfoLabel, 8);
+
+    connect(baudrateComboBox, &QComboBox::currentTextChanged,
+            this, baudrateComboBox_currentTextChanged);
+    connect(baudrateComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, baudrateComboBox_currentIndexChanged);
+    connect(dataBitsComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, dataBitsComboBox_currentIndexChanged);
+    connect(parityComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, parityComboBox_currentIndexChanged);
+    connect(stopBitsComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, stopBitsComboBox_currentIndexChanged);
+    connect(flowComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, flowComboBox_currentIndexChanged);
+    // connect(rxComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+    //         this, nullptr);
+    // connect(txComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+    //         this, nullptr);
 }
 
 void MainWindow::enumPorts()
@@ -162,11 +196,11 @@ void MainWindow::configPort(QSerialPort *port)
                                                      QSerialPort::FlowControl::HardwareControl,
                                                      QSerialPort::FlowControl::SoftwareControl};
 
-    port->setBaudRate(ui->baudrateComboBox->currentText().toInt());
-    port->setDataBits(indexToDataBits[ui->dataBitsComboBox->currentIndex()]);
-    port->setParity(indexToParity[ui->parityComboBox->currentIndex()]);
-    port->setStopBits(indexToStopBits[ui->stopBitsComboBox->currentIndex()]);
-    port->setFlowControl(indexToFlowControl[ui->flowComboBox->currentIndex()]);
+    port->setBaudRate(baudrateComboBox->currentText().toInt());
+    port->setDataBits(indexToDataBits[dataBitsComboBox->currentIndex()]);
+    port->setParity(indexToParity[parityComboBox->currentIndex()]);
+    port->setStopBits(indexToStopBits[stopBitsComboBox->currentIndex()]);
+    port->setFlowControl(indexToFlowControl[flowComboBox->currentIndex()]);
 }
 
 void MainWindow::updatePortConfig()
@@ -223,44 +257,63 @@ void MainWindow::on_outputTextBrowser_cursorPositionChanged()
     qDebug() << "on_outputTextBrowser_cursorPositionChanged";
 }
 
-void MainWindow::on_baudrateComboBox_currentIndexChanged(int index)
+void MainWindow::baudrateComboBox_currentIndexChanged(int index)
 {
-    if (index == ui->baudrateComboBox->count() - 1)
+    static int baudrateCount = 0;
+
+    if (0 == baudrateCount)
     {
-        ui->baudrateComboBox->setEditable(true);
-        ui->baudrateComboBox->setEditText("");
+        baudrateCount = baudrateComboBox->count();
+    }
+
+    if (index == baudrateCount)
+    {
+        QString baudrate = baudrateComboBox->currentText();
+        baudrateComboBox->removeItem(baudrateCount);
+        baudrateComboBox->setCurrentIndex(baudrateCount - 1);
+        baudrateComboBox->setCurrentText(baudrate);
+        return;
+    }
+
+    if (index == baudrateCount - 1)
+    {
+        baudrateComboBox->setEditable(true);
+        baudrateComboBox->setEditText("");
     }
     else
     {
-        ui->baudrateComboBox->setEditable(false);
+        baudrateComboBox->setEditable(false);
     }
 }
 
-void MainWindow::on_baudrateComboBox_currentTextChanged(const QString &text)
+void MainWindow::baudrateComboBox_currentTextChanged(const QString &text)
 {
-    Q_UNUSED(text);
+    if (text == "Custom")
+    {
+        baudrateComboBox->setCurrentText("");
+    }
     updatePortConfig();
 }
 
-void MainWindow::on_dataBitsComboBox_currentIndexChanged(int index)
-{
-    Q_UNUSED(index);
-    updatePortConfig();
-}
-
-void MainWindow::on_parityComboBox_currentIndexChanged(int index)
+void MainWindow::dataBitsComboBox_currentIndexChanged(int index)
 {
     Q_UNUSED(index);
     updatePortConfig();
 }
 
-void MainWindow::on_stopBitsComboBox_currentIndexChanged(int index)
+void MainWindow::parityComboBox_currentIndexChanged(int index)
 {
     Q_UNUSED(index);
     updatePortConfig();
 }
 
-void MainWindow::on_flowComboBox_currentIndexChanged(int index)
+void MainWindow::stopBitsComboBox_currentIndexChanged(int index)
+{
+    Q_UNUSED(index);
+    updatePortConfig();
+}
+
+void MainWindow::flowComboBox_currentIndexChanged(int index)
 {
     Q_UNUSED(index);
     updatePortConfig();

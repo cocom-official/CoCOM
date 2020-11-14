@@ -41,12 +41,12 @@ private slots:
 
     void on_outputTextBrowser_cursorPositionChanged();
 
-    void on_baudrateComboBox_currentTextChanged(const QString &text);
-    void on_baudrateComboBox_currentIndexChanged(int index);
-    void on_dataBitsComboBox_currentIndexChanged(int index);
-    void on_parityComboBox_currentIndexChanged(int index);
-    void on_stopBitsComboBox_currentIndexChanged(int index);
-    void on_flowComboBox_currentIndexChanged(int index);
+    void baudrateComboBox_currentTextChanged(const QString &text);
+    void baudrateComboBox_currentIndexChanged(int index);
+    void dataBitsComboBox_currentIndexChanged(int index);
+    void parityComboBox_currentIndexChanged(int index);
+    void stopBitsComboBox_currentIndexChanged(int index);
+    void flowComboBox_currentIndexChanged(int index);
 
     void on_openAction_toggled(bool checked);
     void on_clearAction_toggled(bool checked);
@@ -58,10 +58,17 @@ private:
     Ui::MainWindow *ui;
 
     QComboBox *portSelect;
-    QLabel  *statusInfoLeftLabel;
+    QLabel  *statusInfoLabel;
     QLabel  *statusTxLabel;
     QLabel  *statusRxLabel;
-    QLabel  *statusInfoRightLabel;
+    /* status bar combobox */
+    QComboBox *baudrateComboBox;
+    QComboBox *dataBitsComboBox;
+    QComboBox *parityComboBox;
+    QComboBox *stopBitsComboBox;
+    QComboBox *flowComboBox;
+    QComboBox *rxComboBox;
+    QComboBox *txComboBox;
 
     QList<int> inputTabWidgetHeight;
 
@@ -77,7 +84,6 @@ private:
     Port_t currentPort;
 
     void setConfigToolBar();
-    void setConfigTab();
     void setStatusBar();
     void enumPorts();
     void configPort(QSerialPort *port);
