@@ -1,4 +1,4 @@
-name: Build Windows
+name: Windows Release
 
 on:
   push:
@@ -12,31 +12,10 @@ defaults:
   run:
     shell: msys2 {0}
 
-
 jobs:
-  get_version:
-    runs-on: ubuntu-latest
-    outputs:
-      output1: ${{ steps.step1.outputs.version }}
-    steps:
-    - name: checkout source
-      uses: actions/checkout@v2
-
-    - name: version
-      run:  |
-        cd $GITHUB_WORKSPACE
-        version=$(cat "makespec/VERSION").$(cat "makespec/BUILD_VERSION")
-        echo "$version"
-      shell: bash
-
-    - id: step1
-      run:  echo "::set-output name=version::$version"
-      shell: bash
-
 
   build:
     runs-on: windows-latest
-    needs: get_version
 
     steps:
     - name: setup msys2
@@ -54,6 +33,12 @@ jobs:
         cd $GITHUB_WORKSPACE
         git submodule update --init
 
+    - name: version
+      run:  |
+        cd $GITHUB_WORKSPACE
+        version=$(cat "makespec/VERSION").$(cat "makespec/BUILD_VERSION")
+        echo "$version"
+
     - name: build
       run: |
         cd $GITHUB_WORKSPACE
@@ -61,22 +46,17 @@ jobs:
         cd release
         cmake -GNinja -DCMAKE_BUILD_TYPE=Release ..
         ninja -j $(nproc)
-        cpack
+        cpack -G WIX
+        cpack -G 7Z
 
-    - name: Uploading Windows installer
+    - name: uploading Windows installer release
       uses: actions/upload-artifact@master
       with:
-        name: windows-installer
+        name: windows-installer-release
         path: ${{ github.workspace }}/release/*.msi
 
-    - name: Create 7z Release
-      uses: DuckSoft/create-7z-action@v1.0
-      with:
-        pathSource: ./release/CoCOM/
-        pathTarget: ./CoCOM-${{needs.get_version.outputs.version}}.7z
-
-    - name: Uploading 7z Release
+    - name: uploading Windows 7z release
       uses: actions/upload-artifact@master
       with:
-        name: CoCOM-${{needs.get_version.outputs.version}}
-        path: CoCOM-${{needs.get_version.outputs.version}}.7z
+        name: windows-7z-release
+        path: ${{ github.workspace }}/release/*.7z

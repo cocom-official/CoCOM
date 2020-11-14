@@ -176,45 +176,49 @@ target_include_directories(
     "src/include/"
     )
 
-if (CMAKE_BUILD_TYPE STREQUAL Release)
-set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
-set(CPACK_PACKAGE_VENDOR ${CoCOM_VENDER})
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "CoCOM -- Serial Port Utility")
-set(CPACK_PACKAGE_VERSION ${CoCOM_VERSION_STRING})
-set(CPACK_PACKAGE_VERSION_MAJOR ${CMAKE_PROJECT_VERSION_MAJOR})
-set(CPACK_PACKAGE_VERSION_MINOR ${CMAKE_PROJECT_VERSION_MINOR})
-set(CPACK_PACKAGE_VERSION_PATCH ${CPACK_PACKAGE_VERSION_PATCH})
-set(CPACK_PACKAGE_INSTALL_DIRECTORY ${PROJECT_NAME})
-set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_SOURCE_DIR}/LICENSE.txt)
-install(FILES ${CMAKE_SOURCE_DIR}/LICENSE.txt DESTINATION /)
+if (CMAKE_BUILD_TYPE STREQUAL Release) # Release
 
-set(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/assets/logos\\\\CoCOM.bmp")
-set(CPACK_PACKAGE_EXECUTABLES ${PROJECT_NAME} ${PROJECT_NAME})
-set(CPACK_CREATE_DESKTOP_LINKS ${PROJECT_NAME})
+    set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
+    set(CPACK_PACKAGE_VENDOR ${CoCOM_VENDER})
+    set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "CoCOM -- Serial Port Utility")
+    set(CPACK_PACKAGE_VERSION ${CoCOM_VERSION_STRING})
+    set(CPACK_PACKAGE_VERSION_MAJOR ${CMAKE_PROJECT_VERSION_MAJOR})
+    set(CPACK_PACKAGE_VERSION_MINOR ${CMAKE_PROJECT_VERSION_MINOR})
+    set(CPACK_PACKAGE_VERSION_PATCH ${CPACK_PACKAGE_VERSION_PATCH})
+    set(CPACK_PACKAGE_INSTALL_DIRECTORY ${PROJECT_NAME})
+    set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_SOURCE_DIR}/LICENSE.txt)
+    install(FILES ${CMAKE_SOURCE_DIR}/LICENSE.txt DESTINATION /)
+
+    set(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/assets/logos\\\\CoCOM.bmp")
+    set(CPACK_PACKAGE_EXECUTABLES ${PROJECT_NAME} ${PROJECT_NAME})
+    set(CPACK_CREATE_DESKTOP_LINKS ${PROJECT_NAME})
 
 
-if (WIN32)
-    set(pack_dir CoCOM)
-    add_custom_command(
-        TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND bash -c "echo post build"
-        COMMAND bash -c "mkdir -p ${pack_dir}"
-        COMMAND bash -c "cp CoCOM.exe ${pack_dir}"
-        COMMAND python3 "${CMAKE_SOURCE_DIR}/tools/mingw-bundledlls/mingw-bundledlls" --copy "${CMAKE_BINARY_DIR}/${pack_dir}/CoCOM.exe"
-        COMMAND bash -c "windeployqt ${CMAKE_BINARY_DIR}/${pack_dir}/CoCOM.exe --no-translations"
-    )
+    if (WIN32) # WIN32
+        set(pack_dir CoCOM)
+        add_custom_command(
+            TARGET ${PROJECT_NAME} POST_BUILD
+            COMMAND bash -c "echo post build"
+            COMMAND bash -c "mkdir -p ${pack_dir}"
+            COMMAND bash -c "cp CoCOM.exe ${pack_dir}"
+            COMMAND python3 "${CMAKE_SOURCE_DIR}/tools/mingw-bundledlls/mingw-bundledlls" --copy "${CMAKE_BINARY_DIR}/${pack_dir}/CoCOM.exe"
+            COMMAND bash -c "windeployqt ${CMAKE_BINARY_DIR}/${pack_dir}/CoCOM.exe --no-translations"
+        )
 
-    install(DIRECTORY "${CMAKE_BINARY_DIR}/${pack_dir}/" DESTINATION /)
+        install(DIRECTORY "${CMAKE_BINARY_DIR}/${pack_dir}/" DESTINATION /)
 
-    set(CPACK_GENERATOR WIX)
-    set(CPACK_WIX_UPGRADE_GUID "58DD5230-1D15-41A7-BAA5-1D1E4DCBBF04")
-    set(CPACK_WIX_MODIFY_PATH ON)
-    set(CPACK_WIX_CULTURES "zh-CN;en-US")
-    set(CPACK_WIX_PRODUCT_ICON "${CMAKE_SOURCE_DIR}/assets/logos/CoCOM.ico")
-    set(CPACK_WIX_UI_BANNER "${CMAKE_SOURCE_DIR}/assets/wix_banner.png")
-    set(CPACK_WIX_UI_DIALOG "${CMAKE_SOURCE_DIR}/assets/wix_dialog.png")
+        set(CPACK_WIX_UPGRADE_GUID "58DD5230-1D15-41A7-BAA5-1D1E4DCBBF04")
+        set(CPACK_WIX_MODIFY_PATH ON)
+        set(CPACK_WIX_CULTURES "zh-CN;en-US")
+        set(CPACK_WIX_PRODUCT_ICON "${CMAKE_SOURCE_DIR}/assets/logos/CoCOM.ico")
+        set(CPACK_WIX_UI_BANNER "${CMAKE_SOURCE_DIR}/assets/wix_banner.png")
+        set(CPACK_WIX_UI_DIALOG "${CMAKE_SOURCE_DIR}/assets/wix_dialog.png")
 
-endif()
+    else() # WIN32
+
+    install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION / PERMISSIONS WORLD_EXECUTE)
+
+    endif() # WIN32
 
 INCLUDE(CPack)
-endif()
+endif() # Release
