@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     setStatusBar();
 
     connect(portSelect, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-            this, &MainWindow::on_portSelectComboBox_currentIndexChanged);
+            this, &MainWindow::portSelectComboBox_currentIndexChanged);
 
     inputTabWidgetHeight
         << ui->basicSendTab->minimumSizeHint().height()
@@ -36,7 +36,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     enumPorts();
 
-#ifdef Q_OS_WIN32
+// #ifdef Q_OS_WIN32
+#if 0
     bool color;
     qDebug() << QtWin::colorizationColor(&color);
     qDebug() << color;
@@ -172,29 +173,29 @@ void MainWindow::enumPorts()
         ports << *port;
     }
 
-    on_portSelectComboBox_currentIndexChanged(portSelect->currentIndex());
+    portSelectComboBox_currentIndexChanged(portSelect->currentIndex());
 }
 
 void MainWindow::configPort(QSerialPort *port)
 {
-    QSerialPort::DataBits indexToDataBits[] = {QSerialPort::DataBits::Data5,
-                                               QSerialPort::DataBits::Data6,
-                                               QSerialPort::DataBits::Data7,
-                                               QSerialPort::DataBits::Data8};
+    const QSerialPort::DataBits indexToDataBits[] = {QSerialPort::DataBits::Data5,
+                                                     QSerialPort::DataBits::Data6,
+                                                     QSerialPort::DataBits::Data7,
+                                                     QSerialPort::DataBits::Data8};
 
-    QSerialPort::Parity indexToParity[] = {QSerialPort::Parity::NoParity,
-                                           QSerialPort::Parity::EvenParity,
-                                           QSerialPort::Parity::OddParity,
-                                           QSerialPort::Parity::SpaceParity,
-                                           QSerialPort::Parity::MarkParity};
+    const QSerialPort::Parity indexToParity[] = {QSerialPort::Parity::NoParity,
+                                                 QSerialPort::Parity::EvenParity,
+                                                 QSerialPort::Parity::OddParity,
+                                                 QSerialPort::Parity::SpaceParity,
+                                                 QSerialPort::Parity::MarkParity};
 
-    QSerialPort::StopBits indexToStopBits[] = {QSerialPort::StopBits::OneStop,
-                                               QSerialPort::StopBits::OneAndHalfStop,
-                                               QSerialPort::StopBits::TwoStop};
+    const QSerialPort::StopBits indexToStopBits[] = {QSerialPort::StopBits::OneStop,
+                                                     QSerialPort::StopBits::OneAndHalfStop,
+                                                     QSerialPort::StopBits::TwoStop};
 
-    QSerialPort::FlowControl indexToFlowControl[] = {QSerialPort::FlowControl::NoFlowControl,
-                                                     QSerialPort::FlowControl::HardwareControl,
-                                                     QSerialPort::FlowControl::SoftwareControl};
+    const QSerialPort::FlowControl indexToFlowControl[] = {QSerialPort::FlowControl::NoFlowControl,
+                                                           QSerialPort::FlowControl::HardwareControl,
+                                                           QSerialPort::FlowControl::SoftwareControl};
 
     port->setBaudRate(baudrateComboBox->currentText().toInt());
     port->setDataBits(indexToDataBits[dataBitsComboBox->currentIndex()]);
@@ -235,6 +236,38 @@ QString MainWindow::getPortStr(MainWindow::Port_t *port)
     return portStr;
 }
 
+void MainWindow::addTxCount(int count)
+{
+    static int txCount = 0;
+
+    if (count < 0)
+    {
+        txCount = 0;
+    }
+    else
+    {
+        txCount += count;
+    }
+
+    statusTxLabel->setText(QString("Tx: %1").arg(QString::number(txCount)));
+}
+
+void MainWindow::addRxCount(int count)
+{
+    static int rxCount = 0;
+
+    if (count < 0)
+    {
+        rxCount = 0;
+    }
+    else
+    {
+        rxCount += count;
+    }
+
+    statusTxLabel->setText(QString("Tx: %1").arg(QString::number(rxCount)));
+}
+
 void MainWindow::on_inputTabWidget_currentChanged(int index)
 {
     int maxHeight = inputTabWidgetHeight[index];
@@ -254,7 +287,6 @@ void MainWindow::on_inputTabWidget_currentChanged(int index)
 
 void MainWindow::on_outputTextBrowser_cursorPositionChanged()
 {
-    qDebug() << "on_outputTextBrowser_cursorPositionChanged";
 }
 
 void MainWindow::baudrateComboBox_currentIndexChanged(int index)
@@ -325,7 +357,7 @@ void MainWindow::on_openAction_toggled(bool checked)
     {
         currentPort.port->open(QIODevice::OpenModeFlag::ReadWrite);
         connect(currentPort.port, &QSerialPort::readyRead,
-                this, &MainWindow::on_currenPort_readyRead);
+                this, &MainWindow::currenPort_readyRead, Qt::QueuedConnection);
     }
     else
     {
@@ -336,16 +368,32 @@ void MainWindow::on_openAction_toggled(bool checked)
     enumPorts();
 }
 
-void MainWindow::on_clearAction_toggled(bool checked)
+void MainWindow::on_clearAction_triggered(bool checked)
 {
-    qDebug() << "clear";
     Q_UNUSED(checked);
     ui->outputTextBrowser->clear();
+    addTxCount(-1);
 }
 
-void MainWindow::on_portSelectComboBox_currentIndexChanged(int index)
+void MainWindow::on_actionPin_toggled(bool checked)
 {
-    if (index >= ports.count()|| index < 0)
+    if (checked)
+    {
+        setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
+        ui->actionPin->setIcon(QIcon(":/assets/icons/pushpin-ed.svg"));
+    }
+    else
+    {
+        setWindowFlags(windowFlags() ^ Qt::WindowStaysOnTopHint);
+        ui->actionPin->setIcon(QIcon(":/assets/icons/pushpin.svg"));
+    }
+
+    show();
+}
+
+void MainWindow::portSelectComboBox_currentIndexChanged(int index)
+{
+    if (index >= ports.count() || index < 0)
     {
         return;
     }
@@ -353,19 +401,23 @@ void MainWindow::on_portSelectComboBox_currentIndexChanged(int index)
     currentPort = ports[index];
 }
 
-void MainWindow::on_currenPort_readyRead()
+void MainWindow::currenPort_readyRead()
 {
-    QTextCursor cursor(currentPort.text);
-    cursor.movePosition(QTextCursor::End);
-    cursor.beginEditBlock();
-    cursor.insertText(QString(currentPort.port->read(
-        currentPort.port->bytesAvailable())));
-    cursor.endEditBlock();
+    int rxCount = currentPort.port->bytesAvailable();
+    addRxCount(rxCount);
 
-    qDebug() << ui->outputTextBrowser->cursor();
+    int currentScroll = ui->outputTextBrowser->verticalScrollBar()->value();
+    int maxScroll = ui->outputTextBrowser->verticalScrollBar()->maximum();
 
-    int scrollBarValue = ui->outputTextBrowser->verticalScrollBar()->value();
-    Q_UNUSED(scrollBarValue);
-    ui->outputTextBrowser->setPlainText(currentPort.text->toPlainText());
     ui->outputTextBrowser->moveCursor(QTextCursor::End);
+    ui->outputTextBrowser->insertPlainText(QString(currentPort.port->read(rxCount)));
+
+    if (currentScroll == maxScroll)
+    {
+        ui->outputTextBrowser->verticalScrollBar()->setValue(ui->outputTextBrowser->verticalScrollBar()->maximum());
+    }
+    else
+    {
+        ui->outputTextBrowser->verticalScrollBar()->setValue(currentScroll);
+    }
 }

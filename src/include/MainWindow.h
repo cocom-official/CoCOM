@@ -49,10 +49,11 @@ private slots:
     void flowComboBox_currentIndexChanged(int index);
 
     void on_openAction_toggled(bool checked);
-    void on_clearAction_toggled(bool checked);
+    void on_clearAction_triggered(bool checked);
+    void on_actionPin_toggled(bool checked);
 
-    void on_portSelectComboBox_currentIndexChanged(int index);
-    void on_currenPort_readyRead();
+    void portSelectComboBox_currentIndexChanged(int index);
+    void currenPort_readyRead();
 
 private:
     Ui::MainWindow *ui;
@@ -89,5 +90,7 @@ private:
     void configPort(QSerialPort *port);
     void updatePortConfig();
     QString getPortStr(Port_t *port);
+    void addTxCount(int count);
+    void addRxCount(int count);
 };
 

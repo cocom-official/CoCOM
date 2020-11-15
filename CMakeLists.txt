@@ -32,7 +32,6 @@ set(rc_flag_ver_str "-DCOCOM_VERSION_STRING=${CoCOM_VERSION_STRING_WITH_SUFFIX}"
 set(rc_flag_vender_str "-DCOCOM_VENDER=${CoCOM_VENDER}")
 
 
-message("CoCOM Version: ${rc_flag}")
 message(" ")
 message("CoCOM Version: ${CoCOM_VERSION_STRING_WITH_SUFFIX}")
 message("CoCOM Build Version: ${CoCOM_BUILD_VERSION}")
