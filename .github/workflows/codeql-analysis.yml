@@ -53,6 +53,9 @@ jobs:
       with:
         version: '5.15.1'
 
+    - name: Install ninja
+      uses: seanmiddleditch/gha-setup-ninja@master
+
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
     # - name: Autobuild
@@ -66,7 +69,7 @@ jobs:
     #    uses a compiled language
 
     - name: Build
-    - run: |
+      run: |
         cd $GITHUB_WORKSPACE
         mkdir release
         cd release
