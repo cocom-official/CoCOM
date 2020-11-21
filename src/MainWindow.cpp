@@ -126,17 +126,17 @@ void MainWindow::setStatusBar()
     ui->statusbar->addWidget(statusInfoLabel, 8);
 
     connect(baudrateComboBox, &QComboBox::currentTextChanged,
-            this, baudrateComboBox_currentTextChanged);
+            this, &MainWindow::baudrateComboBox_currentTextChanged);
     connect(baudrateComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-            this, baudrateComboBox_currentIndexChanged);
+            this, &MainWindow::baudrateComboBox_currentIndexChanged);
     connect(dataBitsComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-            this, dataBitsComboBox_currentIndexChanged);
+            this, &MainWindow::dataBitsComboBox_currentIndexChanged);
     connect(parityComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-            this, parityComboBox_currentIndexChanged);
+            this, &MainWindow::parityComboBox_currentIndexChanged);
     connect(stopBitsComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-            this, stopBitsComboBox_currentIndexChanged);
+            this, &MainWindow::stopBitsComboBox_currentIndexChanged);
     connect(flowComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-            this, flowComboBox_currentIndexChanged);
+            this, &MainWindow::flowComboBox_currentIndexChanged);
     // connect(rxComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
     //         this, nullptr);
     // connect(txComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
