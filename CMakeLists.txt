@@ -84,6 +84,7 @@ qt5_wrap_ui(ui_list
 
 qt5_wrap_cpp(moc_list
     "src/include/MainWindow.h"
+    "src/include/Serial.h"
     )
 
 qt5_add_resources(qrc_list
@@ -103,7 +104,9 @@ set(ts_raw_list
 
 set(src_list
     "src/main.cpp"
+    "src/Common.cpp"
     "src/MainWindow.cpp"
+    "src/Serial.cpp"
     )
 
 
@@ -122,14 +125,14 @@ if (WIN32)
     set(WINDOWS_RES_FILE ${CMAKE_BINARY_DIR}/resources.obj)
     if (MSVC)
         add_custom_command(OUTPUT ${WINDOWS_RES_FILE}
-                           COMMAND rc.exe /fo ${WINDOWS_RES_FILE} ${rc_list} 
-                           ${rc_flag_major} ${rc_flag_minor} ${rc_flag_bugfix} ${rc_flag_build} 
+                           COMMAND rc.exe /fo ${WINDOWS_RES_FILE} ${rc_list}
+                           ${rc_flag_major} ${rc_flag_minor} ${rc_flag_bugfix} ${rc_flag_build}
                            ${rc_flag_ver_str} ${rc_flag_vender_str}
                            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
     else()
         add_custom_command(OUTPUT ${WINDOWS_RES_FILE}
-                           COMMAND windres.exe ${rc_list} ${WINDOWS_RES_FILE} 
-                           ${rc_flag_major} ${rc_flag_minor} ${rc_flag_bugfix} ${rc_flag_build} 
+                           COMMAND windres.exe ${rc_list} ${WINDOWS_RES_FILE}
+                           ${rc_flag_major} ${rc_flag_minor} ${rc_flag_bugfix} ${rc_flag_build}
                            ${rc_flag_ver_str} ${rc_flag_vender_str}
                            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
     endif()
@@ -138,14 +141,14 @@ endif()
 
 if (CMAKE_BUILD_TYPE STREQUAL Debug)
     add_definitions(-DDEBUG)
-    add_executable(${PROJECT_NAME} ${src_list} ${ui_list} ${moc_list} ${qrc_list} 
+    add_executable(${PROJECT_NAME} ${src_list} ${ui_list} ${moc_list} ${qrc_list}
                    ${QM_FILES} ${WINDOWS_RES_FILE})
 else ()
     if (WIN32)
-        add_executable(${PROJECT_NAME} WIN32 ${src_list} ${ui_list} ${moc_list} ${qrc_list} 
+        add_executable(${PROJECT_NAME} WIN32 ${src_list} ${ui_list} ${moc_list} ${qrc_list}
                        ${QM_FILES} ${WINDOWS_RES_FILE})
     else()
-        add_executable(${PROJECT_NAME} ${src_list} ${ui_list} ${moc_list} ${qrc_list} 
+        add_executable(${PROJECT_NAME} ${src_list} ${ui_list} ${moc_list} ${qrc_list}
                        ${QM_FILES} ${WINDOWS_RES_FILE})
     endif ()
 endif ()

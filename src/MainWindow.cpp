@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include "ui_mainWindow.h"
+#include "Common.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -14,7 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
       stopBitsComboBox(new QComboBox(this)),
       flowComboBox(new QComboBox(this)),
       rxComboBox(new QComboBox(this)),
-      txComboBox(new QComboBox(this))
+      txComboBox(new QComboBox(this)),
+      serial(new Serial(this))
 {
     ui->setupUi(this);
 
@@ -36,12 +38,15 @@ MainWindow::MainWindow(QWidget *parent)
 
     enumPorts();
 
+    connect(serial, &Serial::readyRead, this, &MainWindow::serial_readyRead);
+
 // #ifdef Q_OS_WIN32
 #if 0
     bool color;
     qDebug() << QtWin::colorizationColor(&color);
     qDebug() << color;
 #endif
+    setStatusInfo(tr("Ready"));
 }
 
 MainWindow::~MainWindow()
@@ -62,20 +67,19 @@ void MainWindow::setStatusBar()
     statusRxLabel->setText("Rx: 0");
 
     baudrateComboBox->addItem("9600");
-    baudrateComboBox->addItem("19200");
     baudrateComboBox->addItem("38400");
     baudrateComboBox->addItem("57600");
     baudrateComboBox->addItem("115200");
     baudrateComboBox->addItem("921600");
     baudrateComboBox->addItem("Custom");
-    baudrateComboBox->setCurrentIndex(4);
+    baudrateComboBox->setCurrentIndex(defaultSerialConfig[IndexBaudRate]);
     baudrateComboBox->setToolTip(tr("baudrate"));
 
     dataBitsComboBox->addItem("5");
     dataBitsComboBox->addItem("6");
     dataBitsComboBox->addItem("7");
     dataBitsComboBox->addItem("8");
-    dataBitsComboBox->setCurrentIndex(3);
+    dataBitsComboBox->setCurrentIndex(defaultSerialConfig[IndexDataBits]);
     dataBitsComboBox->setToolTip(tr("data bits"));
 
     parityComboBox->addItem("None");
@@ -83,19 +87,19 @@ void MainWindow::setStatusBar()
     parityComboBox->addItem("Odd");
     parityComboBox->addItem("Space");
     parityComboBox->addItem("Mark");
-    parityComboBox->setCurrentIndex(0);
+    parityComboBox->setCurrentIndex(defaultSerialConfig[IndexParity]);
     parityComboBox->setToolTip(tr("parity"));
 
     stopBitsComboBox->addItem("1");
     stopBitsComboBox->addItem("1.5");
     stopBitsComboBox->addItem("2");
-    stopBitsComboBox->setCurrentIndex(0);
+    stopBitsComboBox->setCurrentIndex(defaultSerialConfig[IndexStopBits]);
     stopBitsComboBox->setToolTip(tr("stop bits"));
 
     flowComboBox->addItem("OFF");
     flowComboBox->addItem("RTX/CTX");
     flowComboBox->addItem("XON/XOFF");
-    flowComboBox->setCurrentIndex(0);
+    flowComboBox->setCurrentIndex(defaultSerialConfig[IndexFlowControl]);
     flowComboBox->setToolTip(tr("flow control"));
 
     rxComboBox->addItem("Rx: Text");
@@ -145,95 +149,34 @@ void MainWindow::setStatusBar()
 
 void MainWindow::enumPorts()
 {
-    if (ports.count())
+    if (portSelect->count() == 0)
     {
-        qDebug() << "reenum Ports";
-
-        for (int i = 0; i < ports.count(); i++)
+        for (int i = 0; i < serial->count(); i++)
         {
-            portSelect->setItemText(i, getPortStr(&ports[i]));
+            portSelect->addItem(serial->getPortStr(i));
         }
 
         return;
     }
 
-    MainWindow::Port_t *port = new MainWindow::Port_t();
-    int index = 0;
+    serial->enumPorts();
 
-    for (auto &&comInfo : QSerialPortInfo::availablePorts())
-    {
-        port->port = new QSerialPort(comInfo.portName(), this);
-        port->info = new QSerialPortInfo(*port->port);
-        port->text = new QTextDocument(this);
-        port->index = index++;
-
-        configPort(port->port);
-        portSelect->addItem(getPortStr(port));
-
-        ports << *port;
-    }
-
-    portSelectComboBox_currentIndexChanged(portSelect->currentIndex());
-}
-
-void MainWindow::configPort(QSerialPort *port)
-{
-    const QSerialPort::DataBits indexToDataBits[] = {QSerialPort::DataBits::Data5,
-                                                     QSerialPort::DataBits::Data6,
-                                                     QSerialPort::DataBits::Data7,
-                                                     QSerialPort::DataBits::Data8};
-
-    const QSerialPort::Parity indexToParity[] = {QSerialPort::Parity::NoParity,
-                                                 QSerialPort::Parity::EvenParity,
-                                                 QSerialPort::Parity::OddParity,
-                                                 QSerialPort::Parity::SpaceParity,
-                                                 QSerialPort::Parity::MarkParity};
-
-    const QSerialPort::StopBits indexToStopBits[] = {QSerialPort::StopBits::OneStop,
-                                                     QSerialPort::StopBits::OneAndHalfStop,
-                                                     QSerialPort::StopBits::TwoStop};
-
-    const QSerialPort::FlowControl indexToFlowControl[] = {QSerialPort::FlowControl::NoFlowControl,
-                                                           QSerialPort::FlowControl::HardwareControl,
-                                                           QSerialPort::FlowControl::SoftwareControl};
-
-    port->setBaudRate(baudrateComboBox->currentText().toInt());
-    port->setDataBits(indexToDataBits[dataBitsComboBox->currentIndex()]);
-    port->setParity(indexToParity[parityComboBox->currentIndex()]);
-    port->setStopBits(indexToStopBits[stopBitsComboBox->currentIndex()]);
-    port->setFlowControl(indexToFlowControl[flowComboBox->currentIndex()]);
+    int index = portSelect->currentIndex();
+    portSelect->setItemText(index, serial->getPortStr(index));
+    portSelectComboBox_currentIndexChanged(index);
 }
 
 void MainWindow::updatePortConfig()
 {
-    if (!ports.isEmpty() &&
-        currentPort.port)
+    bool ret =  serial->config(baudrateComboBox->currentText().toInt(),
+                               dataBitsComboBox->currentIndex(),
+                               parityComboBox->currentIndex(),
+                               stopBitsComboBox->currentIndex(),
+                               flowComboBox->currentIndex());
+    if (!ret)
     {
-        configPort(currentPort.port);
+        qDebug() << "port config fail";
     }
-}
-
-QString MainWindow::getPortStr(MainWindow::Port_t *port)
-{
-    auto statusStr = [=]() {
-        if (port->port->isOpen())
-        {
-            return "●";
-        }
-        else
-        {
-            return "○";
-        }
-    };
-
-    QString portStr = QString("%1 %2|%4");
-
-    portStr = portStr.arg(
-        statusStr(),
-        port->port->portName(),
-        port->info->description());
-
-    return portStr;
 }
 
 void MainWindow::addTxCount(int count)
@@ -266,6 +209,11 @@ void MainWindow::addRxCount(int count)
     }
 
     statusTxLabel->setText(QString("Tx: %1").arg(QString::number(rxCount)));
+}
+
+void MainWindow::setStatusInfo(QString text)
+{
+    statusInfoLabel->setText(text);
 }
 
 void MainWindow::on_inputTabWidget_currentChanged(int index)
@@ -355,14 +303,11 @@ void MainWindow::on_openAction_toggled(bool checked)
 {
     if (checked)
     {
-        currentPort.port->open(QIODevice::OpenModeFlag::ReadWrite);
-        connect(currentPort.port, &QSerialPort::readyRead,
-                this, &MainWindow::currenPort_readyRead, Qt::QueuedConnection);
+        serial->open();
     }
     else
     {
-        currentPort.port->close();
-        currentPort.text->clear();
+        serial->close();
     }
 
     enumPorts();
@@ -393,24 +338,18 @@ void MainWindow::on_actionPin_toggled(bool checked)
 
 void MainWindow::portSelectComboBox_currentIndexChanged(int index)
 {
-    if (index >= ports.count() || index < 0)
-    {
-        return;
-    }
-
-    currentPort = ports[index];
+    serial->setCurrentPort(index);
 }
 
-void MainWindow::currenPort_readyRead()
+void MainWindow::serial_readyRead(int count, QByteArray *bytes)
 {
-    int rxCount = currentPort.port->bytesAvailable();
-    addRxCount(rxCount);
+    addRxCount(count);
 
     int currentScroll = ui->outputTextBrowser->verticalScrollBar()->value();
     int maxScroll = ui->outputTextBrowser->verticalScrollBar()->maximum();
 
     ui->outputTextBrowser->moveCursor(QTextCursor::End);
-    ui->outputTextBrowser->insertPlainText(QString(currentPort.port->read(rxCount)));
+    ui->outputTextBrowser->insertPlainText(QString(*bytes));
 
     if (currentScroll == maxScroll)
     {

@@ -14,8 +14,6 @@
 #include <QWidget>
 #include <QHBoxLayout>
 #include <QSpacerItem>
-#include <QSerialPort>
-#include <QSerialPortInfo>
 #include <QTextDocument>
 #include <QTextCursor>
 #include <QScrollBar>
@@ -23,6 +21,8 @@
 #ifdef Q_OS_WIN32
 #include <QtWinExtras>
 #endif
+
+#include "Serial.h"
 
 namespace Ui {
 class MainWindow;
@@ -53,7 +53,7 @@ private slots:
     void on_actionPin_toggled(bool checked);
 
     void portSelectComboBox_currentIndexChanged(int index);
-    void currenPort_readyRead();
+    void serial_readyRead(int count, QByteArray *bytes);
 
 private:
     Ui::MainWindow *ui;
@@ -73,24 +73,13 @@ private:
 
     QList<int> inputTabWidgetHeight;
 
-    typedef struct
-    {
-        QSerialPort *port;
-        QSerialPortInfo *info;
-        QTextDocument *text;
-        int index;
-    }Port_t;
-
-    QList<Port_t> ports;
-    Port_t currentPort;
+    Serial *serial;
 
     void setConfigToolBar();
     void setStatusBar();
     void enumPorts();
-    void configPort(QSerialPort *port);
     void updatePortConfig();
-    QString getPortStr(Port_t *port);
     void addTxCount(int count);
     void addRxCount(int count);
+    void setStatusInfo(QString text);
 };
-

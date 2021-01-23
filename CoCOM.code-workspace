@@ -5,12 +5,5 @@
         }
     ],
     "settings": {
-        "files.associations": {
-            "qspaceritem": "cpp",
-            "qserialport": "cpp",
-            "variant": "cpp",
-            "qtextdocument": "cpp",
-            "qtextcursor": "cpp"
-        }
     }
 }
