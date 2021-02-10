@@ -15,5 +15,6 @@ int main(int argc, char *argv[])
     app.installTranslator(&translator);
     MainWindow windows;
     windows.show();
-        return app.exec();
+
+    return app.exec();
 }

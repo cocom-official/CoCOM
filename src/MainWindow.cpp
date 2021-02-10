@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
       serial(new Serial(this))
 {
     ui->setupUi(this);
+    textBrowser = new TextBrowser(this, ui->outputTextBrowser);
 
     setConfigToolBar();
 
@@ -344,19 +345,5 @@ void MainWindow::portSelectComboBox_currentIndexChanged(int index)
 void MainWindow::serial_readyRead(int count, QByteArray *bytes)
 {
     addRxCount(count);
-
-    int currentScroll = ui->outputTextBrowser->verticalScrollBar()->value();
-    int maxScroll = ui->outputTextBrowser->verticalScrollBar()->maximum();
-
-    ui->outputTextBrowser->moveCursor(QTextCursor::End);
-    ui->outputTextBrowser->insertPlainText(QString(*bytes));
-
-    if (currentScroll == maxScroll)
-    {
-        ui->outputTextBrowser->verticalScrollBar()->setValue(ui->outputTextBrowser->verticalScrollBar()->maximum());
-    }
-    else
-    {
-        ui->outputTextBrowser->verticalScrollBar()->setValue(currentScroll);
-    }
+    textBrowser->insertData(bytes);
 }

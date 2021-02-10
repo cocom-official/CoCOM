@@ -1,3 +1,5 @@
+#pragma once
+
 #include <QSerialPort>
 
 enum SerialConfigIndex
@@ -7,6 +9,12 @@ enum SerialConfigIndex
     IndexParity,
     IndexStopBits,
     IndexFlowControl,
+};
+
+enum DataType
+{
+    TextType = 0,
+    HexType,
 };
 
 extern const int indexToBaudRate[5];

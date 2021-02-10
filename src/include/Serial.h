@@ -6,7 +6,6 @@
 #include <QByteArray>
 #include <QSerialPort>
 #include <QSerialPortInfo>
-#include <QComboBox>
 
 typedef enum
 {
@@ -16,6 +15,8 @@ typedef enum
 
 class Serial : public QObject
 {
+    Q_OBJECT
+
     typedef struct
     {
         QSerialPort *port;
@@ -26,7 +27,6 @@ class Serial : public QObject
     QList<Port_t> ports;
     Port_t currentPort;
 
-    Q_OBJECT
 public:
     explicit Serial(QObject *parent);
     int32_t count();

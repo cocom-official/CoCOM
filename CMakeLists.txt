@@ -60,6 +60,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt5 COMPONENTS Core Gui Widgets SerialPort
              LinguistTools REQUIRED)
 
+# add_compile_definitions(QT_DISABLE_DEPRECATED_BEFORE=0x050F00)
+
 if (${Qt5_FOUND})
     message(STATUS "Found Qt " ${Qt5_VERSION})
 else()
@@ -85,6 +87,7 @@ qt5_wrap_ui(ui_list
 qt5_wrap_cpp(moc_list
     "src/include/MainWindow.h"
     "src/include/Serial.h"
+    "src/include/TextBrowser.h"
     )
 
 qt5_add_resources(qrc_list
@@ -107,6 +110,7 @@ set(src_list
     "src/Common.cpp"
     "src/MainWindow.cpp"
     "src/Serial.cpp"
+    "src/TextBrowser.cpp"
     )
 
 

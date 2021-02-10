@@ -155,42 +155,42 @@
         <translation>侧边栏</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="49"/>
+        <location filename="../../src/MainWindow.cpp" line="50"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="76"/>
+        <location filename="../../src/MainWindow.cpp" line="77"/>
         <source>baudrate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="83"/>
+        <location filename="../../src/MainWindow.cpp" line="84"/>
         <source>data bits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="91"/>
+        <location filename="../../src/MainWindow.cpp" line="92"/>
         <source>parity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="97"/>
+        <location filename="../../src/MainWindow.cpp" line="98"/>
         <source>stop bits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="103"/>
+        <location filename="../../src/MainWindow.cpp" line="104"/>
         <source>flow control</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="108"/>
+        <location filename="../../src/MainWindow.cpp" line="109"/>
         <source>Rx</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="113"/>
+        <location filename="../../src/MainWindow.cpp" line="114"/>
         <source>Tx</source>
         <translation type="unfinished"></translation>
     </message>

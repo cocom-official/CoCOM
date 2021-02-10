@@ -2,16 +2,29 @@
     "tasks": [
         {
             "type": "shell",
-            "label": "C/C++: gcc.exe build active file",
-            "command": "C:\\msys2\\mingw64\\bin\\gcc.exe",
+            "label": "CMake Config[Debug]",
+            "command": "C:/msys64/mingw64/bin/cmake.exe",
             "args": [
-                "-g",
-                "${file}",
-                "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "-p",
+                "../CoCOM_build",
+                "-DCMAKE_BUILD_TYPE=Debug"
             ],
             "options": {
-                "cwd": "C:\\msys2\\mingw64\\bin"
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "type": "shell",
+            "label": "Ninja Build",
+            "command": "C:/msys64/mingw64/bin/ninja.exe",
+            "args": [
+                "-C",
+                "../CoCOM_build",
+                "-j16"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
             },
             "problemMatcher": [
                 "$gcc"

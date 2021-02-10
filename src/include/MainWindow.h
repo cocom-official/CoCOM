@@ -23,6 +23,7 @@
 #endif
 
 #include "Serial.h"
+#include "TextBrowser.h"
 
 namespace Ui {
 class MainWindow;
@@ -74,6 +75,7 @@ private:
     QList<int> inputTabWidgetHeight;
 
     Serial *serial;
+    TextBrowser *textBrowser;
 
     void setConfigToolBar();
     void setStatusBar();
