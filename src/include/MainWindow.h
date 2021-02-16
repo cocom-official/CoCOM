@@ -25,8 +25,9 @@
 #include "Serial.h"
 #include "TextBrowser.h"
 
-namespace Ui {
-class MainWindow;
+namespace Ui
+{
+    class MainWindow;
 }
 
 class MainWindow : public QMainWindow
@@ -60,9 +61,9 @@ private:
     Ui::MainWindow *ui;
 
     QComboBox *portSelect;
-    QLabel  *statusInfoLabel;
-    QLabel  *statusTxLabel;
-    QLabel  *statusRxLabel;
+    QLabel *statusInfoLabel;
+    QLabel *statusTxLabel;
+    QLabel *statusRxLabel;
     /* status bar combobox */
     QComboBox *baudrateComboBox;
     QComboBox *dataBitsComboBox;
@@ -77,6 +78,7 @@ private:
     Serial *serial;
     TextBrowser *textBrowser;
 
+    void loadFont();
     void setConfigToolBar();
     void setStatusBar();
     void enumPorts();

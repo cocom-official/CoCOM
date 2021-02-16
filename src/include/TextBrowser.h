@@ -1,5 +1,7 @@
 #include <QObject>
 #include <QMutex>
+#include <QString>
+#include <QList>
 #include <QByteArray>
 #include <QTextBrowser>
 #include <QScrollBar>
@@ -17,18 +19,40 @@ public:
 
     void setDataType(DataType type);
     void insertData(QByteArray *data);
+    void clear();
 
 public slots:
 
 private:
+    typedef struct
+    {
+        const QString *key;
+        int cursorPos;
+    } HintKey;
+
+    typedef struct
+    {
+        QList<HintKey*> key;
+        QTextCharFormat *format;
+    } HintFormat;
+
     QTextBrowser *browser;
     QMutex mutex;
     DataType dataType;
-    QTextCursor cursor;
+    QTextCursor lockCursor;
     int scroll;
     int maxScroll;
 
+    HintFormat successHint;
+    HintFormat warnHint;
+    HintFormat errorHint;
+
     void lock();
     void unlock();
-    void setFormat(int from, int end, QTextCharFormat format);
+    void setFormat(int start, int end, QTextCharFormat *format);
+    void addHintFormat(HintFormat *hintFormat, const QString *key, QTextCharFormat *format);
+    void initHintFormat();
+    void processHintFormant(HintFormat *hint);
+    void processAllHintFormants();
+    void resetHintFormant(HintFormat *hint);
 };

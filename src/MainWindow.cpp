@@ -25,6 +25,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     setStatusBar();
 
+    loadFont();
+
     connect(portSelect, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
             this, &MainWindow::portSelectComboBox_currentIndexChanged);
 
@@ -53,6 +55,33 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::loadFont()
+{
+    QFile fontFile(":/assets/fonts/CascadiaCodePL.ttf");
+    if(!fontFile.open(QIODevice::ReadOnly))
+    {
+        qDebug("open fontFile fail");
+        return;
+    }
+
+    int fontId = QFontDatabase::addApplicationFontFromData(fontFile.readAll());
+    if(fontId == -1)
+    {
+        qDebug("load fontFile fail");
+        return;
+    }
+
+    QStringList fontFamily = QFontDatabase::applicationFontFamilies(fontId);
+    if(fontFamily.empty())
+    {
+        qDebug("fontFile empty");
+        return;
+    }
+
+    QFont font(fontFamily.at(0));
+    ui->outputTextBrowser->setFont(font);
 }
 
 void MainWindow::setConfigToolBar()
@@ -169,11 +198,11 @@ void MainWindow::enumPorts()
 
 void MainWindow::updatePortConfig()
 {
-    bool ret =  serial->config(baudrateComboBox->currentText().toInt(),
-                               dataBitsComboBox->currentIndex(),
-                               parityComboBox->currentIndex(),
-                               stopBitsComboBox->currentIndex(),
-                               flowComboBox->currentIndex());
+    bool ret = serial->config(baudrateComboBox->currentText().toInt(),
+                              dataBitsComboBox->currentIndex(),
+                              parityComboBox->currentIndex(),
+                              stopBitsComboBox->currentIndex(),
+                              flowComboBox->currentIndex());
     if (!ret)
     {
         qDebug() << "port config fail";
@@ -317,7 +346,8 @@ void MainWindow::on_openAction_toggled(bool checked)
 void MainWindow::on_clearAction_triggered(bool checked)
 {
     Q_UNUSED(checked);
-    ui->outputTextBrowser->clear();
+    textBrowser->clear();
+    addRxCount(-1);
     addTxCount(-1);
 }
 
