@@ -50,7 +50,7 @@
         </attribute>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
-          <widget class="QComboBox" name="comboBox">
+          <widget class="QComboBox" name="sendComboBox">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -77,7 +77,7 @@
         </attribute>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
-          <widget class="QPlainTextEdit" name="plainTextEdit"/>
+          <widget class="QPlainTextEdit" name="sendTextEdit"/>
          </item>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -95,7 +95,7 @@
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="nultiSendButton">
+            <widget class="QPushButton" name="multiSendButton">
              <property name="text">
               <string>Send</string>
              </property>

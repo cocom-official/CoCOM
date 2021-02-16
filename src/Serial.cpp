@@ -2,7 +2,8 @@
 #include "Common.h"
 
 Serial::Serial(QObject *parent)
-    : QObject(parent)
+    : QObject(parent),
+      sendDataType(TextType)
 {
     enumPorts();
 }
@@ -39,6 +40,29 @@ bool Serial::open()
 void Serial::close()
 {
     currentPort.port->close();
+}
+
+void Serial::sendRawData(QByteArray *bytes)
+{
+    currentPort.port->write(*bytes);
+}
+
+void Serial::sendHexString(QString *string)
+{
+}
+
+void Serial::sendTextString(QString *string)
+{
+    if (string->length() == 0)
+    {
+        return;
+    }
+
+    QByteArray bytes = string->toUtf8();
+    emit bytesSend(bytes.size());
+    bytes.append('\r');
+    bytes.append('\n');
+    currentPort.port->write(bytes);
 }
 
 bool Serial::config(uint baudrate, uint databits, uint parity, uint stopbits, uint flowControl)

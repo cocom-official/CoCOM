@@ -42,6 +42,7 @@ MainWindow::MainWindow(QWidget *parent)
     enumPorts();
 
     connect(serial, &Serial::readyRead, this, &MainWindow::serial_readyRead);
+    connect(serial, &Serial::bytesSend, this, &MainWindow::serial_bytesSend);
 
 // #ifdef Q_OS_WIN32
 #if 0
@@ -60,21 +61,21 @@ MainWindow::~MainWindow()
 void MainWindow::loadFont()
 {
     QFile fontFile(":/assets/fonts/CascadiaCodePL.ttf");
-    if(!fontFile.open(QIODevice::ReadOnly))
+    if (!fontFile.open(QIODevice::ReadOnly))
     {
         qDebug("open fontFile fail");
         return;
     }
 
     int fontId = QFontDatabase::addApplicationFontFromData(fontFile.readAll());
-    if(fontId == -1)
+    if (fontId == -1)
     {
         qDebug("load fontFile fail");
         return;
     }
 
     QStringList fontFamily = QFontDatabase::applicationFontFamilies(fontId);
-    if(fontFamily.empty())
+    if (fontFamily.empty())
     {
         qDebug("fontFile empty");
         return;
@@ -367,6 +368,18 @@ void MainWindow::on_actionPin_toggled(bool checked)
     show();
 }
 
+void MainWindow::on_basicSendButton_pressed()
+{
+    QString string = ui->sendComboBox->currentText();
+    serial->sendTextString(&string);
+}
+
+void MainWindow::on_multiSendButton_pressed()
+{
+    QString string = ui->sendTextEdit->toPlainText();
+    serial->sendTextString(&string);
+}
+
 void MainWindow::portSelectComboBox_currentIndexChanged(int index)
 {
     serial->setCurrentPort(index);
@@ -376,4 +389,9 @@ void MainWindow::serial_readyRead(int count, QByteArray *bytes)
 {
     addRxCount(count);
     textBrowser->insertData(bytes);
+}
+
+void MainWindow::serial_bytesSend(int count)
+{
+    addTxCount(count);
 }

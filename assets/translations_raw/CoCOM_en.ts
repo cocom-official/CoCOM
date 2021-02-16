@@ -95,42 +95,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="52"/>
+        <location filename="../../src/MainWindow.cpp" line="53"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="106"/>
+        <location filename="../../src/MainWindow.cpp" line="107"/>
         <source>baudrate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="113"/>
+        <location filename="../../src/MainWindow.cpp" line="114"/>
         <source>data bits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="121"/>
+        <location filename="../../src/MainWindow.cpp" line="122"/>
         <source>parity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="127"/>
+        <location filename="../../src/MainWindow.cpp" line="128"/>
         <source>stop bits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="133"/>
+        <location filename="../../src/MainWindow.cpp" line="134"/>
         <source>flow control</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="138"/>
+        <location filename="../../src/MainWindow.cpp" line="139"/>
         <source>Rx</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="143"/>
+        <location filename="../../src/MainWindow.cpp" line="144"/>
         <source>Tx</source>
         <translation type="unfinished"></translation>
     </message>

@@ -7,6 +7,8 @@
 #include <QSerialPort>
 #include <QSerialPortInfo>
 
+#include "Common.h"
+
 typedef enum
 {
     HEX_TYPE,
@@ -34,17 +36,21 @@ public:
     int currentIndex();
     bool open();
     void close();
+    void sendRawData(QByteArray *bytes);
+    void sendHexString(QString *bytes);
+    void sendTextString(QString *bytes);
     bool config(uint baudrate, uint databits, uint parity, uint stopbits, uint flowControl);
     QString getPortStr(int index);
     void enumPorts();
 
 private:
     QByteArray bytes;
-
+    DataType sendDataType;
 
 private slots:
     void currenPort_readyRead();
 
 signals:
     void readyRead(int count, QByteArray *bytes);
+    void bytesSend(int count);
 };

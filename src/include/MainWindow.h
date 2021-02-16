@@ -54,8 +54,12 @@ private slots:
     void on_clearAction_triggered(bool checked);
     void on_actionPin_toggled(bool checked);
 
+    void on_basicSendButton_pressed();
+    void on_multiSendButton_pressed();
+
     void portSelectComboBox_currentIndexChanged(int index);
     void serial_readyRead(int count, QByteArray *bytes);
+    void serial_bytesSend(int count);
 
 private:
     Ui::MainWindow *ui;
