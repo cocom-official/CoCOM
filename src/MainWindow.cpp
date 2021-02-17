@@ -16,7 +16,8 @@ MainWindow::MainWindow(QWidget *parent)
       flowComboBox(new QComboBox(this)),
       rxComboBox(new QComboBox(this)),
       txComboBox(new QComboBox(this)),
-      serial(new Serial(this))
+      serial(new Serial(this)),
+      timer(new QTimer(this))
 {
     ui->setupUi(this);
     textBrowser = new TextBrowser(this, ui->outputTextBrowser);
@@ -39,10 +40,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->commandTab->setMaximumHeight(inputTabWidgetHeight[0]);
     ui->horizontalSplitter->setSizes(QList<int>() << 700 << 1);
 
-    enumPorts();
-
     connect(serial, &Serial::readyRead, this, &MainWindow::serial_readyRead);
     connect(serial, &Serial::bytesSend, this, &MainWindow::serial_bytesSend);
+
+    enumPorts();
+    connect(timer, &QTimer::timeout, this, &MainWindow::enumPorts);
+    timer->start(1000);
 
 // #ifdef Q_OS_WIN32
 #if 0
@@ -178,23 +181,44 @@ void MainWindow::setStatusBar()
     //         this, nullptr);
 }
 
+void MainWindow::updatePortSelectText()
+{
+    for (int i = 0; i < portSelect->count(); i++)
+    {
+        portSelect->setItemText(i, serial->getPortStr(i));
+    }
+
+    if (ui->openAction->isChecked() && serial->isOpen(serial->currentIndex()) != true)
+    {
+        ui->openAction->setChecked(false);
+    }
+}
+
 void MainWindow::enumPorts()
 {
-    if (portSelect->count() == 0)
+    QAbstractItemView *view = portSelect->view();
+    if (view != nullptr && view->isVisible())
     {
-        for (int i = 0; i < serial->count(); i++)
-        {
-            portSelect->addItem(serial->getPortStr(i));
-        }
-
         return;
     }
 
     serial->enumPorts();
 
-    int index = portSelect->currentIndex();
-    portSelect->setItemText(index, serial->getPortStr(index));
-    portSelectComboBox_currentIndexChanged(index);
+    portSelect->blockSignals(true);
+
+    while (portSelect->count() != 0)
+    {
+        portSelect->removeItem(portSelect->count() - 1);
+    }
+
+    for (int i = 0; i < serial->count(); i++)
+    {
+        portSelect->addItem(serial->getPortStr(i));
+    }
+
+    portSelect->blockSignals(false);
+
+    portSelect->setCurrentIndex(serial->currentIndex());
 }
 
 void MainWindow::updatePortConfig()
@@ -334,14 +358,18 @@ void MainWindow::on_openAction_toggled(bool checked)
 {
     if (checked)
     {
-        serial->open();
+        if (!serial->open())
+        {
+            ui->openAction->setChecked(false);
+            QMessageBox::critical(this, tr("Open Failed!"), tr("Serial Port [%1] Open Failed!").arg(serial->getPortStr(serial->currentIndex())));
+        }
     }
     else
     {
         serial->close();
     }
 
-    enumPorts();
+    updatePortSelectText();
 }
 
 void MainWindow::on_clearAction_triggered(bool checked)
@@ -383,6 +411,7 @@ void MainWindow::on_multiSendButton_pressed()
 void MainWindow::portSelectComboBox_currentIndexChanged(int index)
 {
     serial->setCurrentPort(index);
+    updatePortSelectText();
 }
 
 void MainWindow::serial_readyRead(int count, QByteArray *bytes)

@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QObject>
 #include <QList>
+#include <QMutex>
 #include <QByteArray>
 #include <QSerialPort>
 #include <QSerialPortInfo>
@@ -31,11 +32,14 @@ class Serial : public QObject
 
 public:
     explicit Serial(QObject *parent);
+    ~Serial();
+
     int32_t count();
     void setCurrentPort(int32_t index);
     int currentIndex();
     bool open();
     void close();
+    bool isOpen(int32_t index);
     void sendRawData(QByteArray *bytes);
     void sendHexString(QString *bytes);
     void sendTextString(QString *bytes);
@@ -46,6 +50,7 @@ public:
 private:
     QByteArray bytes;
     DataType sendDataType;
+    QMutex mutex;
 
 private slots:
     void currenPort_readyRead();

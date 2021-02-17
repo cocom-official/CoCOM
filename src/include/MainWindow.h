@@ -8,6 +8,7 @@
 #include <QString>
 #include <QTabWidget>
 #include <QComboBox>
+#include <QAbstractItemView>
 #include <QLabel>
 #include <QPushButton>
 #include <QSplitter>
@@ -17,6 +18,8 @@
 #include <QTextDocument>
 #include <QTextCursor>
 #include <QScrollBar>
+#include <QTimer>
+#include <QMessageBox>
 
 #ifdef Q_OS_WIN32
 #include <QtWinExtras>
@@ -82,9 +85,12 @@ private:
     Serial *serial;
     TextBrowser *textBrowser;
 
+    QTimer *timer;
+
     void loadFont();
     void setConfigToolBar();
     void setStatusBar();
+    void updatePortSelectText();
     void enumPorts();
     void updatePortConfig();
     void addTxCount(int count);

@@ -5,22 +5,61 @@ Serial::Serial(QObject *parent)
     : QObject(parent),
       sendDataType(TextType)
 {
+    currentPort.index = -1;
+    currentPort.info = nullptr;
+    currentPort.port = nullptr;
+
     enumPorts();
+}
+
+Serial::~Serial()
+{
+    for (auto &&i : ports)
+    {
+        if (i.info == nullptr)
+        {
+            continue;
+        }
+
+        delete (i.info);
+        i.info = nullptr;
+    }
 }
 
 int32_t Serial::count()
 {
-    return ports.size();
+    return ports.count();
 }
 
 void Serial::setCurrentPort(int32_t index)
 {
-    if (index < 0 || index > ports.size())
+    if (currentPort.index == index || index < 0 || index > ports.count())
     {
         return;
     }
 
+    Serial::Port_t lastPort = currentPort;
+
+    mutex.lock();
+
     currentPort = ports[index];
+
+    if (lastPort.port == nullptr || lastPort.info == nullptr ||
+        currentPort.port == nullptr || currentPort.info == nullptr)
+    {
+        return;
+    }
+
+    if (lastPort.port != nullptr && lastPort.port->isOpen())
+    {
+        if (lastPort.port != nullptr)
+        {
+            lastPort.port->close();
+        }
+        open();
+    }
+
+    mutex.unlock();
 }
 
 int Serial::currentIndex()
@@ -30,16 +69,45 @@ int Serial::currentIndex()
 
 bool Serial::open()
 {
+    if (currentPort.port == nullptr || currentPort.info == nullptr ||
+        currentPort.info->isBusy() || currentPort.info->isNull())
+    {
+        qDebug() << "serial port open fail";
+        return false;
+    }
+
     bool ret = currentPort.port->open(QIODevice::OpenModeFlag::ReadWrite);
-    connect(currentPort.port, &QSerialPort::readyRead,
-            this, &Serial::currenPort_readyRead, Qt::QueuedConnection);
+
+    if (ret)
+    {
+        connect(currentPort.port, &QSerialPort::readyRead,
+                this, &Serial::currenPort_readyRead, Qt::QueuedConnection);
+    }
 
     return ret;
 }
 
 void Serial::close()
 {
+    disconnect(currentPort.port);
     currentPort.port->close();
+}
+
+bool Serial::isOpen(int32_t index)
+{
+    if (index < 0 || index > ports.count())
+    {
+        return false;
+    }
+
+    Port_t port = ports[index];
+
+    if (port.port == nullptr || port.info == nullptr)
+    {
+        return false;
+    }
+
+    return port.port->isOpen();
 }
 
 void Serial::sendRawData(QByteArray *bytes)
@@ -49,6 +117,7 @@ void Serial::sendRawData(QByteArray *bytes)
 
 void Serial::sendHexString(QString *string)
 {
+    Q_UNUSED(string);
 }
 
 void Serial::sendTextString(QString *string)
@@ -59,9 +128,9 @@ void Serial::sendTextString(QString *string)
     }
 
     QByteArray bytes = string->toUtf8();
-    emit bytesSend(bytes.size());
     bytes.append('\r');
     bytes.append('\n');
+    emit bytesSend(bytes.size());
     currentPort.port->write(bytes);
 }
 
@@ -93,6 +162,12 @@ bool Serial::config(uint baudrate, uint databits, uint parity, uint stopbits, ui
 QString Serial::getPortStr(int index)
 {
     Serial::Port_t port = ports[index];
+
+    if (port.port == nullptr || port.info == nullptr)
+    {
+        return "x";
+    }
+
     auto statusStr = [=]() {
         if (port.port->isOpen())
         {
@@ -116,19 +191,70 @@ QString Serial::getPortStr(int index)
 
 void Serial::enumPorts()
 {
-    Serial::Port_t *port = new Serial::Port_t();
     int index = 0;
+    int currentIndex = 0;
+    bool portExit = false;
+    Serial::Port_t lPort;
+    QList<Port_t> newPorts;
+
+    mutex.lock();
 
     for (auto &&comInfo : QSerialPortInfo::availablePorts())
     {
-        port->port = new QSerialPort(comInfo.portName(), this);
-        port->info = new QSerialPortInfo(*port->port);
-        port->index = index++;
+        portExit = false;
+        for (auto &&i : ports)
+        {
+            if (i.port != nullptr && i.port->portName() == comInfo.portName())
+            {
+                lPort = i;
+                portExit = true;
+            }
+        }
 
-        port->port->setBaudRate(indexToBaudRate[defaultSerialConfig[IndexBaudRate]]);
+        if (!portExit)
+        {
+            lPort.port = new QSerialPort(comInfo.portName(), this);
+            lPort.info = new QSerialPortInfo(*lPort.port);
 
-        ports << *port;
+            lPort.port->setBaudRate(indexToBaudRate[defaultSerialConfig[IndexBaudRate]]);
+        }
+
+        lPort.index = index++;
+
+        if (currentPort.port != nullptr && currentPort.port->portName() == comInfo.portName())
+        {
+            currentIndex = lPort.index;
+        }
+
+        newPorts << lPort;
     }
+
+    /* find no need port and delete */
+    for (auto &&i : ports)
+    {
+        bool delPort = true;
+        for (auto &&j : newPorts)
+        {
+            if (i.port != nullptr && j.port != nullptr &&
+                i.port->portName() == j.port->portName())
+            {
+                delPort = false;
+            }
+        }
+
+        if (delPort && i.port != nullptr && i.info != nullptr)
+        {
+            delete (i.info);
+            i.port->setParent(nullptr);
+            delete (i.port);
+        }
+    }
+
+    ports = newPorts;
+
+    currentPort = ports[currentIndex];
+
+    mutex.unlock();
 }
 
 void Serial::currenPort_readyRead()

@@ -95,43 +95,53 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="53"/>
+        <location filename="../../src/MainWindow.cpp" line="56"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="107"/>
+        <location filename="../../src/MainWindow.cpp" line="110"/>
         <source>baudrate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="114"/>
+        <location filename="../../src/MainWindow.cpp" line="117"/>
         <source>data bits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="122"/>
+        <location filename="../../src/MainWindow.cpp" line="125"/>
         <source>parity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="128"/>
+        <location filename="../../src/MainWindow.cpp" line="131"/>
         <source>stop bits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="134"/>
+        <location filename="../../src/MainWindow.cpp" line="137"/>
         <source>flow control</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="139"/>
+        <location filename="../../src/MainWindow.cpp" line="142"/>
         <source>Rx</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="144"/>
+        <location filename="../../src/MainWindow.cpp" line="147"/>
         <source>Tx</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="364"/>
+        <source>Open Failed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="364"/>
+        <source>Serial Port [%1] Open Failed!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
