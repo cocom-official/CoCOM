@@ -52,6 +52,8 @@ private slots:
     void parityComboBox_currentIndexChanged(int index);
     void stopBitsComboBox_currentIndexChanged(int index);
     void flowComboBox_currentIndexChanged(int index);
+    void rxTypeComboBox_currentIndexChanged(int index);
+    void encodingBox_currentIndexChanged(int index);
 
     void on_openAction_toggled(bool checked);
     void on_clearAction_triggered(bool checked);
@@ -77,8 +79,10 @@ private:
     QComboBox *parityComboBox;
     QComboBox *stopBitsComboBox;
     QComboBox *flowComboBox;
-    QComboBox *rxComboBox;
-    QComboBox *txComboBox;
+    QComboBox *rxTypeComboBox;
+    QComboBox *txTypeComboBox;
+    QComboBox *lineBreakBox;
+    QComboBox *encodingBox;
 
     QList<int> inputTabWidgetHeight;
 

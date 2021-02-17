@@ -17,6 +17,19 @@ enum DataType
     HexType,
 };
 
+enum LineBreakType
+{
+    LineBreakOFF = 0,
+    LineBreakLF,
+    LineBreakCRLF,
+};
+
+enum EncodingType
+{
+    LocalEnc = 0,
+    UTF_8,
+};
+
 extern const int indexToBaudRate[5];
 extern const QSerialPort::DataBits indexToDataBits[4];
 extern const QSerialPort::Parity indexToParity[5];

@@ -14,8 +14,10 @@ MainWindow::MainWindow(QWidget *parent)
       parityComboBox(new QComboBox(this)),
       stopBitsComboBox(new QComboBox(this)),
       flowComboBox(new QComboBox(this)),
-      rxComboBox(new QComboBox(this)),
-      txComboBox(new QComboBox(this)),
+      rxTypeComboBox(new QComboBox(this)),
+      txTypeComboBox(new QComboBox(this)),
+      lineBreakBox(new QComboBox(this)),
+      encodingBox(new QComboBox(this)),
       serial(new Serial(this)),
       timer(new QTimer(this))
 {
@@ -107,14 +109,14 @@ void MainWindow::setStatusBar()
     baudrateComboBox->addItem("921600");
     baudrateComboBox->addItem("Custom");
     baudrateComboBox->setCurrentIndex(defaultSerialConfig[IndexBaudRate]);
-    baudrateComboBox->setToolTip(tr("baudrate"));
+    baudrateComboBox->setToolTip(tr("Baudrate"));
 
     dataBitsComboBox->addItem("5");
     dataBitsComboBox->addItem("6");
     dataBitsComboBox->addItem("7");
     dataBitsComboBox->addItem("8");
     dataBitsComboBox->setCurrentIndex(defaultSerialConfig[IndexDataBits]);
-    dataBitsComboBox->setToolTip(tr("data bits"));
+    dataBitsComboBox->setToolTip(tr("Data Bits"));
 
     parityComboBox->addItem("None");
     parityComboBox->addItem("Even");
@@ -122,29 +124,40 @@ void MainWindow::setStatusBar()
     parityComboBox->addItem("Space");
     parityComboBox->addItem("Mark");
     parityComboBox->setCurrentIndex(defaultSerialConfig[IndexParity]);
-    parityComboBox->setToolTip(tr("parity"));
+    parityComboBox->setToolTip(tr("Parity"));
 
     stopBitsComboBox->addItem("1");
     stopBitsComboBox->addItem("1.5");
     stopBitsComboBox->addItem("2");
     stopBitsComboBox->setCurrentIndex(defaultSerialConfig[IndexStopBits]);
-    stopBitsComboBox->setToolTip(tr("stop bits"));
+    stopBitsComboBox->setToolTip(tr("Stop Bits"));
 
     flowComboBox->addItem("OFF");
     flowComboBox->addItem("RTX/CTX");
     flowComboBox->addItem("XON/XOFF");
     flowComboBox->setCurrentIndex(defaultSerialConfig[IndexFlowControl]);
-    flowComboBox->setToolTip(tr("flow control"));
+    flowComboBox->setToolTip(tr("Flow Control"));
 
-    rxComboBox->addItem("Rx: Text");
-    rxComboBox->addItem("Rx: HEX");
-    rxComboBox->setCurrentIndex(0);
-    rxComboBox->setToolTip(tr("Rx"));
+    rxTypeComboBox->addItem("Text");
+    rxTypeComboBox->addItem("HEX");
+    rxTypeComboBox->setCurrentIndex(0);
+    rxTypeComboBox->setToolTip(tr("Rx Type"));
 
-    txComboBox->addItem("Tx: Text");
-    txComboBox->addItem("Tx: HEX");
-    txComboBox->setCurrentIndex(0);
-    txComboBox->setToolTip(tr("Tx"));
+    txTypeComboBox->addItem("Text");
+    txTypeComboBox->addItem("HEX");
+    txTypeComboBox->setCurrentIndex(0);
+    txTypeComboBox->setToolTip(tr("Tx Type"));
+
+    lineBreakBox->addItem("OFF");
+    lineBreakBox->addItem("LF");
+    lineBreakBox->addItem("CRLF");
+    lineBreakBox->setCurrentIndex(2);
+    lineBreakBox->setToolTip(tr("Line break"));
+
+    encodingBox->addItem("Local");
+    encodingBox->addItem("UTF-8");
+    encodingBox->setCurrentIndex(0);
+    encodingBox->setToolTip(tr("Encodeing"));
 
     QWidget *statusWidget = new QWidget(this);
     QHBoxLayout *statusLayout = new QHBoxLayout(this);
@@ -154,8 +167,10 @@ void MainWindow::setStatusBar()
     statusLayout->addWidget(parityComboBox);
     statusLayout->addWidget(stopBitsComboBox);
     statusLayout->addWidget(flowComboBox);
-    statusLayout->addWidget(rxComboBox);
-    statusLayout->addWidget(txComboBox);
+    statusLayout->addWidget(rxTypeComboBox);
+    statusLayout->addWidget(txTypeComboBox);
+    statusLayout->addWidget(lineBreakBox);
+    statusLayout->addWidget(encodingBox);
     statusWidget->setLayout(statusLayout);
 
     ui->statusbar->addWidget(statusWidget, 0);
@@ -175,10 +190,10 @@ void MainWindow::setStatusBar()
             this, &MainWindow::stopBitsComboBox_currentIndexChanged);
     connect(flowComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
             this, &MainWindow::flowComboBox_currentIndexChanged);
-    // connect(rxComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-    //         this, nullptr);
-    // connect(txComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-    //         this, nullptr);
+    connect(rxTypeComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, &MainWindow::rxTypeComboBox_currentIndexChanged);
+    connect(encodingBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, &MainWindow::encodingBox_currentIndexChanged);
 }
 
 void MainWindow::updatePortSelectText()
@@ -354,6 +369,16 @@ void MainWindow::flowComboBox_currentIndexChanged(int index)
     updatePortConfig();
 }
 
+void MainWindow::rxTypeComboBox_currentIndexChanged(int index)
+{
+    textBrowser->setDataType((DataType)index);
+}
+
+void MainWindow::encodingBox_currentIndexChanged(int index)
+{
+    textBrowser->setEncoding((EncodingType)index);
+}
+
 void MainWindow::on_openAction_toggled(bool checked)
 {
     if (checked)
@@ -399,13 +424,29 @@ void MainWindow::on_actionPin_toggled(bool checked)
 void MainWindow::on_basicSendButton_pressed()
 {
     QString string = ui->sendComboBox->currentText();
-    serial->sendTextString(&string);
+
+    if (txTypeComboBox->currentIndex() == TextType)
+    {
+        serial->sendTextString(&string, (EncodingType)encodingBox->currentIndex(), (LineBreakType)lineBreakBox->currentIndex());
+    }
+    else
+    {
+        serial->sendHexString(&string);
+    }
 }
 
 void MainWindow::on_multiSendButton_pressed()
 {
     QString string = ui->sendTextEdit->toPlainText();
-    serial->sendTextString(&string);
+
+    if (txTypeComboBox->currentIndex() == TextType)
+    {
+        serial->sendTextString(&string, (EncodingType)encodingBox->currentIndex(), (LineBreakType)lineBreakBox->currentIndex());
+    }
+    else
+    {
+        serial->sendHexString(&string);
+    }
 }
 
 void MainWindow::portSelectComboBox_currentIndexChanged(int index)

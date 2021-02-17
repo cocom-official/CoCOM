@@ -21,20 +21,39 @@
         <translation type="vanished">串口</translation>
     </message>
     <message>
+        <location filename="../../src/MainWindow.cpp" line="112"/>
         <source>Baudrate</source>
-        <translation type="vanished">波特率</translation>
+        <translation>波特率</translation>
     </message>
     <message>
+        <location filename="../../src/MainWindow.cpp" line="119"/>
         <source>Data Bits</source>
-        <translation type="vanished">数据位</translation>
+        <translation>数据位</translation>
     </message>
     <message>
+        <location filename="../../src/MainWindow.cpp" line="127"/>
         <source>Parity</source>
-        <translation type="vanished">校验</translation>
+        <translation>校验</translation>
     </message>
     <message>
+        <location filename="../../src/MainWindow.cpp" line="133"/>
         <source>Stop Bits</source>
-        <translation type="vanished">停止位</translation>
+        <translation>停止位</translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="139"/>
+        <source>Flow Control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="144"/>
+        <source>Rx Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="149"/>
+        <source>Tx Type</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Flow</source>
@@ -155,52 +174,27 @@
         <translation>侧边栏</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="56"/>
+        <location filename="../../src/MainWindow.cpp" line="58"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="110"/>
-        <source>baudrate</source>
+        <location filename="../../src/MainWindow.cpp" line="155"/>
+        <source>Line break</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="117"/>
-        <source>data bits</source>
+        <location filename="../../src/MainWindow.cpp" line="160"/>
+        <source>Encodeing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="125"/>
-        <source>parity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/MainWindow.cpp" line="131"/>
-        <source>stop bits</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/MainWindow.cpp" line="137"/>
-        <source>flow control</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/MainWindow.cpp" line="142"/>
-        <source>Rx</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/MainWindow.cpp" line="147"/>
-        <source>Tx</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/MainWindow.cpp" line="364"/>
+        <location filename="../../src/MainWindow.cpp" line="389"/>
         <source>Open Failed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="364"/>
+        <location filename="../../src/MainWindow.cpp" line="389"/>
         <source>Serial Port [%1] Open Failed!</source>
         <translation type="unfinished"></translation>
     </message>

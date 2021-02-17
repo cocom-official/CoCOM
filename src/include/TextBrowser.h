@@ -3,6 +3,7 @@
 #include <QString>
 #include <QList>
 #include <QByteArray>
+#include <QTextCodec>
 #include <QTextBrowser>
 #include <QScrollBar>
 #include <QTextCharFormat>
@@ -18,6 +19,7 @@ public:
     ~TextBrowser();
 
     void setDataType(DataType type);
+    void setEncoding(EncodingType lEncoding);
     void insertData(QByteArray *data);
     void clear();
 
@@ -42,6 +44,7 @@ private:
     QTextCursor lockCursor;
     int scroll;
     int maxScroll;
+    EncodingType encoding;
 
     HintFormat successHint;
     HintFormat warnHint;

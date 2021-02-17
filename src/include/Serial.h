@@ -5,6 +5,7 @@
 #include <QList>
 #include <QMutex>
 #include <QByteArray>
+#include <QTextCodec>
 #include <QSerialPort>
 #include <QSerialPortInfo>
 
@@ -42,7 +43,7 @@ public:
     bool isOpen(int32_t index);
     void sendRawData(QByteArray *bytes);
     void sendHexString(QString *bytes);
-    void sendTextString(QString *bytes);
+    void sendTextString(QString *bytes, EncodingType encodingType, LineBreakType linebreak);
     bool config(uint baudrate, uint databits, uint parity, uint stopbits, uint flowControl);
     QString getPortStr(int index);
     void enumPorts();

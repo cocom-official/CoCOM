@@ -3,7 +3,8 @@
 TextBrowser::TextBrowser(QObject *parent, QTextBrowser *browser)
     : QObject(parent),
       browser(browser),
-      dataType(TextType)
+      dataType(TextType),
+      encoding(LocalEnc)
 {
     if (browser == nullptr)
     {
@@ -131,6 +132,11 @@ void TextBrowser::setDataType(DataType type)
     mutex.unlock();
 }
 
+void TextBrowser::setEncoding(EncodingType lEncoding)
+{
+    encoding = lEncoding;
+}
+
 void TextBrowser::setFormat(int start, int end, QTextCharFormat *format)
 {
     QTextCursor lCursor = browser->textCursor();
@@ -144,6 +150,20 @@ void TextBrowser::setFormat(int start, int end, QTextCharFormat *format)
 
 void TextBrowser::insertData(QByteArray *data)
 {
+    QTextCodec *codec = nullptr;
+
+    switch (encoding)
+    {
+    case UTF_8:
+        codec = QTextCodec::codecForName("UTF-8");
+        break;
+
+    default:
+        codec = QTextCodec::codecForLocale();
+        break;
+    }
+    QString string = codec->toUnicode(*data);
+
     lock();
 
     if (dataType == TextType)
@@ -157,7 +177,7 @@ void TextBrowser::insertData(QByteArray *data)
         lCursor = browser->textCursor();
         startPos = lCursor.position();
 
-        browser->insertPlainText(QString(*data));
+        browser->insertPlainText(string);
 
         browser->moveCursor(QTextCursor::End);
         lCursor = browser->textCursor();
