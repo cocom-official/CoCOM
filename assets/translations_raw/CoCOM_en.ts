@@ -136,12 +136,12 @@
     </message>
     <message>
         <location filename="../../src/MainWindow.cpp" line="155"/>
-        <source>Line break</source>
+        <source>Line Break</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/MainWindow.cpp" line="160"/>
-        <source>Encodeing</source>
+        <source>Encoding</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

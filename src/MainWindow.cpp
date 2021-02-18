@@ -152,12 +152,12 @@ void MainWindow::setStatusBar()
     lineBreakBox->addItem("LF");
     lineBreakBox->addItem("CRLF");
     lineBreakBox->setCurrentIndex(2);
-    lineBreakBox->setToolTip(tr("Line break"));
+    lineBreakBox->setToolTip(tr("Line Break"));
 
     encodingBox->addItem("Local");
     encodingBox->addItem("UTF-8");
     encodingBox->setCurrentIndex(0);
-    encodingBox->setToolTip(tr("Encodeing"));
+    encodingBox->setToolTip(tr("Encoding"));
 
     QWidget *statusWidget = new QWidget(this);
     QHBoxLayout *statusLayout = new QHBoxLayout(this);

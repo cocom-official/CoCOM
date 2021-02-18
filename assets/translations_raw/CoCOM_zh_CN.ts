@@ -43,17 +43,27 @@
     <message>
         <location filename="../../src/MainWindow.cpp" line="139"/>
         <source>Flow Control</source>
-        <translation type="unfinished"></translation>
+        <translation>流控</translation>
     </message>
     <message>
         <location filename="../../src/MainWindow.cpp" line="144"/>
         <source>Rx Type</source>
-        <translation type="unfinished"></translation>
+        <translation>接收类型</translation>
     </message>
     <message>
         <location filename="../../src/MainWindow.cpp" line="149"/>
         <source>Tx Type</source>
-        <translation type="unfinished"></translation>
+        <translation>发送类型</translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="155"/>
+        <source>Line Break</source>
+        <translation>行尾结束符</translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="160"/>
+        <source>Encoding</source>
+        <translation>编码</translation>
     </message>
     <message>
         <source>Flow</source>
@@ -106,7 +116,7 @@
     <message>
         <location filename="../../ui/mainWindow.ui" line="110"/>
         <source>Command</source>
-        <translation type="unfinished"></translation>
+        <translation>命令</translation>
     </message>
     <message>
         <location filename="../../ui/mainWindow.ui" line="121"/>
@@ -120,7 +130,7 @@
         <location filename="../../ui/mainWindow.ui" line="233"/>
         <location filename="../../ui/mainWindow.ui" line="247"/>
         <source>PushButton</source>
-        <translation type="unfinished"></translation>
+        <translation>按钮</translation>
     </message>
     <message>
         <location filename="../../ui/mainWindow.ui" line="262"/>
@@ -176,27 +186,17 @@
     <message>
         <location filename="../../src/MainWindow.cpp" line="58"/>
         <source>Ready</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/MainWindow.cpp" line="155"/>
-        <source>Line break</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/MainWindow.cpp" line="160"/>
-        <source>Encodeing</source>
-        <translation type="unfinished"></translation>
+        <translation>就绪</translation>
     </message>
     <message>
         <location filename="../../src/MainWindow.cpp" line="389"/>
         <source>Open Failed!</source>
-        <translation type="unfinished"></translation>
+        <translation>打开失败！</translation>
     </message>
     <message>
         <location filename="../../src/MainWindow.cpp" line="389"/>
         <source>Serial Port [%1] Open Failed!</source>
-        <translation type="unfinished"></translation>
+        <translation>串口 [%1] 打开失败！</translation>
     </message>
 </context>
 </TS>
