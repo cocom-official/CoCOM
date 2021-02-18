@@ -2,6 +2,8 @@
 
 CoCOM is a Serial Port Utility for Embedded Software Engineer.
 
+## Build
+
 ``` bash
 # install dependence
 pacman -S base-devel git
@@ -20,3 +22,32 @@ ninja -j $(nproc)
 cpack -G WIX
 cpack -G 7Z
 ```
+
+## Feature
+
+- [ ] basic send && receive
+  - [x] receive text
+  - [x] send text
+  - [ ] receive Hex
+  - [ ] send Hex
+  - [ ] send command
+- [ ] high level send && receive
+  - [x] text encoding
+  - [x] line break
+  - [ ] auto send
+- [ ] delectable output view
+  - [x] ligature support
+  - [x] success && warn && error colorful hint
+  - [ ] output filer
+  - [ ] custom colorful hint
+  - [ ] Ctrl + F, find anything in output view
+- [ ] small but useful feature
+  - [x] window pin
+  - [ ] save text output to file
+- [ ] lua embed
+  - [ ] new data received callback
+  - [ ] new text line received callback
+  - [ ] send data through lua scripts
+  - [ ] protocol support
+    - [ ] protocol decode
+    - [ ] protocol encode
