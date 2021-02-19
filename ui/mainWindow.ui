@@ -272,6 +272,12 @@
    <property name="windowTitle">
     <string>toolBar</string>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>24</width>
+     <height>24</height>
+    </size>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
@@ -279,8 +285,6 @@
     <bool>false</bool>
    </attribute>
    <addaction name="openAction"/>
-   <addaction name="pauseAction"/>
-   <addaction name="stopAction"/>
    <addaction name="clearAction"/>
    <addaction name="separator"/>
    <addaction name="actionPin"/>
@@ -362,9 +366,6 @@
    </property>
   </action>
   <action name="fileAction">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
    <property name="icon">
     <iconset resource="../assets/assets.qrc">
      <normaloff>:/assets/icons/file.svg</normaloff>:/assets/icons/file.svg</iconset>

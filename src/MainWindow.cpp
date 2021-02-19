@@ -5,6 +5,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
+      dpiScaling(1.0),
       portSelect(new QComboBox(this)),
       statusInfoLabel(new QLabel(this)),
       statusTxLabel(new QLabel(this)),
@@ -20,6 +21,18 @@ MainWindow::MainWindow(QWidget *parent)
       encodingBox(new QComboBox(this)),
       serial(new Serial(this)),
       timer(new QTimer(this))
+{
+    setupUI();
+
+    setupSerialPort();
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+void MainWindow::setupUI()
 {
     ui->setupUi(this);
     textBrowser = new TextBrowser(this, ui->outputTextBrowser);
@@ -42,25 +55,33 @@ MainWindow::MainWindow(QWidget *parent)
     ui->commandTab->setMaximumHeight(inputTabWidgetHeight[0]);
     ui->horizontalSplitter->setSizes(QList<int>() << 700 << 1);
 
-    connect(serial, &Serial::readyRead, this, &MainWindow::serial_readyRead);
-    connect(serial, &Serial::bytesSend, this, &MainWindow::serial_bytesSend);
+    refreshDPI();
 
-    enumPorts();
-    connect(timer, &QTimer::timeout, this, &MainWindow::enumPorts);
-    timer->start(1000);
-
-// #ifdef Q_OS_WIN32
-#if 0
-    bool color;
-    qDebug() << QtWin::colorizationColor(&color);
-    qDebug() << color;
-#endif
     setStatusInfo(tr("Ready"));
 }
 
-MainWindow::~MainWindow()
+void MainWindow::setupSerialPort()
 {
-    delete ui;
+    connect(serial, &Serial::readyRead, this, &MainWindow::serial_readyRead);
+    connect(serial, &Serial::bytesSend, this, &MainWindow::serial_bytesSend);
+    enumPorts();
+    connect(timer, &QTimer::timeout, this, &MainWindow::enumPorts);
+    timer->start(1000);
+}
+
+void MainWindow::refreshDPI()
+{
+    QScreen *screen = QApplication::primaryScreen();
+    qreal dpi = screen->logicalDotsPerInch();
+
+    double objectRate = dpi / 96.0 / dpiScaling;
+
+    ui->buttosToolBar->setIconSize(ui->buttosToolBar->iconSize() * objectRate);
+
+    changeObjectSize(*this, objectRate);
+    resize(width() * objectRate, height() * objectRate);
+    dpiScaling = objectRate * dpiScaling;
+    qDebug() << "dpiScaling: " << dpiScaling;
 }
 
 void MainWindow::loadFont()
@@ -387,11 +408,14 @@ void MainWindow::on_openAction_toggled(bool checked)
         {
             ui->openAction->setChecked(false);
             QMessageBox::critical(this, tr("Open Failed!"), tr("Serial Port [%1] Open Failed!").arg(serial->getPortStr(serial->currentIndex())));
+            return;
         }
+        ui->openAction->setIcon(QIcon(":/assets/icons/pause.svg"));
     }
     else
     {
         serial->close();
+        ui->openAction->setIcon(QIcon(":/assets/icons/play.svg"));
     }
 
     updatePortSelectText();

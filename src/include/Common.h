@@ -40,3 +40,5 @@ extern const int defaultSerialConfig[5];
 extern const QString successKey[4];
 extern const QString warnKey[2];
 extern const QString errorKey[3];
+
+extern void changeObjectSize(const QObject &o, double objectRate);

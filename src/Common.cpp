@@ -1,3 +1,4 @@
+#include <QWidget>
 #include <QSerialPort>
 
 #include "Common.h"
@@ -51,3 +52,17 @@ const QString errorKey[3] = {
     "fail",
     "failed",
     };
+
+void changeObjectSize(const QObject &o, double objectRate)
+{
+    for (int i = 0; i < o.children().size(); ++i)
+    {
+        QWidget *pWidget = qobject_cast<QWidget *>(o.children().at(i));
+        if (pWidget != nullptr)
+        {
+            pWidget->setGeometry(pWidget->x() * objectRate, pWidget->y() * objectRate,
+                                 pWidget->width() * objectRate, pWidget->height() * objectRate);
+            changeObjectSize(*(o.children().at(i)), objectRate);
+        }
+    }
+}

@@ -20,6 +20,7 @@
 #include <QScrollBar>
 #include <QTimer>
 #include <QMessageBox>
+#include <QScreen>
 
 #ifdef Q_OS_WIN32
 #include <QtWinExtras>
@@ -68,6 +69,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    float dpiScaling;
 
     QComboBox *portSelect;
     QLabel *statusInfoLabel;
@@ -91,6 +93,9 @@ private:
 
     QTimer *timer;
 
+    void setupUI();
+    void setupSerialPort();
+    void refreshDPI();
     void loadFont();
     void setConfigToolBar();
     void setStatusBar();
