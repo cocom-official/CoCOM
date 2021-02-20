@@ -113,10 +113,6 @@ set(src_list
     "src/TextBrowser.cpp"
     )
 
-
-# qt5_add_translation(QM_FILES ${ts_list})
-qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${ts_raw_list} ${src_list})
-
 configure_file(assets/translations.qrc ${CMAKE_BINARY_DIR} COPYONLY)
 
 add_custom_target(translations ALL DEPENDS ${QM_FILES})
@@ -144,10 +140,14 @@ endif()
 
 
 if (CMAKE_BUILD_TYPE STREQUAL Debug)
+    # creat translation when Debug
+    qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${ts_raw_list} ${src_list})
     add_definitions(-DDEBUG)
     add_executable(${PROJECT_NAME} ${src_list} ${ui_list} ${moc_list} ${qrc_list}
                    ${QM_FILES} ${WINDOWS_RES_FILE})
 else ()
+    # add translation when Release
+    qt5_add_translation(QM_FILES ${ts_list})
     if (WIN32)
         add_executable(${PROJECT_NAME} WIN32 ${src_list} ${ui_list} ${moc_list} ${qrc_list}
                        ${QM_FILES} ${WINDOWS_RES_FILE})

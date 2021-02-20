@@ -21,6 +21,7 @@
 #include <QTimer>
 #include <QMessageBox>
 #include <QScreen>
+#include <QWindow>
 
 #ifdef Q_OS_WIN32
 #include <QtWinExtras>
@@ -60,8 +61,8 @@ private slots:
     void on_clearAction_triggered(bool checked);
     void on_actionPin_toggled(bool checked);
 
-    void on_basicSendButton_pressed();
-    void on_multiSendButton_pressed();
+    void on_textSendButton_pressed();
+    void on_commandLineSendButton_pressed();
 
     void portSelectComboBox_currentIndexChanged(int index);
     void serial_readyRead(int count, QByteArray *bytes);
@@ -94,6 +95,7 @@ private:
     QTimer *timer;
 
     void setupUI();
+    void setLayout(double rate);
     void setupSerialPort();
     void refreshDPI();
     void loadFont();
@@ -105,4 +107,9 @@ private:
     void addTxCount(int count);
     void addRxCount(int count);
     void setStatusInfo(QString text);
+
+    /* event */
+    void moveEvent(QMoveEvent *event);
+    void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
 };

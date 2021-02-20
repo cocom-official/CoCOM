@@ -9,192 +9,154 @@
         <translation></translation>
     </message>
     <message>
-        <source>Config</source>
-        <translation type="vanished">设置</translation>
-    </message>
-    <message>
-        <source>Port Config</source>
-        <translation type="vanished">串口设置</translation>
-    </message>
-    <message>
-        <source>Port</source>
-        <translation type="vanished">串口</translation>
-    </message>
-    <message>
-        <location filename="../../src/MainWindow.cpp" line="133"/>
-        <source>Baudrate</source>
-        <translation>波特率</translation>
-    </message>
-    <message>
-        <location filename="../../src/MainWindow.cpp" line="140"/>
-        <source>Data Bits</source>
-        <translation>数据位</translation>
-    </message>
-    <message>
-        <location filename="../../src/MainWindow.cpp" line="148"/>
-        <source>Parity</source>
-        <translation>校验</translation>
-    </message>
-    <message>
-        <location filename="../../src/MainWindow.cpp" line="154"/>
-        <source>Stop Bits</source>
-        <translation>停止位</translation>
-    </message>
-    <message>
-        <location filename="../../src/MainWindow.cpp" line="160"/>
-        <source>Flow Control</source>
-        <translation>流控</translation>
-    </message>
-    <message>
-        <location filename="../../src/MainWindow.cpp" line="165"/>
-        <source>Rx Type</source>
-        <translation>接收类型</translation>
-    </message>
-    <message>
-        <location filename="../../src/MainWindow.cpp" line="170"/>
-        <source>Tx Type</source>
-        <translation>发送类型</translation>
-    </message>
-    <message>
-        <location filename="../../src/MainWindow.cpp" line="176"/>
-        <source>Line Break</source>
-        <translation>行尾结束符</translation>
-    </message>
-    <message>
-        <location filename="../../src/MainWindow.cpp" line="181"/>
-        <source>Encoding</source>
-        <translation>编码</translation>
-    </message>
-    <message>
-        <source>Flow</source>
-        <translation type="vanished">流控</translation>
-    </message>
-    <message>
-        <source>Receive Config</source>
-        <translation type="vanished">接收设置</translation>
-    </message>
-    <message>
-        <source>Auto Feed</source>
-        <translation type="vanished">自动换行</translation>
-    </message>
-    <message>
-        <source>Display Time</source>
-        <translation type="vanished">显示时间</translation>
-    </message>
-    <message>
-        <source>Display Send</source>
-        <translation type="vanished">显示发送</translation>
-    </message>
-    <message>
-        <source>Send Config</source>
-        <translation type="vanished">发送设置</translation>
-    </message>
-    <message>
-        <source>Auto Send</source>
-        <translation type="vanished">自动发送</translation>
-    </message>
-    <message>
-        <source>Fliter</source>
-        <translation type="vanished">过滤器</translation>
-    </message>
-    <message>
-        <location filename="../../ui/mainWindow.ui" line="49"/>
-        <source>basic</source>
-        <translation>基本</translation>
-    </message>
-    <message>
-        <location filename="../../ui/mainWindow.ui" line="68"/>
-        <location filename="../../ui/mainWindow.ui" line="100"/>
+        <location filename="../../ui/mainWindow.ui" line="56"/>
+        <location filename="../../ui/mainWindow.ui" line="136"/>
+        <location filename="../../ui/mainWindow.ui" line="180"/>
         <source>Send</source>
         <translation>发送</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="76"/>
-        <source>Muti Line</source>
-        <translation>多行</translation>
+        <location filename="../../ui/mainWindow.ui" line="97"/>
+        <source>Periodic</source>
+        <translation>周期发送</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="110"/>
-        <source>Command</source>
-        <translation>命令</translation>
+        <location filename="../../ui/mainWindow.ui" line="107"/>
+        <source>ms</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="121"/>
-        <location filename="../../ui/mainWindow.ui" line="135"/>
-        <location filename="../../ui/mainWindow.ui" line="149"/>
-        <location filename="../../ui/mainWindow.ui" line="163"/>
-        <location filename="../../ui/mainWindow.ui" line="177"/>
-        <location filename="../../ui/mainWindow.ui" line="191"/>
-        <location filename="../../ui/mainWindow.ui" line="205"/>
-        <location filename="../../ui/mainWindow.ui" line="219"/>
-        <location filename="../../ui/mainWindow.ui" line="233"/>
-        <location filename="../../ui/mainWindow.ui" line="247"/>
+        <location filename="../../ui/mainWindow.ui" line="146"/>
+        <source>Command Line</source>
+        <translation>命令行</translation>
+    </message>
+    <message>
+        <location filename="../../ui/mainWindow.ui" line="188"/>
+        <source>Multi Command</source>
+        <translation>多条发送</translation>
+    </message>
+    <message>
+        <location filename="../../ui/mainWindow.ui" line="214"/>
+        <location filename="../../ui/mainWindow.ui" line="228"/>
+        <location filename="../../ui/mainWindow.ui" line="242"/>
+        <location filename="../../ui/mainWindow.ui" line="256"/>
+        <location filename="../../ui/mainWindow.ui" line="270"/>
+        <location filename="../../ui/mainWindow.ui" line="284"/>
+        <location filename="../../ui/mainWindow.ui" line="298"/>
+        <location filename="../../ui/mainWindow.ui" line="312"/>
+        <location filename="../../ui/mainWindow.ui" line="326"/>
+        <location filename="../../ui/mainWindow.ui" line="340"/>
         <source>PushButton</source>
         <translation>按钮</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="262"/>
-        <location filename="../../ui/mainWindow.ui" line="273"/>
+        <location filename="../../ui/mainWindow.ui" line="354"/>
+        <location filename="../../ui/mainWindow.ui" line="365"/>
         <source>toolBar</source>
         <translation>工具栏</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="305"/>
+        <location filename="../../ui/mainWindow.ui" line="397"/>
         <source>pin</source>
-        <translation>窗口置顶</translation>
+        <translation>固定窗口</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="317"/>
+        <location filename="../../ui/mainWindow.ui" line="409"/>
         <source>open</source>
-        <translation>打开串口</translation>
+        <translation>打开</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="329"/>
+        <location filename="../../ui/mainWindow.ui" line="421"/>
         <source>pause</source>
         <translation>暂停</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="338"/>
+        <location filename="../../ui/mainWindow.ui" line="430"/>
         <source>stop</source>
-        <translation>关闭串口</translation>
+        <translation>停止</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="347"/>
+        <location filename="../../ui/mainWindow.ui" line="439"/>
         <source>clear</source>
-        <translation>清空</translation>
+        <translation>清除</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="356"/>
+        <location filename="../../ui/mainWindow.ui" line="448"/>
         <source>setting</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="365"/>
+        <location filename="../../ui/mainWindow.ui" line="457"/>
         <source>tools</source>
         <translation>工具</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="374"/>
+        <location filename="../../ui/mainWindow.ui" line="466"/>
         <source>file</source>
-        <translation>保存到文件</translation>
+        <translation>文件</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="386"/>
+        <location filename="../../ui/mainWindow.ui" line="478"/>
         <source>sidebar</source>
         <translation>侧边栏</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="60"/>
+        <location filename="../../src/MainWindow.cpp" line="59"/>
         <source>Ready</source>
         <translation>就绪</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="410"/>
+        <location filename="../../src/MainWindow.cpp" line="168"/>
+        <source>Baudrate</source>
+        <translation>波特率</translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="175"/>
+        <source>Data Bits</source>
+        <translation>数据位</translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="183"/>
+        <source>Parity</source>
+        <translation>校验位</translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="189"/>
+        <source>Stop Bits</source>
+        <translation>停止位</translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="195"/>
+        <source>Flow Control</source>
+        <translation>流控</translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="200"/>
+        <source>Rx Type</source>
+        <translation>接收类型</translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="205"/>
+        <source>Tx Type</source>
+        <translation>发送类型</translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="211"/>
+        <source>Line Break</source>
+        <translation>行尾结束符</translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="216"/>
+        <source>Encoding</source>
+        <translation>编码格式</translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="477"/>
         <source>Open Failed!</source>
         <translation>打开失败！</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="410"/>
+        <location filename="../../src/MainWindow.cpp" line="477"/>
         <source>Serial Port [%1] Open Failed!</source>
         <translation>串口 [%1] 打开失败！</translation>
     </message>

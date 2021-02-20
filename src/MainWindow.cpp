@@ -47,17 +47,33 @@ void MainWindow::setupUI()
             this, &MainWindow::portSelectComboBox_currentIndexChanged);
 
     inputTabWidgetHeight
-        << ui->basicSendTab->minimumSizeHint().height()
-        << ui->multiLineSendTab->minimumSizeHint().height()
-        << ui->commandTab->minimumSizeHint().height();
+        << ui->sendTab->minimumSizeHint().height()
+        << ui->commandLineTab->minimumSizeHint().height()
+        << ui->multiCommandTab->minimumSizeHint().height();
 
-    ui->multiLineSendTab->setMaximumHeight(inputTabWidgetHeight[0]);
-    ui->commandTab->setMaximumHeight(inputTabWidgetHeight[0]);
-    ui->horizontalSplitter->setSizes(QList<int>() << 700 << 1);
+    ui->commandLineTab->setMaximumHeight(inputTabWidgetHeight[0]);
+    ui->multiCommandTab->setMaximumHeight(inputTabWidgetHeight[0]);
 
     refreshDPI();
 
     setStatusInfo(tr("Ready"));
+}
+
+void MainWindow::setLayout(double rate)
+{
+    int defaultMargin = 4;
+
+    ui->centralVerticalLayout->setMargin(defaultMargin * rate);
+    ui->sendTabHorizontalLayout->setMargin(defaultMargin * rate);
+    ui->commandLineTabHorizontalLayout->setMargin(defaultMargin * rate);
+    ui->multiCommandTabGridLayout->setMargin(defaultMargin * rate);
+    ui->sendTabVerticalLayout->setMargin(0);
+
+    ui->centralVerticalLayout->setSpacing(defaultMargin * rate);
+    ui->sendTabHorizontalLayout->setSpacing(defaultMargin * rate);
+    ui->commandLineTabHorizontalLayout->setSpacing(defaultMargin * rate);
+    ui->multiCommandTabGridLayout->setSpacing(defaultMargin * rate);
+    ui->sendTabVerticalLayout->setSpacing(defaultMargin * rate);
 }
 
 void MainWindow::setupSerialPort()
@@ -71,17 +87,36 @@ void MainWindow::setupSerialPort()
 
 void MainWindow::refreshDPI()
 {
-    QScreen *screen = QApplication::primaryScreen();
+    QScreen *screen = nullptr;
+    static QScreen *lastScreen = nullptr;
+    QWindow *window = this->window()->windowHandle();
+
+    if (window != nullptr)
+    {
+        screen = window->screen();
+    }
+    else
+    {
+        screen = QApplication::primaryScreen();
+    }
+
+    if (screen == nullptr || lastScreen == screen)
+    {
+        return;
+    }
+
+    lastScreen = screen;
+
     qreal dpi = screen->logicalDotsPerInch();
 
     double objectRate = dpi / 96.0 / dpiScaling;
+    dpiScaling = dpi / 96.0;
 
     ui->buttosToolBar->setIconSize(ui->buttosToolBar->iconSize() * objectRate);
+    setLayout(dpiScaling);
 
-    changeObjectSize(*this, objectRate);
-    resize(width() * objectRate, height() * objectRate);
-    dpiScaling = objectRate * dpiScaling;
-    qDebug() << "dpiScaling: " << dpiScaling;
+    // changeObjectSize(*this, objectRate);
+    // resize(width() * objectRate, height() * objectRate);
 }
 
 void MainWindow::loadFont()
@@ -299,12 +334,44 @@ void MainWindow::addRxCount(int count)
         rxCount += count;
     }
 
-    statusTxLabel->setText(QString("Tx: %1").arg(QString::number(rxCount)));
+    statusRxLabel->setText(QString("Rx: %1").arg(QString::number(rxCount)));
 }
 
 void MainWindow::setStatusInfo(QString text)
 {
     statusInfoLabel->setText(text);
+}
+
+void MainWindow::moveEvent(QMoveEvent *event)
+{
+    Q_UNUSED(event);
+    refreshDPI();
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    if (event->isAutoRepeat())
+        return;
+
+    if (event->key() == Qt::Key_Enter ||
+        event->key() == Qt::Key_Return)
+    {
+        if (ui->sendTextEdit->hasFocus())
+        {
+            on_textSendButton_pressed();
+        }
+        else if(ui->commandLineSendComboBox->hasFocus())
+        {
+            on_commandLineSendButton_pressed();
+            ui->commandLineSendComboBox->setCurrentText("");
+        }
+    }
+}
+
+void MainWindow::keyReleaseEvent(QKeyEvent *event)
+{
+    if (event->isAutoRepeat())
+        return;
 }
 
 void MainWindow::on_inputTabWidget_currentChanged(int index)
@@ -445,9 +512,9 @@ void MainWindow::on_actionPin_toggled(bool checked)
     show();
 }
 
-void MainWindow::on_basicSendButton_pressed()
+void MainWindow::on_commandLineSendButton_pressed()
 {
-    QString string = ui->sendComboBox->currentText();
+    QString string = ui->commandLineSendComboBox->currentText();
 
     if (txTypeComboBox->currentIndex() == TextType)
     {
@@ -459,7 +526,7 @@ void MainWindow::on_basicSendButton_pressed()
     }
 }
 
-void MainWindow::on_multiSendButton_pressed()
+void MainWindow::on_textSendButton_pressed()
 {
     QString string = ui->sendTextEdit->toPlainText();
 

@@ -107,6 +107,9 @@ void TextBrowser::processHintFormant(HintFormat *hint)
             lCursor.clearSelection();
             lCursor = document->find(*(i->key), lCursor, QTextDocument::FindWholeWords);
         }
+        browser->moveCursor(QTextCursor::End);
+        int pos = browser->textCursor().position() - i->key->length() - 1;
+        i->cursorPos = (pos > 0) ? pos : 0;
     }
 }
 

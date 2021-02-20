@@ -1,0 +1,123 @@
+<!DOCTYPE QPH>
+<QPH language="zh_CN">
+<phrase>
+    <source>Multi Command</source>
+    <target>多条发送</target>
+</phrase>
+<phrase>
+    <source>Tx Type</source>
+    <target>发送类型</target>
+</phrase>
+<phrase>
+    <source>tools</source>
+    <target>工具</target>
+</phrase>
+<phrase>
+    <source>toolBar</source>
+    <target>工具栏</target>
+</phrase>
+<phrase>
+    <source>Stop Bits</source>
+    <target>停止位</target>
+</phrase>
+<phrase>
+    <source>stop</source>
+    <target>停止</target>
+</phrase>
+<phrase>
+    <source>sidebar</source>
+    <target>侧边栏</target>
+</phrase>
+<phrase>
+    <source>setting</source>
+    <target>设置</target>
+</phrase>
+<phrase>
+    <source>Serial Port [%1] Open Failed!</source>
+    <target>串口 [%1] 打开失败！</target>
+</phrase>
+<phrase>
+    <source>Send</source>
+    <target>发送</target>
+</phrase>
+<phrase>
+    <source>Rx Type</source>
+    <target>接收类型</target>
+</phrase>
+<phrase>
+    <source>Ready</source>
+    <target>就绪</target>
+</phrase>
+<phrase>
+    <source>PushButton</source>
+    <target>按钮</target>
+</phrase>
+<phrase>
+    <source>pin</source>
+    <target>固定窗口</target>
+</phrase>
+<phrase>
+    <source>Periodic</source>
+    <target>周期发送</target>
+</phrase>
+<phrase>
+    <source>pause</source>
+    <target>暂停</target>
+</phrase>
+<phrase>
+    <source>Parity</source>
+    <target>校验位</target>
+</phrase>
+<phrase>
+    <source>Open Failed!</source>
+    <target>打开失败！</target>
+</phrase>
+<phrase>
+    <source>open</source>
+    <target>打开</target>
+</phrase>
+<phrase>
+    <source>Multi Command</source>
+    <target>多条发送</target>
+</phrase>
+<phrase>
+    <source>ms</source>
+    <target></target>
+</phrase>
+<phrase>
+    <source>Line Break</source>
+    <target>行尾结束符</target>
+</phrase>
+<phrase>
+    <source>Flow Control</source>
+    <target>流控</target>
+</phrase>
+<phrase>
+    <source>file</source>
+    <target>文件</target>
+</phrase>
+<phrase>
+    <source>Encoding</source>
+    <target>编码格式</target>
+</phrase>
+<phrase>
+    <source>Data Bits</source>
+    <target>数据位</target>
+</phrase>
+<phrase>
+    <source>Command Line</source>
+    <target>命令行</target>
+</phrase>
+<phrase>
+    <source>CoCOM</source>
+    <target></target>
+</phrase>
+<phrase>
+    <source>clear</source>
+    <target>清除</target>
+</phrase>
+<phrase>
+    <source>Baudrate</source>
+    <target>波特率</target>
+</phrase>
+</QPH>
