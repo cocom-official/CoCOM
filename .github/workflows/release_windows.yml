@@ -30,7 +30,7 @@ jobs:
     - name: fetch submodule
       run: |
         cd $GITHUB_WORKSPACE
-        git submodule update --init
+        git submodule update --init --depth 1
 
     - name: version
       run:  |
@@ -55,28 +55,28 @@ jobs:
       id: create_release
       with:
         draft: false
-        prerelease: false
+        prerelease: true
         release_name: ${{ steps.version.outputs.version }}
         tag_name: ${{ github.ref }}
         # body_path: CHANGELOG.md
       env:
         GITHUB_TOKEN: ${{ github.token }}
-    - name: upload msi artifact
+    - name: upload Windows installer release
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ github.token }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/release/*.msi
-        asset_name: CoCOM-${{ steps.version.outputs.version }}-windows-amd64.msi
+        asset_path: ${{ github.workspace }}/release/CoCOM-${{ steps.version.outputs.version }}-win64.msi
+        asset_name: CoCOM-${{ steps.version.outputs.version }}-win64.msi
         asset_content_type: application/octet-stream
 
-    - name: upload 7z artifact
+    - name: upload Windows 7z release
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ github.token }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/release/*.7z
-        asset_name: CoCOM-${{ steps.version.outputs.version }}-windows-amd64.7z
+        asset_path: ${{ github.workspace }}/release/CoCOM-${{ steps.version.outputs.version }}-win64.7z
+        asset_name: CoCOM-${{ steps.version.outputs.version }}-win64.7z
         asset_content_type: application/x-gtar

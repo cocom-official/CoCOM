@@ -1,4 +1,4 @@
-name: Windows Release
+name: build_windows
 
 on:
   push:
@@ -27,17 +27,21 @@ jobs:
 
     - name: checkout source
       uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
 
     - name: fetch submodule
       run: |
         cd $GITHUB_WORKSPACE
-        git submodule update --init
+        git submodule update --init --depth 1
 
     - name: version
       run:  |
         cd $GITHUB_WORKSPACE
         version=$(cat "makespec/VERSION").$(cat "makespec/BUILD_VERSION")
         echo "$version"
+        echo "::set-output name=version::$version"
+      id: version
 
     - name: build
       run: |
@@ -49,14 +53,14 @@ jobs:
         cpack -G WIX
         cpack -G 7Z
 
-    - name: uploading Windows installer release
+    - name: uploading Windows installer artifact
       uses: actions/upload-artifact@master
       with:
-        name: windows-installer-release
-        path: ${{ github.workspace }}/release/*.msi
+        name: CoCOM-${{ steps.version.outputs.version }}-win64-installer
+        path: ${{ github.workspace }}/release/CoCOM-${{ steps.version.outputs.version }}-win64.msi
 
-    - name: uploading Windows 7z release
+    - name: uploading Windows 7z artifact
       uses: actions/upload-artifact@master
       with:
-        name: windows-7z-release
-        path: ${{ github.workspace }}/release/*.7z
+        name: CoCOM-${{ steps.version.outputs.version }}-win64-7z
+        path: ${{ github.workspace }}/release/CoCOM-${{ steps.version.outputs.version }}-win64.7z

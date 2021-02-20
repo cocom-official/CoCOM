@@ -37,6 +37,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
@@ -51,7 +53,7 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
-        version: '5.15.1'
+        version: '5.15.2'
 
     - name: Install ninja
       uses: seanmiddleditch/gha-setup-ninja@master
