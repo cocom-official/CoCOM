@@ -5,6 +5,10 @@ on:
     tags:
       - '*'
 
+defaults:
+  run:
+    shell: msys2 {0}
+
 jobs:
 
   release:
