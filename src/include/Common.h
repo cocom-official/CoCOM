@@ -2,6 +2,14 @@
 
 #include <QSerialPort>
 
+/* dummy definitions */
+#ifndef COCOM_APPLICATIONNAME
+#define COCOM_APPLICATIONNAME ""
+#define COCOM_VENDER ""
+#define COCOM_HOMEPAGE ""
+#define COCOM_VERSION_STRING_WITH_SUFFIX ""
+#endif
+
 enum SerialConfigIndex
 {
     IndexBaudRate = 0,

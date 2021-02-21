@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
+project(CoCOM LANGUAGES CXX)
+
 file(STRINGS "${CMAKE_SOURCE_DIR}/makespec/VERSION" CoCOM_VERSION)
 file(STRINGS "${CMAKE_SOURCE_DIR}/makespec/BUILD_VERSION" CoCOM_BUILD_VERSION)
 file(STRINGS "${CMAKE_SOURCE_DIR}/makespec/VERSION_SUFFIX" CoCOM_VERSION_SUFFIX)
@@ -7,6 +9,7 @@ file(STRINGS "${CMAKE_SOURCE_DIR}/makespec/VERSION_SUFFIX" CoCOM_VERSION_SUFFIX)
 set(CoCOM_VERSION_STRING "${CoCOM_VERSION}.${CoCOM_BUILD_VERSION}")
 set(CoCOM_VERSION_STRING_WITH_SUFFIX "${CoCOM_VERSION}.${CoCOM_BUILD_VERSION}${CoCOM_VERSION_SUFFIX}")
 set(CoCOM_VENDER "CoCOM-Official")
+set(CoCOM_HOMEPAGE "https://github.com/cocom-official")
 
 set(VERSION_LIST ${CoCOM_VERSION})
 string(REPLACE "." ";" VERSION_LIST ${VERSION_LIST})
@@ -21,7 +24,10 @@ add_definitions(-DCOCOM_VERSION_MAJOR=${CMAKE_PROJECT_VERSION_MAJOR})
 add_definitions(-DCOCOM_VERSION_MINOR=${CMAKE_PROJECT_VERSION_MINOR})
 add_definitions(-DCOCOM_VERSION_BUGFIX=${CPACK_PACKAGE_VERSION_PATCH})
 add_definitions(-DCOCOM_VERSION_BUILD=${CoCOM_BUILD_VERSION})
-add_definitions(-DCoCOM_VERSION_STRING_WITH_SUFFIX="${CoCOM_VERSION_STRING_WITH_SUFFIX}")
+add_definitions(-DCOCOM_VERSION_STRING_WITH_SUFFIX="${CoCOM_VERSION_STRING_WITH_SUFFIX}")
+add_definitions(-DCOCOM_APPLICATIONNAME="${PROJECT_NAME}")
+add_definitions(-DCOCOM_VENDER="${CoCOM_VENDER}")
+add_definitions(-DCOCOM_HOMEPAGE="${CoCOM_HOMEPAGE}")
 
 # For Windows RC file.
 set(rc_flag_major   "-DCOCOM_VERSION_MAJOR=${CMAKE_PROJECT_VERSION_MAJOR}")
@@ -44,13 +50,11 @@ message("│ permitted by local law.                                 │")
 message("│                                                         │")
 message("│ See: https://www.gnu.org/licenses/gpl-3.0.html          │")
 message("├─────────────────────────────────────────────────────────┤")
-message("│ Project Homepage: https://github.com/cocom-official     │")
+message("│ Project Homepage: ${CoCOM_HOMEPAGE}     │")
 message("│ Welcome to contribute!                                  │")
 message("└─────────────────────────────────────────────────────────┘")
 message(" ")
 
-
-project(CoCOM LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -82,12 +86,14 @@ endif()
 
 qt5_wrap_ui(ui_list
     "ui/mainWindow.ui"
+    "ui/configDialog.ui"
     )
 
 qt5_wrap_cpp(moc_list
     "src/include/MainWindow.h"
     "src/include/Serial.h"
     "src/include/TextBrowser.h"
+    "src/include/ConfigDialog.h"
     )
 
 qt5_add_resources(qrc_list
@@ -111,6 +117,7 @@ set(src_list
     "src/MainWindow.cpp"
     "src/Serial.cpp"
     "src/TextBrowser.cpp"
+    "src/ConfigDialog.cpp"
     )
 
 

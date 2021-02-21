@@ -132,4 +132,32 @@
     <source>Software Flow Control</source>
     <target>软件流控</target>
 </phrase>
+<phrase>
+    <source>Configuration</source>
+    <target>设置</target>
+</phrase>
+<phrase>
+    <source>Style:</source>
+    <target>窗口风格</target>
+</phrase>
+<phrase>
+    <source>OK</source>
+    <target>确认</target>
+</phrase>
+<phrase>
+    <source>Style:</source>
+    <target>窗口风格:</target>
+</phrase>
+<phrase>
+    <source>Cancel</source>
+    <target>取消</target>
+</phrase>
+<phrase>
+    <source>Common</source>
+    <target>通用</target>
+</phrase>
+<phrase>
+    <source>About</source>
+    <target>关于</target>
+</phrase>
 </QPH>

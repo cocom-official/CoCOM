@@ -19,10 +19,15 @@ MainWindow::MainWindow(QWidget *parent)
       txTypeComboBox(new QComboBox(this)),
       lineBreakBox(new QComboBox(this)),
       encodingBox(new QComboBox(this)),
+      configDialog(nullptr),
       serial(new Serial(this)),
       timer(new QTimer(this)),
       periodicSendTimer(new QTimer(this))
 {
+    QCoreApplication::setApplicationName(QString(COCOM_APPLICATIONNAME));
+    QCoreApplication::setOrganizationName(QString(COCOM_VENDER));
+    QCoreApplication::setOrganizationDomain(QString(COCOM_HOMEPAGE));
+
     setupUI();
 
     setupSerialPort();
@@ -507,20 +512,32 @@ void MainWindow::on_clearAction_triggered(bool checked)
     addTxCount(-1);
 }
 
-void MainWindow::on_actionPin_toggled(bool checked)
+void MainWindow::on_pinAction_toggled(bool checked)
 {
     if (checked)
     {
         setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
-        ui->actionPin->setIcon(QIcon(":/assets/icons/pushpin-ed.svg"));
+        ui->pinAction->setIcon(QIcon(":/assets/icons/pushpin-ed.svg"));
     }
     else
     {
         setWindowFlags(windowFlags() ^ Qt::WindowStaysOnTopHint);
-        ui->actionPin->setIcon(QIcon(":/assets/icons/pushpin.svg"));
+        ui->pinAction->setIcon(QIcon(":/assets/icons/pushpin.svg"));
     }
 
     show();
+}
+
+void MainWindow::on_configAction_triggered(bool checked)
+{
+    Q_UNUSED(checked);
+
+    if (nullptr == configDialog)
+    {
+        configDialog = new ConfigDialog(this);
+    }
+
+    configDialog->show();
 }
 
 void MainWindow::on_commandLineSendButton_pressed()

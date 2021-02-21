@@ -27,6 +27,7 @@
 #include <QtWinExtras>
 #endif
 
+#include "ConfigDialog.h"
 #include "Serial.h"
 #include "TextBrowser.h"
 
@@ -59,7 +60,8 @@ private slots:
 
     void on_openAction_toggled(bool checked);
     void on_clearAction_triggered(bool checked);
-    void on_actionPin_toggled(bool checked);
+    void on_pinAction_toggled(bool checked);
+    void on_configAction_triggered(bool checked);
 
     void on_textSendButton_pressed();
     void on_commandLineSendButton_pressed();
@@ -89,6 +91,8 @@ private:
     QComboBox *txTypeComboBox;
     QComboBox *lineBreakBox;
     QComboBox *encodingBox;
+
+    ConfigDialog *configDialog;
 
     QList<int> inputTabWidgetHeight;
 

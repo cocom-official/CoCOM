@@ -382,13 +382,13 @@
    <addaction name="openAction"/>
    <addaction name="clearAction"/>
    <addaction name="separator"/>
-   <addaction name="actionPin"/>
+   <addaction name="pinAction"/>
    <addaction name="fileAction"/>
    <addaction name="toolsAction"/>
-   <addaction name="settingAction"/>
+   <addaction name="configAction"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionPin">
+  <action name="pinAction">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -442,7 +442,7 @@
     <string>clear</string>
    </property>
   </action>
-  <action name="settingAction">
+  <action name="configAction">
    <property name="icon">
     <iconset resource="../assets/assets.qrc">
      <normaloff>:/assets/icons/sliders.svg</normaloff>:/assets/icons/sliders.svg</iconset>
