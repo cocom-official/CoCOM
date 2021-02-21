@@ -159,77 +159,82 @@
         <translation>侧边栏</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="67"/>
+        <location filename="../../src/MainWindow.cpp" line="47"/>
+        <source>Serial Port Utility</source>
+        <translation>串口调试助手</translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="70"/>
         <source>Ready</source>
         <translation>就绪</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="176"/>
+        <location filename="../../src/MainWindow.cpp" line="179"/>
         <source>Baudrate</source>
         <translation>波特率</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="183"/>
+        <location filename="../../src/MainWindow.cpp" line="186"/>
         <source>Data Bits</source>
         <translation>数据位</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="191"/>
+        <location filename="../../src/MainWindow.cpp" line="194"/>
         <source>Parity</source>
         <translation>校验位</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="197"/>
+        <location filename="../../src/MainWindow.cpp" line="200"/>
         <source>Stop Bits</source>
         <translation>停止位</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="203"/>
+        <location filename="../../src/MainWindow.cpp" line="206"/>
         <source>Flow Control</source>
         <translation>流控</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="204"/>
+        <location filename="../../src/MainWindow.cpp" line="207"/>
         <source>Flow Control OFF</source>
         <translation>关闭流控</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="205"/>
+        <location filename="../../src/MainWindow.cpp" line="208"/>
         <source>Hardware Flow Control</source>
         <translation>硬件流控</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="206"/>
+        <location filename="../../src/MainWindow.cpp" line="209"/>
         <source>Software Flow Control</source>
         <translation>软件流控</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="211"/>
+        <location filename="../../src/MainWindow.cpp" line="214"/>
         <source>Rx Type</source>
         <translation>接收类型</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="216"/>
+        <location filename="../../src/MainWindow.cpp" line="219"/>
         <source>Tx Type</source>
         <translation>发送类型</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="222"/>
+        <location filename="../../src/MainWindow.cpp" line="225"/>
         <source>Line Break</source>
         <translation>行尾结束符</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="227"/>
+        <location filename="../../src/MainWindow.cpp" line="230"/>
         <source>Encoding</source>
         <translation>编码格式</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="493"/>
+        <location filename="../../src/MainWindow.cpp" line="513"/>
         <source>Open Failed!</source>
         <translation>打开失败！</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="493"/>
+        <location filename="../../src/MainWindow.cpp" line="513"/>
         <source>Serial Port [%1] Open Failed!</source>
         <translation>串口 [%1] 打开失败！</translation>
     </message>

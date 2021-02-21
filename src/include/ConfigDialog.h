@@ -25,6 +25,8 @@ public:
 private slots:
     void on_styleComboBox_currentIndexChanged(const QString &text);
     void on_listWidget_currentRowChanged(int currentRow);
+    void on_okButton_pressed();
+    void on_cancelButton_pressed();
 
 private:
     Ui::ConfigDialog *ui;

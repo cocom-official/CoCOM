@@ -56,6 +56,7 @@ private slots:
     void stopBitsComboBox_currentIndexChanged(int index);
     void flowComboBox_currentIndexChanged(int index);
     void rxTypeComboBox_currentIndexChanged(int index);
+    void txTypeComboBox_currentIndexChanged(int index);
     void encodingBox_currentIndexChanged(int index);
 
     void on_openAction_toggled(bool checked);
@@ -101,6 +102,8 @@ private:
 
     QTimer *timer;
     QTimer *periodicSendTimer;
+
+    int  lineBreakType;
 
     void setupUI();
     void setLayout(double rate);

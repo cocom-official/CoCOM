@@ -160,4 +160,8 @@
     <source>About</source>
     <target>关于</target>
 </phrase>
+<phrase>
+    <source>Serial Port Utility</source>
+    <target>串口调试助手</target>
+</phrase>
 </QPH>

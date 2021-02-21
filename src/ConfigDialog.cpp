@@ -90,3 +90,13 @@ void ConfigDialog::on_listWidget_currentRowChanged(int currentRow)
 {
     ui->stackedWidget->setCurrentIndex(currentRow);
 }
+
+void ConfigDialog::on_okButton_pressed()
+{
+    close();
+}
+
+void ConfigDialog::on_cancelButton_pressed()
+{
+    close();
+}

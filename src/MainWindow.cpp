@@ -22,7 +22,8 @@ MainWindow::MainWindow(QWidget *parent)
       configDialog(nullptr),
       serial(new Serial(this)),
       timer(new QTimer(this)),
-      periodicSendTimer(new QTimer(this))
+      periodicSendTimer(new QTimer(this)),
+      lineBreakType(LineBreakOFF)
 {
     QCoreApplication::setApplicationName(QString(COCOM_APPLICATIONNAME));
     QCoreApplication::setOrganizationName(QString(COCOM_VENDER));
@@ -42,6 +43,8 @@ void MainWindow::setupUI()
 {
     ui->setupUi(this);
     textBrowser = new TextBrowser(this, ui->outputTextBrowser);
+
+    setWindowTitle(QString(COCOM_APPLICATIONNAME) + " -- " + tr("Serial Port Utility"));
 
     setConfigToolBar();
 
@@ -259,6 +262,8 @@ void MainWindow::setStatusBar()
             this, &MainWindow::flowComboBox_currentIndexChanged);
     connect(rxTypeComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
             this, &MainWindow::rxTypeComboBox_currentIndexChanged);
+    connect(txTypeComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, &MainWindow::txTypeComboBox_currentIndexChanged);
     connect(encodingBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
             this, &MainWindow::encodingBox_currentIndexChanged);
 }
@@ -476,6 +481,21 @@ void MainWindow::flowComboBox_currentIndexChanged(int index)
 void MainWindow::rxTypeComboBox_currentIndexChanged(int index)
 {
     textBrowser->setDataType((DataType)index);
+}
+
+void MainWindow::txTypeComboBox_currentIndexChanged(int index)
+{
+    if (index == HexType)
+    {
+        lineBreakType = lineBreakBox->currentIndex();
+        lineBreakBox->setDisabled(true);
+        lineBreakBox->setCurrentIndex(LineBreakOFF);
+    }
+    else
+    {
+        lineBreakBox->setCurrentIndex(lineBreakType);
+        lineBreakBox->setDisabled(false);
+    }
 }
 
 void MainWindow::encodingBox_currentIndexChanged(int index)
