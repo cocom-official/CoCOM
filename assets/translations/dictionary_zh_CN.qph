@@ -176,4 +176,16 @@
     <source>Text files (*.txt)</source>
     <target>文本文件 (*.txt)</target>
 </phrase>
+<phrase>
+    <source>Open</source>
+    <target>打开</target>
+</phrase>
+<phrase>
+    <source>Close</source>
+    <target>关闭</target>
+</phrase>
+<phrase>
+    <source>Double Click to Clear Count!</source>
+    <target>双击清空计数！</target>
+</phrase>
 </QPH>

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QtWidgets>
 #include <QSerialPort>
 
 /* dummy definitions */
@@ -50,3 +51,32 @@ extern const QString warnKey[2];
 extern const QString errorKey[3];
 
 extern void changeObjectSize(const QObject &o, double objectRate);
+
+class MouseButtonSignaler : public QObject
+{
+    Q_OBJECT
+
+private:
+    bool eventFilter(QObject *obj, QEvent *ev) Q_DECL_OVERRIDE
+    {
+        if ((ev->type() == QEvent::MouseButtonPress ||
+             ev->type() == QEvent::MouseButtonRelease ||
+             ev->type() == QEvent::MouseButtonDblClick) &&
+            obj->isWidgetType())
+            emit mouseButtonEvent(static_cast<QWidget *>(obj),
+                                  static_cast<QMouseEvent *>(ev));
+        return false;
+    };
+
+public:
+    explicit MouseButtonSignaler(QObject *parent = 0) : QObject(parent){};
+    ~MouseButtonSignaler(){};
+
+    void installOn(QWidget *widget)
+    {
+        widget->installEventFilter(this);
+    };
+
+signals:
+    void mouseButtonEvent(QWidget *, QMouseEvent *);
+};

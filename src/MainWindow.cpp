@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
       statusInfoLabel(new QLabel(this)),
       statusTxLabel(new QLabel(this)),
       statusRxLabel(new QLabel(this)),
+      statueLabelSignaler(new MouseButtonSignaler(this)),
       baudrateComboBox(new QComboBox(this)),
       dataBitsComboBox(new QComboBox(this)),
       parityComboBox(new QComboBox(this)),
@@ -163,6 +164,7 @@ void MainWindow::loadFont()
     ui->outputTextBrowser->setFont(font);
     ui->sendTextEdit->setFont(font);
     ui->commandLineSendComboBox->setFont(font);
+    statusInfoLabel->setFont(font);
 }
 
 void MainWindow::setConfigToolBar()
@@ -174,8 +176,17 @@ void MainWindow::setConfigToolBar()
 
 void MainWindow::setStatusBar()
 {
-    statusTxLabel->setText("Tx: 0");
-    statusRxLabel->setText("Rx: 0");
+    statusTxLabel->setToolTip(tr("Double Click to Clear Count!"));
+    statusRxLabel->setToolTip(tr("Double Click to Clear Count!"));
+
+    addTxCount(-1);
+    addRxCount(-1);
+
+    statueLabelSignaler->installOn(statusTxLabel);
+    statueLabelSignaler->installOn(statusRxLabel);
+    statueLabelSignaler->installOn(statusInfoLabel);
+    connect(statueLabelSignaler, &MouseButtonSignaler::mouseButtonEvent,
+            this, &MainWindow::statusLabel_mouseButtonEvent);
 
     baudrateComboBox->addItem("9600");
     baudrateComboBox->addItem("38400");
@@ -350,7 +361,7 @@ void MainWindow::addTxCount(int count)
         txCount += count;
     }
 
-    statusTxLabel->setText(QString("Tx: %1").arg(QString::number(txCount)));
+    statusTxLabel->setText(QString(" Tx: %1 ").arg(QString::number(txCount)));
 }
 
 void MainWindow::addRxCount(int count)
@@ -366,12 +377,23 @@ void MainWindow::addRxCount(int count)
         rxCount += count;
     }
 
-    statusRxLabel->setText(QString("Rx: %1").arg(QString::number(rxCount)));
+    statusRxLabel->setText(QString(" Rx: %1 ").arg(QString::number(rxCount)));
 }
 
 void MainWindow::setStatusInfo(QString text)
 {
-    statusInfoLabel->setText(text);
+    text = "->" + text;
+
+    QFontMetrics fontWidth(statusInfoLabel->font());
+    QString elideText = fontWidth.elidedText(text, Qt::ElideRight, statusInfoLabel->width());
+
+    if (elideText.isEmpty())
+    {
+        elideText = text;
+    }
+
+    statusInfoLabel->setToolTip(text);
+    statusInfoLabel->setText(elideText);
 }
 
 void MainWindow::moveEvent(QMoveEvent *event)
@@ -392,7 +414,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         {
             on_textSendButton_pressed();
         }
-        else if (ui->commandLineSendComboBox->hasFocus())
+        else if (ui->commandLineSendComboBox->hasFocus() && ui->openAction->isChecked())
         {
             on_commandLineSendButton_pressed();
             ui->commandLineSendComboBox->setCurrentText("");
@@ -516,14 +538,18 @@ void MainWindow::encodingBox_currentIndexChanged(int index)
 
 void MainWindow::on_openAction_toggled(bool checked)
 {
+    QString portStr = serial->getPortStr(serial->currentIndex()).mid(2);
     if (checked)
     {
         if (!serial->open())
         {
             ui->openAction->setChecked(false);
-            QMessageBox::critical(this, tr("Open Failed!"), serial->getPortStr(serial->currentIndex()).mid(2) + " " + tr("Open Failed!"));
+            QMessageBox::critical(this, tr("Open Failed!"), portStr + " " + tr("Open Failed!"));
             return;
         }
+
+        setStatusInfo(tr("Open") + " " + portStr);
+
         ui->openAction->setIcon(QIcon(":/assets/icons/pause.svg"));
         ui->textSendButton->setEnabled(true);
         ui->commandLineSendButton->setEnabled(true);
@@ -532,6 +558,9 @@ void MainWindow::on_openAction_toggled(bool checked)
     else
     {
         serial->close();
+
+        setStatusInfo(tr("Close") + " " + portStr);
+
         ui->openAction->setIcon(QIcon(":/assets/icons/play.svg"));
         ui->textSendButton->setEnabled(false);
         ui->commandLineSendButton->setEnabled(false);
@@ -555,7 +584,7 @@ void MainWindow::on_saveToFileAction_triggered(bool checked)
     Q_UNUSED(checked);
 
     QDateTime dateTime(QDateTime::currentDateTime());
-    QString selectedFile = dateTime.toString("yyyy_MM_dd_hhmm");;
+    QString selectedFile = dateTime.toString("yyyy_MM_dd_hhmm");
 
     QString path = QFileDialog::getSaveFileName(this,
                                                 tr("Save Output To File"),
@@ -669,6 +698,26 @@ void MainWindow::portSelectComboBox_currentIndexChanged(int index)
 {
     serial->setCurrentPort(index);
     updatePortSelectText();
+}
+
+void MainWindow::statusLabel_mouseButtonEvent(QWidget *obj, QMouseEvent *event)
+{
+    obj = static_cast<QLabel *>(obj);
+    if (event->type() == QEvent::MouseButtonDblClick)
+    {
+        if (obj == statusTxLabel)
+        {
+            addTxCount(-1);
+        }
+        else if(obj == statusRxLabel)
+        {
+            addRxCount(-1);
+        }
+        else if(obj == statusInfoLabel)
+        {
+            setStatusInfo(tr("Ready"));
+        }
+    }
 }
 
 void MainWindow::serial_readyRead(int count, QByteArray *bytes)

@@ -76,6 +76,8 @@ private slots:
     void on_periodicSendCheckBox_stateChanged(int state);
     void on_timerPeriodSpinBox_valueChanged(int value);
 
+    void statusLabel_mouseButtonEvent(QWidget *obj, QMouseEvent *event);
+
     void portSelectComboBox_currentIndexChanged(int index);
     void serial_readyRead(int count, QByteArray *bytes);
     void serial_bytesSend(int count);
@@ -88,6 +90,8 @@ private:
     QLabel *statusInfoLabel;
     QLabel *statusTxLabel;
     QLabel *statusRxLabel;
+    MouseButtonSignaler *statueLabelSignaler;
+
     /* status bar combobox */
     QComboBox *baudrateComboBox;
     QComboBox *dataBitsComboBox;

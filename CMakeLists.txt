@@ -90,6 +90,7 @@ qt5_wrap_ui(ui_list
     )
 
 qt5_wrap_cpp(moc_list
+    "src/include/Common.h"
     "src/include/MainWindow.h"
     "src/include/Serial.h"
     "src/include/TextBrowser.h"

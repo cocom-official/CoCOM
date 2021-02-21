@@ -159,92 +159,109 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="47"/>
+        <location filename="../../src/MainWindow.cpp" line="48"/>
         <source>Serial Port Utility</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="74"/>
+        <location filename="../../src/MainWindow.cpp" line="75"/>
         <source>Not Implement Current!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="76"/>
+        <location filename="../../src/MainWindow.cpp" line="77"/>
+        <location filename="../../src/MainWindow.cpp" line="719"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="187"/>
+        <location filename="../../src/MainWindow.cpp" line="179"/>
+        <location filename="../../src/MainWindow.cpp" line="180"/>
+        <source>Double Click to Clear Count!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="198"/>
         <source>Baudrate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="194"/>
+        <location filename="../../src/MainWindow.cpp" line="205"/>
         <source>Data Bits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="202"/>
+        <location filename="../../src/MainWindow.cpp" line="213"/>
         <source>Parity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="208"/>
+        <location filename="../../src/MainWindow.cpp" line="219"/>
         <source>Stop Bits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="214"/>
+        <location filename="../../src/MainWindow.cpp" line="225"/>
         <source>Flow Control</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="215"/>
+        <location filename="../../src/MainWindow.cpp" line="226"/>
         <source>Flow Control OFF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="216"/>
+        <location filename="../../src/MainWindow.cpp" line="227"/>
         <source>Hardware Flow Control</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="217"/>
+        <location filename="../../src/MainWindow.cpp" line="228"/>
         <source>Software Flow Control</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="222"/>
+        <location filename="../../src/MainWindow.cpp" line="233"/>
         <source>Rx Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="227"/>
+        <location filename="../../src/MainWindow.cpp" line="238"/>
         <source>Tx Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="233"/>
+        <location filename="../../src/MainWindow.cpp" line="244"/>
         <source>Line Break</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="238"/>
+        <location filename="../../src/MainWindow.cpp" line="249"/>
         <source>Encoding</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="524"/>
+        <location filename="../../src/MainWindow.cpp" line="547"/>
         <source>Open Failed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="561"/>
+        <location filename="../../src/MainWindow.cpp" line="551"/>
+        <source>Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="562"/>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="591"/>
         <source>Save Output To File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="563"/>
+        <location filename="../../src/MainWindow.cpp" line="593"/>
         <source>Text files (*.txt)</source>
         <translation type="unfinished"></translation>
     </message>
