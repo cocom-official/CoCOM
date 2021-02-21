@@ -12,6 +12,8 @@ TextBrowser::TextBrowser(QObject *parent, QTextBrowser *browser)
     {
         throw std::runtime_error("browser should not be nullptr");
     }
+    /* no line warp */
+    // browser->setLineWrapMode(QTextEdit::NoWrap);
 
     initHintFormat();
 }
