@@ -117,7 +117,9 @@ void Serial::sendRawData(QByteArray *bytes)
 
 void Serial::sendHexString(QString *string)
 {
-    Q_UNUSED(string);
+    QByteArray bytes = QByteArray().fromHex(string->toLatin1());
+    emit bytesSend(bytes.size());
+    currentPort.port->write(bytes);
 }
 
 void Serial::sendTextString(QString *string, EncodingType encodingType, LineBreakType linebreak)

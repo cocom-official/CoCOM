@@ -45,6 +45,8 @@ private:
     int scroll;
     int maxScroll;
     EncodingType encoding;
+    char hexSeparator;
+    bool hexUpperCase;
 
     HintFormat successHint;
     HintFormat warnHint;

@@ -7,8 +7,8 @@ CoCOM is a Serial Port Utility for Embedded Software Engineer.
 - [ ] basic send && receive
   - [x] receive text
   - [x] send text
-  - [ ] receive Hex
-  - [ ] send Hex
+  - [x] receive Hex
+  - [x] send Hex
   - [ ] send command
 - [ ] high level send && receive
   - [x] text encoding

@@ -4,13 +4,14 @@ TextBrowser::TextBrowser(QObject *parent, QTextBrowser *browser)
     : QObject(parent),
       browser(browser),
       dataType(TextType),
-      encoding(LocalEnc)
+      encoding(LocalEnc),
+      hexSeparator(' '),
+      hexUpperCase(true)
 {
     if (browser == nullptr)
     {
         throw std::runtime_error("browser should not be nullptr");
     }
-    browser->insertPlainText(QString(QByteArray("\r\n")));
 
     initHintFormat();
 }
@@ -153,48 +154,61 @@ void TextBrowser::setFormat(int start, int end, QTextCharFormat *format)
 
 void TextBrowser::insertData(QByteArray *data)
 {
-    QTextCodec *codec = nullptr;
-
-    switch (encoding)
-    {
-    case UTF_8:
-        codec = QTextCodec::codecForName("UTF-8");
-        break;
-
-    default:
-        codec = QTextCodec::codecForLocale();
-        break;
-    }
-    QString string = codec->toUnicode(*data);
-
-    lock();
+    QString string;
 
     if (dataType == TextType)
     {
-        QTextCharFormat defaultFormat;
-        QTextCursor lCursor;
-        int startPos = 0;
-        int endPos = 0;
+        QTextCodec *codec = nullptr;
+        switch (encoding)
+        {
+        case UTF_8:
+            codec = QTextCodec::codecForName("UTF-8");
+            break;
 
-        browser->moveCursor(QTextCursor::End);
-        lCursor = browser->textCursor();
-        startPos = lCursor.position();
+        default:
+            codec = QTextCodec::codecForLocale();
+            break;
+        }
 
-        browser->insertPlainText(string);
-
-        browser->moveCursor(QTextCursor::End);
-        lCursor = browser->textCursor();
-        endPos = lCursor.position();
-
-        lCursor.setPosition(startPos);
-        lCursor.setPosition(endPos, QTextCursor::KeepAnchor);
-        browser->setTextCursor(lCursor);
-        browser->setCurrentCharFormat(defaultFormat);
-
-        processAllHintFormants();
+        string = codec->toUnicode(*data);
     }
     else
     {
+        string = QString(data->toHex(hexSeparator).append(hexSeparator));
+    }
+
+    lock();
+
+    QTextCharFormat defaultFormat;
+    QTextCursor lCursor;
+    int startPos = 0;
+    int endPos = 0;
+
+    browser->moveCursor(QTextCursor::End);
+    lCursor = browser->textCursor();
+    startPos = lCursor.position();
+
+    if (hexUpperCase && dataType == HexType)
+    {
+        browser->insertPlainText(string.toUpper());
+    }
+    else
+    {
+        browser->insertPlainText(string);
+    }
+
+    browser->moveCursor(QTextCursor::End);
+    lCursor = browser->textCursor();
+    endPos = lCursor.position();
+
+    lCursor.setPosition(startPos);
+    lCursor.setPosition(endPos, QTextCursor::KeepAnchor);
+    browser->setTextCursor(lCursor);
+    browser->setCurrentCharFormat(defaultFormat);
+
+    if (dataType == TextType)
+    {
+        processAllHintFormants();
     }
 
     unlock();
