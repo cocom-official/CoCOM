@@ -22,6 +22,10 @@
 #include <QMessageBox>
 #include <QScreen>
 #include <QWindow>
+#include <QFileDialog>
+#include <QFile>
+#include <QIODevice>
+#include <QDateTime>
 
 #ifdef Q_OS_WIN32
 #include <QtWinExtras>
@@ -61,6 +65,8 @@ private slots:
 
     void on_openAction_toggled(bool checked);
     void on_clearAction_triggered(bool checked);
+    //
+    void on_saveToFileAction_triggered(bool checked);
     void on_pinAction_toggled(bool checked);
     void on_configAction_triggered(bool checked);
 

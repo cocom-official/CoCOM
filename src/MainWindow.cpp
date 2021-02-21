@@ -67,6 +67,12 @@ void MainWindow::setupUI()
 
     refreshDPI();
 
+    on_openAction_toggled(false);
+
+    /* current disable */
+    ui->multiCommandTab->setEnabled(false);
+    ui->multiCommandTab->setToolTip(tr("Not Implement Current!"));
+
     setStatusInfo(tr("Ready"));
 }
 
@@ -155,6 +161,8 @@ void MainWindow::loadFont()
 
     QFont font(fontFamily.at(0));
     ui->outputTextBrowser->setFont(font);
+    ui->sendTextEdit->setFont(font);
+    ui->commandLineSendComboBox->setFont(font);
 }
 
 void MainWindow::setConfigToolBar()
@@ -272,8 +280,11 @@ void MainWindow::updatePortSelectText()
 {
     for (int i = 0; i < portSelect->count(); i++)
     {
-        portSelect->setItemText(i, serial->getPortStr(i));
+        QString portStr = serial->getPortStr(i);
+        portSelect->setItemText(i, portStr);
+        portSelect->setItemData(i, portStr.mid(2), Qt::ToolTipRole);
     }
+    portSelect->setToolTip(serial->getPortStr(0).mid(2));
 
     if (ui->openAction->isChecked() && serial->isOpen(serial->currentIndex()) != true)
     {
@@ -510,15 +521,22 @@ void MainWindow::on_openAction_toggled(bool checked)
         if (!serial->open())
         {
             ui->openAction->setChecked(false);
-            QMessageBox::critical(this, tr("Open Failed!"), tr("Serial Port [%1] Open Failed!").arg(serial->getPortStr(serial->currentIndex())));
+            QMessageBox::critical(this, tr("Open Failed!"), serial->getPortStr(serial->currentIndex()).mid(2) + " " + tr("Open Failed!"));
             return;
         }
         ui->openAction->setIcon(QIcon(":/assets/icons/pause.svg"));
+        ui->textSendButton->setEnabled(true);
+        ui->commandLineSendButton->setEnabled(true);
+        ui->periodicSendCheckBox->setEnabled(true);
     }
     else
     {
         serial->close();
         ui->openAction->setIcon(QIcon(":/assets/icons/play.svg"));
+        ui->textSendButton->setEnabled(false);
+        ui->commandLineSendButton->setEnabled(false);
+        ui->periodicSendCheckBox->setEnabled(false);
+        ui->periodicSendCheckBox->setChecked(false);
     }
 
     updatePortSelectText();
@@ -530,6 +548,31 @@ void MainWindow::on_clearAction_triggered(bool checked)
     textBrowser->clear();
     addRxCount(-1);
     addTxCount(-1);
+}
+
+void MainWindow::on_saveToFileAction_triggered(bool checked)
+{
+    Q_UNUSED(checked);
+
+    QDateTime dateTime(QDateTime::currentDateTime());
+    QString selectedFile = dateTime.toString("yyyy_MM_dd_hhmm");;
+
+    QString path = QFileDialog::getSaveFileName(this,
+                                                tr("Save Output To File"),
+                                                selectedFile + ".txt",
+                                                tr("Text files (*.txt)"));
+
+    if (path.isEmpty())
+    {
+        return;
+    }
+
+    QFile file(path);
+    if (file.open(QIODevice::ReadWrite))
+    {
+        QTextStream stream(&file);
+        stream << ui->outputTextBrowser->document()->toPlainText() << Qt::endl;
+    }
 }
 
 void MainWindow::on_pinAction_toggled(bool checked)
@@ -562,6 +605,11 @@ void MainWindow::on_configAction_triggered(bool checked)
 
 void MainWindow::on_commandLineSendButton_pressed()
 {
+    if (!ui->openAction->isChecked())
+    {
+        return;
+    }
+
     QString string = ui->commandLineSendComboBox->currentText();
 
     if (txTypeComboBox->currentIndex() == TextType)

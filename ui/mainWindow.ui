@@ -383,7 +383,7 @@
    <addaction name="clearAction"/>
    <addaction name="separator"/>
    <addaction name="pinAction"/>
-   <addaction name="fileAction"/>
+   <addaction name="saveToFileAction"/>
    <addaction name="toolsAction"/>
    <addaction name="configAction"/>
   </widget>
@@ -460,7 +460,7 @@
     <string>tools</string>
    </property>
   </action>
-  <action name="fileAction">
+  <action name="saveToFileAction">
    <property name="icon">
     <iconset resource="../assets/assets.qrc">
      <normaloff>:/assets/icons/file.svg</normaloff>:/assets/icons/file.svg</iconset>

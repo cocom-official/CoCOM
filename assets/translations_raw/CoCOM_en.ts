@@ -164,78 +164,88 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="70"/>
+        <location filename="../../src/MainWindow.cpp" line="74"/>
+        <source>Not Implement Current!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="76"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="179"/>
+        <location filename="../../src/MainWindow.cpp" line="187"/>
         <source>Baudrate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="186"/>
+        <location filename="../../src/MainWindow.cpp" line="194"/>
         <source>Data Bits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="194"/>
+        <location filename="../../src/MainWindow.cpp" line="202"/>
         <source>Parity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="200"/>
+        <location filename="../../src/MainWindow.cpp" line="208"/>
         <source>Stop Bits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="206"/>
+        <location filename="../../src/MainWindow.cpp" line="214"/>
         <source>Flow Control</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="207"/>
+        <location filename="../../src/MainWindow.cpp" line="215"/>
         <source>Flow Control OFF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="208"/>
+        <location filename="../../src/MainWindow.cpp" line="216"/>
         <source>Hardware Flow Control</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="209"/>
+        <location filename="../../src/MainWindow.cpp" line="217"/>
         <source>Software Flow Control</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="214"/>
+        <location filename="../../src/MainWindow.cpp" line="222"/>
         <source>Rx Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="219"/>
+        <location filename="../../src/MainWindow.cpp" line="227"/>
         <source>Tx Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="225"/>
+        <location filename="../../src/MainWindow.cpp" line="233"/>
         <source>Line Break</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="230"/>
+        <location filename="../../src/MainWindow.cpp" line="238"/>
         <source>Encoding</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="513"/>
+        <location filename="../../src/MainWindow.cpp" line="524"/>
         <source>Open Failed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="513"/>
-        <source>Serial Port [%1] Open Failed!</source>
+        <location filename="../../src/MainWindow.cpp" line="561"/>
+        <source>Save Output To File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="563"/>
+        <source>Text files (*.txt)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

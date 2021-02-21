@@ -164,4 +164,16 @@
     <source>Serial Port Utility</source>
     <target>串口调试助手</target>
 </phrase>
+<phrase>
+    <source>Not Implement Current!</source>
+    <target>暂时没有还没有做！</target>
+</phrase>
+<phrase>
+    <source>Save Output To File</source>
+    <target>保存输出到文件</target>
+</phrase>
+<phrase>
+    <source>Text files (*.txt)</source>
+    <target>文本文件 (*.txt)</target>
+</phrase>
 </QPH>
