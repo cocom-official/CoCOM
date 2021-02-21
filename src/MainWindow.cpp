@@ -189,18 +189,21 @@ void MainWindow::setStatusBar()
     stopBitsComboBox->setToolTip(tr("Stop Bits"));
 
     flowComboBox->addItem("OFF");
-    flowComboBox->addItem("RTX/CTX");
-    flowComboBox->addItem("XON/XOFF");
+    flowComboBox->addItem("HFC");
+    flowComboBox->addItem("SFC");
     flowComboBox->setCurrentIndex(defaultSerialConfig[IndexFlowControl]);
     flowComboBox->setToolTip(tr("Flow Control"));
+    flowComboBox->setItemData(0, tr("Flow Control OFF"), Qt::ToolTipRole);
+    flowComboBox->setItemData(1, tr("Hardware Flow Control"), Qt::ToolTipRole);
+    flowComboBox->setItemData(2, tr("Software Flow Control"), Qt::ToolTipRole);
 
     rxTypeComboBox->addItem("Text");
-    rxTypeComboBox->addItem("HEX");
+    rxTypeComboBox->addItem("Hex");
     rxTypeComboBox->setCurrentIndex(0);
     rxTypeComboBox->setToolTip(tr("Rx Type"));
 
     txTypeComboBox->addItem("Text");
-    txTypeComboBox->addItem("HEX");
+    txTypeComboBox->addItem("Hex");
     txTypeComboBox->setCurrentIndex(0);
     txTypeComboBox->setToolTip(tr("Tx Type"));
 
@@ -230,8 +233,8 @@ void MainWindow::setStatusBar()
     statusWidget->setLayout(statusLayout);
 
     ui->statusbar->addWidget(statusWidget, 0);
-    ui->statusbar->addWidget(statusTxLabel, 1);
     ui->statusbar->addWidget(statusRxLabel, 1);
+    ui->statusbar->addWidget(statusTxLabel, 1);
     ui->statusbar->addWidget(statusInfoLabel, 8);
 
     connect(baudrateComboBox, &QComboBox::currentTextChanged,

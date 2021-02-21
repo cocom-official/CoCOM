@@ -131,32 +131,47 @@
         <translation>流控</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="200"/>
+        <location filename="../../src/MainWindow.cpp" line="196"/>
+        <source>Flow Control OFF</source>
+        <translation>关闭流控</translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="197"/>
+        <source>Hardware Flow Control</source>
+        <translation>硬件流控</translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="198"/>
+        <source>Software Flow Control</source>
+        <translation>软件流控</translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="203"/>
         <source>Rx Type</source>
         <translation>接收类型</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="205"/>
+        <location filename="../../src/MainWindow.cpp" line="208"/>
         <source>Tx Type</source>
         <translation>发送类型</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="211"/>
+        <location filename="../../src/MainWindow.cpp" line="214"/>
         <source>Line Break</source>
         <translation>行尾结束符</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="216"/>
+        <location filename="../../src/MainWindow.cpp" line="219"/>
         <source>Encoding</source>
         <translation>编码格式</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="477"/>
+        <location filename="../../src/MainWindow.cpp" line="480"/>
         <source>Open Failed!</source>
         <translation>打开失败！</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="477"/>
+        <location filename="../../src/MainWindow.cpp" line="480"/>
         <source>Serial Port [%1] Open Failed!</source>
         <translation>串口 [%1] 打开失败！</translation>
     </message>

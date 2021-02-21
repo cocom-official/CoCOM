@@ -120,4 +120,16 @@
     <source>Baudrate</source>
     <target>波特率</target>
 </phrase>
+<phrase>
+    <source>Flow Control OFF</source>
+    <target>关闭流控</target>
+</phrase>
+<phrase>
+    <source>Hardware Flow Control</source>
+    <target>硬件流控</target>
+</phrase>
+<phrase>
+    <source>Software Flow Control</source>
+    <target>软件流控</target>
+</phrase>
 </QPH>
