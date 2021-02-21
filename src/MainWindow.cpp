@@ -20,7 +20,8 @@ MainWindow::MainWindow(QWidget *parent)
       lineBreakBox(new QComboBox(this)),
       encodingBox(new QComboBox(this)),
       serial(new Serial(this)),
-      timer(new QTimer(this))
+      timer(new QTimer(this)),
+      periodicSendTimer(new QTimer(this))
 {
     setupUI();
 
@@ -45,6 +46,8 @@ void MainWindow::setupUI()
 
     connect(portSelect, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
             this, &MainWindow::portSelectComboBox_currentIndexChanged);
+
+    connect(periodicSendTimer, &QTimer::timeout, this, &MainWindow::periodicSend);
 
     inputTabWidgetHeight
         << ui->sendTab->minimumSizeHint().height()
@@ -308,6 +311,11 @@ void MainWindow::updatePortConfig()
     }
 }
 
+void MainWindow::periodicSend()
+{
+    on_textSendButton_pressed();
+}
+
 void MainWindow::addTxCount(int count)
 {
     static int txCount = 0;
@@ -363,7 +371,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         {
             on_textSendButton_pressed();
         }
-        else if(ui->commandLineSendComboBox->hasFocus())
+        else if (ui->commandLineSendComboBox->hasFocus())
         {
             on_commandLineSendButton_pressed();
             ui->commandLineSendComboBox->setCurrentText("");
@@ -531,6 +539,11 @@ void MainWindow::on_commandLineSendButton_pressed()
 
 void MainWindow::on_textSendButton_pressed()
 {
+    if (!ui->openAction->isChecked())
+    {
+        return;
+    }
+
     QString string = ui->sendTextEdit->toPlainText();
 
     if (txTypeComboBox->currentIndex() == TextType)
@@ -540,6 +553,30 @@ void MainWindow::on_textSendButton_pressed()
     else
     {
         serial->sendHexString(&string);
+    }
+}
+
+void MainWindow::on_periodicSendCheckBox_stateChanged(int state)
+{
+    if (state == Qt::Checked)
+    {
+        periodicSendTimer->start(ui->timerPeriodSpinBox->value());
+    }
+    else
+    {
+        periodicSendTimer->stop();
+    }
+}
+
+void MainWindow::on_timerPeriodSpinBox_valueChanged(int value)
+{
+    if (value > 0)
+    {
+        periodicSendTimer->setInterval(value);
+    }
+    else
+    {
+        periodicSendTimer->stop();
     }
 }
 

@@ -13,7 +13,7 @@ CoCOM is a Serial Port Utility for Embedded Software Engineer.
 - [ ] high level send && receive
   - [x] text encoding
   - [x] line break
-  - [ ] auto send
+  - [x] auto periodic send
 - [ ] delectable output view
   - [x] ligature support
   - [x] success && warn && error colorful hint

@@ -64,6 +64,9 @@ private slots:
     void on_textSendButton_pressed();
     void on_commandLineSendButton_pressed();
 
+    void on_periodicSendCheckBox_stateChanged(int state);
+    void on_timerPeriodSpinBox_valueChanged(int value);
+
     void portSelectComboBox_currentIndexChanged(int index);
     void serial_readyRead(int count, QByteArray *bytes);
     void serial_bytesSend(int count);
@@ -93,6 +96,7 @@ private:
     TextBrowser *textBrowser;
 
     QTimer *timer;
+    QTimer *periodicSendTimer;
 
     void setupUI();
     void setLayout(double rate);
@@ -104,6 +108,7 @@ private:
     void updatePortSelectText();
     void enumPorts();
     void updatePortConfig();
+    void periodicSend();
     void addTxCount(int count);
     void addRxCount(int count);
     void setStatusInfo(QString text);
