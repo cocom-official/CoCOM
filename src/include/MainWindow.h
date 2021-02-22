@@ -65,6 +65,7 @@ private slots:
 
     void on_openAction_toggled(bool checked);
     void on_clearAction_triggered(bool checked);
+    void on_goDownAction_triggered(bool checked);
     //
     void on_saveToFileAction_triggered(bool checked);
     void on_pinAction_toggled(bool checked);

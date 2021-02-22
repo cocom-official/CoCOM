@@ -381,6 +381,7 @@
    </attribute>
    <addaction name="openAction"/>
    <addaction name="clearAction"/>
+   <addaction name="goDownAction"/>
    <addaction name="separator"/>
    <addaction name="pinAction"/>
    <addaction name="saveToFileAction"/>
@@ -479,6 +480,18 @@
    </property>
    <property name="text">
     <string>sidebar</string>
+   </property>
+  </action>
+  <action name="goDownAction">
+   <property name="icon">
+    <iconset resource="../assets/assets.qrc">
+     <normaloff>:/assets/icons/level-down.svg</normaloff>:/assets/icons/level-down.svg</iconset>
+   </property>
+   <property name="text">
+    <string>goDown</string>
+   </property>
+   <property name="toolTip">
+    <string>go down</string>
    </property>
   </action>
  </widget>

@@ -2,6 +2,21 @@ cmake_minimum_required(VERSION 3.5)
 
 project(CoCOM LANGUAGES CXX)
 
+IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
+  FIND_PACKAGE(Git)
+  IF(GIT_FOUND)
+    EXECUTE_PROCESS(
+      COMMAND ${GIT_EXECUTABLE} rev-parse --short HEAD
+      WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+      OUTPUT_VARIABLE "CoCOM_COMMIT_ID"
+      ERROR_QUIET
+      OUTPUT_STRIP_TRAILING_WHITESPACE)
+  ELSE(GIT_FOUND)
+    SET(CoCOM_COMMIT_ID 0)
+  ENDIF(GIT_FOUND)
+ENDIF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
+add_definitions(-DCOCOM_COMMIT_ID="${CoCOM_COMMIT_ID}")
+
 file(STRINGS "${CMAKE_SOURCE_DIR}/makespec/VERSION" CoCOM_VERSION)
 file(STRINGS "${CMAKE_SOURCE_DIR}/makespec/BUILD_VERSION" CoCOM_BUILD_VERSION)
 file(STRINGS "${CMAKE_SOURCE_DIR}/makespec/VERSION_SUFFIX" CoCOM_VERSION_SUFFIX)
@@ -41,6 +56,7 @@ set(rc_flag_vender_str "-DCOCOM_VENDER=${CoCOM_VENDER}")
 message(" ")
 message("CoCOM Version: ${CoCOM_VERSION_STRING_WITH_SUFFIX}")
 message("CoCOM Build Version: ${CoCOM_BUILD_VERSION}")
+message("Git Commit ID: ${CoCOM_COMMIT_ID}")
 message("┌─────────────────────────────────────────────────────────┐")
 message("│ CoCOM, A Cross Platform Serial Port Utility.            │")
 message("│ Licenced under GPLv3                                    │")

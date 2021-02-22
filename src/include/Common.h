@@ -9,6 +9,7 @@
 #define COCOM_VENDER ""
 #define COCOM_HOMEPAGE ""
 #define COCOM_VERSION_STRING_WITH_SUFFIX ""
+#define COCOM_COMMIT_ID ""
 #endif
 
 enum SerialConfigIndex

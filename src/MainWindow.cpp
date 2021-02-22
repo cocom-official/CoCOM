@@ -579,6 +579,13 @@ void MainWindow::on_clearAction_triggered(bool checked)
     addTxCount(-1);
 }
 
+void MainWindow::on_goDownAction_triggered(bool checked)
+{
+    Q_UNUSED(checked);
+    ui->outputTextBrowser->verticalScrollBar()->setValue(
+        ui->outputTextBrowser->verticalScrollBar()->maximum());
+}
+
 void MainWindow::on_saveToFileAction_triggered(bool checked)
 {
     Q_UNUSED(checked);
@@ -709,11 +716,11 @@ void MainWindow::statusLabel_mouseButtonEvent(QWidget *obj, QMouseEvent *event)
         {
             addTxCount(-1);
         }
-        else if(obj == statusRxLabel)
+        else if (obj == statusRxLabel)
         {
             addRxCount(-1);
         }
-        else if(obj == statusInfoLabel)
+        else if (obj == statusInfoLabel)
         {
             setStatusInfo(tr("Ready"));
         }

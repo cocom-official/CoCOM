@@ -19,32 +19,52 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="107"/>
-        <source>vx.x.x.x</source>
+        <location filename="../../ui/configDialog.ui" line="112"/>
+        <source>Version: vx.x.x.x</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="123"/>
+        <location filename="../../ui/configDialog.ui" line="128"/>
+        <source>Commit: x.x.x.x</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../ui/configDialog.ui" line="164"/>
+        <source>Qt:x.x.x.x</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../ui/configDialog.ui" line="180"/>
+        <source>Lua:x.x.x.x</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../ui/configDialog.ui" line="238"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/cocom-official/CoCOM&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Home Page&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/cocom-official/CoCOM&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;主页&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../ui/configDialog.ui" line="257"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/zt-luo&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;GitHub&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../ui/configDialog.ui" line="211"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;CoCOM is a Serial Port Utility for Embedded Software Engineer.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="153"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/cocom-official/CoCOM&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;GitHub&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../ui/configDialog.ui" line="172"/>
+        <location filename="../../ui/configDialog.ui" line="276"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://blog.ztluo.dev/&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Blog&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://blog.ztluo.dev/&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;博客&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="237"/>
+        <location filename="../../ui/configDialog.ui" line="341"/>
         <source>OK</source>
         <translation>确认</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="244"/>
+        <location filename="../../ui/configDialog.ui" line="348"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -57,6 +77,11 @@
         <location filename="../../src/ConfigDialog.cpp" line="30"/>
         <source>About</source>
         <translation>关于</translation>
+    </message>
+    <message>
+        <location filename="../../src/ConfigDialog.cpp" line="37"/>
+        <source>Version</source>
+        <translation>版本号</translation>
     </message>
 </context>
 <context>
@@ -114,49 +139,59 @@
         <translation>工具栏</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="400"/>
+        <location filename="../../ui/mainWindow.ui" line="401"/>
         <source>pin</source>
         <translation>固定窗口</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="412"/>
+        <location filename="../../ui/mainWindow.ui" line="413"/>
         <source>open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="424"/>
+        <location filename="../../ui/mainWindow.ui" line="425"/>
         <source>pause</source>
         <translation>暂停</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="433"/>
+        <location filename="../../ui/mainWindow.ui" line="434"/>
         <source>stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="442"/>
+        <location filename="../../ui/mainWindow.ui" line="443"/>
         <source>clear</source>
         <translation>清除</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="451"/>
+        <location filename="../../ui/mainWindow.ui" line="452"/>
         <source>setting</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="460"/>
+        <location filename="../../ui/mainWindow.ui" line="461"/>
         <source>tools</source>
         <translation>工具</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="469"/>
+        <location filename="../../ui/mainWindow.ui" line="470"/>
         <source>file</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="481"/>
+        <location filename="../../ui/mainWindow.ui" line="482"/>
         <source>sidebar</source>
         <translation>侧边栏</translation>
+    </message>
+    <message>
+        <location filename="../../ui/mainWindow.ui" line="491"/>
+        <source>goDown</source>
+        <translation>转到底部</translation>
+    </message>
+    <message>
+        <location filename="../../ui/mainWindow.ui" line="494"/>
+        <source>go down</source>
+        <translation>转到底部</translation>
     </message>
     <message>
         <location filename="../../src/MainWindow.cpp" line="48"/>
@@ -170,7 +205,7 @@
     </message>
     <message>
         <location filename="../../src/MainWindow.cpp" line="77"/>
-        <location filename="../../src/MainWindow.cpp" line="718"/>
+        <location filename="../../src/MainWindow.cpp" line="725"/>
         <source>Ready</source>
         <translation>就绪</translation>
     </message>
@@ -256,12 +291,12 @@
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="590"/>
+        <location filename="../../src/MainWindow.cpp" line="597"/>
         <source>Save Output To File</source>
         <translation>保存输出到文件</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="592"/>
+        <location filename="../../src/MainWindow.cpp" line="599"/>
         <source>Text files (*.txt)</source>
         <translation>文本文件 (*.txt)</translation>
     </message>

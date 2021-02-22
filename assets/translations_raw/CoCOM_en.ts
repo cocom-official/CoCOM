@@ -19,32 +19,52 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="107"/>
-        <source>vx.x.x.x</source>
+        <location filename="../../ui/configDialog.ui" line="112"/>
+        <source>Version: vx.x.x.x</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="123"/>
+        <location filename="../../ui/configDialog.ui" line="128"/>
+        <source>Commit: x.x.x.x</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/configDialog.ui" line="164"/>
+        <source>Qt:x.x.x.x</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/configDialog.ui" line="180"/>
+        <source>Lua:x.x.x.x</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/configDialog.ui" line="238"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/cocom-official/CoCOM&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Home Page&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/configDialog.ui" line="257"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/zt-luo&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;GitHub&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/configDialog.ui" line="211"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;CoCOM is a Serial Port Utility for Embedded Software Engineer.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="153"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/cocom-official/CoCOM&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;GitHub&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/configDialog.ui" line="172"/>
+        <location filename="../../ui/configDialog.ui" line="276"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://blog.ztluo.dev/&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Blog&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="237"/>
+        <location filename="../../ui/configDialog.ui" line="341"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="244"/>
+        <location filename="../../ui/configDialog.ui" line="348"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -56,6 +76,11 @@
     <message>
         <location filename="../../src/ConfigDialog.cpp" line="30"/>
         <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/ConfigDialog.cpp" line="37"/>
+        <source>Version</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -114,48 +139,58 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="400"/>
+        <location filename="../../ui/mainWindow.ui" line="401"/>
         <source>pin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="412"/>
+        <location filename="../../ui/mainWindow.ui" line="413"/>
         <source>open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="424"/>
+        <location filename="../../ui/mainWindow.ui" line="425"/>
         <source>pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="433"/>
+        <location filename="../../ui/mainWindow.ui" line="434"/>
         <source>stop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="442"/>
+        <location filename="../../ui/mainWindow.ui" line="443"/>
         <source>clear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="451"/>
+        <location filename="../../ui/mainWindow.ui" line="452"/>
         <source>setting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="460"/>
+        <location filename="../../ui/mainWindow.ui" line="461"/>
         <source>tools</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="469"/>
+        <location filename="../../ui/mainWindow.ui" line="470"/>
         <source>file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="481"/>
+        <location filename="../../ui/mainWindow.ui" line="482"/>
         <source>sidebar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/mainWindow.ui" line="491"/>
+        <source>goDown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/mainWindow.ui" line="494"/>
+        <source>go down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -170,7 +205,7 @@
     </message>
     <message>
         <location filename="../../src/MainWindow.cpp" line="77"/>
-        <location filename="../../src/MainWindow.cpp" line="718"/>
+        <location filename="../../src/MainWindow.cpp" line="725"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -256,12 +291,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="590"/>
+        <location filename="../../src/MainWindow.cpp" line="597"/>
         <source>Save Output To File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="592"/>
+        <location filename="../../src/MainWindow.cpp" line="599"/>
         <source>Text files (*.txt)</source>
         <translation type="unfinished"></translation>
     </message>
