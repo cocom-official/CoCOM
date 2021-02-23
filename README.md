@@ -23,7 +23,7 @@ CoCOM is a Serial Port Utility for Embedded Software Engineer.
 - [x] high DPI support
   - [x] auto scaling according to dpi
   - [x] auto scaling when moves betweens different dpi screen
-- [x] save text output to file
+- [x] save text output to file with encoding support
 - [ ] lua embed
   - [ ] new data received callback
   - [ ] new text line received callback
@@ -35,6 +35,7 @@ CoCOM is a Serial Port Utility for Embedded Software Engineer.
   - [ ] upgrade MCU firmware
 - [ ] small but useful feature
   - [x] window pin
+  - [ ] global shortcuts
 
 ## Build
 

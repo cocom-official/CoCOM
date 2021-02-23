@@ -205,7 +205,7 @@
     </message>
     <message>
         <location filename="../../src/MainWindow.cpp" line="77"/>
-        <location filename="../../src/MainWindow.cpp" line="725"/>
+        <location filename="../../src/MainWindow.cpp" line="728"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -271,32 +271,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="249"/>
+        <location filename="../../src/MainWindow.cpp" line="250"/>
         <source>Encoding</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="547"/>
+        <location filename="../../src/MainWindow.cpp" line="549"/>
         <source>Open Failed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="551"/>
+        <location filename="../../src/MainWindow.cpp" line="553"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="562"/>
+        <location filename="../../src/MainWindow.cpp" line="564"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="597"/>
+        <location filename="../../src/MainWindow.cpp" line="599"/>
         <source>Save Output To File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="599"/>
+        <location filename="../../src/MainWindow.cpp" line="601"/>
         <source>Text files (*.txt)</source>
         <translation type="unfinished"></translation>
     </message>

@@ -245,6 +245,7 @@ void MainWindow::setStatusBar()
 
     encodingBox->addItem("Local");
     encodingBox->addItem("UTF-8");
+    encodingBox->addItem("Latin1");
     encodingBox->setCurrentIndex(0);
     encodingBox->setToolTip(tr("Encoding"));
 
@@ -533,7 +534,8 @@ void MainWindow::txTypeComboBox_currentIndexChanged(int index)
 
 void MainWindow::encodingBox_currentIndexChanged(int index)
 {
-    textBrowser->setEncoding((EncodingType)index);
+    Q_UNUSED(index);
+    textBrowser->setEncoding(encodingBox->currentText());
 }
 
 void MainWindow::on_openAction_toggled(bool checked)
@@ -604,10 +606,11 @@ void MainWindow::on_saveToFileAction_triggered(bool checked)
     }
 
     QFile file(path);
-    if (file.open(QIODevice::ReadWrite))
+    if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
     {
         QTextStream stream(&file);
-        stream << ui->outputTextBrowser->document()->toPlainText() << Qt::endl;
+        stream.setCodec(getEncodingCodecFromString(encodingBox->currentText()));
+        stream << ui->outputTextBrowser->document()->toPlainText();
     }
 }
 
@@ -650,7 +653,7 @@ void MainWindow::on_commandLineSendButton_pressed()
 
     if (txTypeComboBox->currentIndex() == TextType)
     {
-        serial->sendTextString(&string, (EncodingType)encodingBox->currentIndex(), (LineBreakType)lineBreakBox->currentIndex());
+        serial->sendTextString(&string, encodingBox->currentText(), (LineBreakType)lineBreakBox->currentIndex());
     }
     else
     {
@@ -669,7 +672,7 @@ void MainWindow::on_textSendButton_pressed()
 
     if (txTypeComboBox->currentIndex() == TextType)
     {
-        serial->sendTextString(&string, (EncodingType)encodingBox->currentIndex(), (LineBreakType)lineBreakBox->currentIndex());
+        serial->sendTextString(&string, encodingBox->currentText(), (LineBreakType)lineBreakBox->currentIndex());
     }
     else
     {

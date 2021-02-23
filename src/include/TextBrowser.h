@@ -19,7 +19,7 @@ public:
     ~TextBrowser();
 
     void setDataType(DataType type);
-    void setEncoding(EncodingType lEncoding);
+    void setEncoding(QString lEncoding);
     void insertData(QByteArray *data);
     void clear();
 
@@ -44,7 +44,7 @@ private:
     QTextCursor lockCursor;
     int scroll;
     int maxScroll;
-    EncodingType encoding;
+    QString encoding;
     char hexSeparator;
     bool hexUpperCase;
 

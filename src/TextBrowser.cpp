@@ -4,7 +4,7 @@ TextBrowser::TextBrowser(QObject *parent, QTextBrowser *browser)
     : QObject(parent),
       browser(browser),
       dataType(TextType),
-      encoding(LocalEnc),
+      encoding(DEFAULT_ENCODING),
       hexSeparator(' '),
       hexUpperCase(true)
 {
@@ -138,7 +138,7 @@ void TextBrowser::setDataType(DataType type)
     mutex.unlock();
 }
 
-void TextBrowser::setEncoding(EncodingType lEncoding)
+void TextBrowser::setEncoding(QString lEncoding)
 {
     encoding = lEncoding;
 }
@@ -160,19 +160,7 @@ void TextBrowser::insertData(QByteArray *data)
 
     if (dataType == TextType)
     {
-        QTextCodec *codec = nullptr;
-        switch (encoding)
-        {
-        case UTF_8:
-            codec = QTextCodec::codecForName("UTF-8");
-            break;
-
-        default:
-            codec = QTextCodec::codecForLocale();
-            break;
-        }
-
-        string = codec->toUnicode(*data);
+        string = getEncodingCodecFromString(encoding)->toUnicode(*data);
     }
     else
     {

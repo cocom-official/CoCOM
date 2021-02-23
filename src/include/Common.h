@@ -2,6 +2,7 @@
 
 #include <QtWidgets>
 #include <QSerialPort>
+#include <QTextCodec>
 
 /* dummy definitions */
 #ifndef COCOM_APPLICATIONNAME
@@ -11,6 +12,8 @@
 #define COCOM_VERSION_STRING_WITH_SUFFIX ""
 #define COCOM_COMMIT_ID ""
 #endif
+
+#define DEFAULT_ENCODING "Local"
 
 enum SerialConfigIndex
 {
@@ -34,12 +37,6 @@ enum LineBreakType
     LineBreakCRLF,
 };
 
-enum EncodingType
-{
-    LocalEnc = 0,
-    UTF_8,
-};
-
 extern const int indexToBaudRate[5];
 extern const QSerialPort::DataBits indexToDataBits[4];
 extern const QSerialPort::Parity indexToParity[5];
@@ -52,6 +49,7 @@ extern const QString warnKey[2];
 extern const QString errorKey[3];
 
 extern void changeObjectSize(const QObject &o, double objectRate);
+extern QTextCodec *getEncodingCodecFromString(QString encoding);
 
 class MouseButtonSignaler : public QObject
 {

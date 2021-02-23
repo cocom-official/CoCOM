@@ -71,3 +71,25 @@ void changeObjectSize(const QObject &o, double objectRate)
         }
     }
 }
+
+QTextCodec *getEncodingCodecFromString(QString encoding)
+{
+    QTextCodec *codec = nullptr;
+
+    if (encoding == DEFAULT_ENCODING)
+    {
+        codec = QTextCodec::codecForLocale();
+    }
+    else
+    {
+        codec = QTextCodec::codecForName(encoding.toUtf8());
+
+        if (codec == 0)
+        {
+            qDebug() << "Encoding: " << encoding << "NOT Found!" << "use Local";
+            codec = QTextCodec::codecForLocale();
+        }
+    }
+
+    return codec;
+}

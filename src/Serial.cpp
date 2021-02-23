@@ -122,27 +122,14 @@ void Serial::sendHexString(QString *string)
     currentPort.port->write(bytes);
 }
 
-void Serial::sendTextString(QString *string, EncodingType encodingType, LineBreakType linebreak)
+void Serial::sendTextString(QString *string, QString encoding, LineBreakType linebreak)
 {
     if (string->length() == 0)
     {
         return;
     }
 
-    QTextCodec *codec = nullptr;
-
-    switch (encodingType)
-    {
-    case UTF_8:
-        codec = QTextCodec::codecForName("UTF-8");
-        break;
-
-    default:
-        codec = QTextCodec::codecForLocale();
-        break;
-    }
-
-    QByteArray bytes = codec->fromUnicode(*string);
+    QByteArray bytes = getEncodingCodecFromString(encoding)->fromUnicode(*string);
 
     switch (linebreak)
     {

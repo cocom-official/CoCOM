@@ -205,7 +205,7 @@
     </message>
     <message>
         <location filename="../../src/MainWindow.cpp" line="77"/>
-        <location filename="../../src/MainWindow.cpp" line="725"/>
+        <location filename="../../src/MainWindow.cpp" line="728"/>
         <source>Ready</source>
         <translation>就绪</translation>
     </message>
@@ -271,32 +271,32 @@
         <translation>行尾结束符</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="249"/>
+        <location filename="../../src/MainWindow.cpp" line="250"/>
         <source>Encoding</source>
         <translation>编码格式</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="547"/>
+        <location filename="../../src/MainWindow.cpp" line="549"/>
         <source>Open Failed!</source>
         <translation>打开失败！</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="551"/>
+        <location filename="../../src/MainWindow.cpp" line="553"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="562"/>
+        <location filename="../../src/MainWindow.cpp" line="564"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="597"/>
+        <location filename="../../src/MainWindow.cpp" line="599"/>
         <source>Save Output To File</source>
         <translation>保存输出到文件</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="599"/>
+        <location filename="../../src/MainWindow.cpp" line="601"/>
         <source>Text files (*.txt)</source>
         <translation>文本文件 (*.txt)</translation>
     </message>

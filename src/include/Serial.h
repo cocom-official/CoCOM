@@ -43,7 +43,7 @@ public:
     bool isOpen(int32_t index);
     void sendRawData(QByteArray *bytes);
     void sendHexString(QString *bytes);
-    void sendTextString(QString *bytes, EncodingType encodingType, LineBreakType linebreak);
+    void sendTextString(QString *bytes, QString encoding, LineBreakType linebreak);
     bool config(uint baudrate, uint databits, uint parity, uint stopbits, uint flowControl);
     QString getPortStr(int index);
     void enumPorts();
