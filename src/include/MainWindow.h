@@ -31,6 +31,8 @@
 #include <QtWinExtras>
 #endif
 
+#include <QHotkey>
+
 #include "ConfigDialog.h"
 #include "Serial.h"
 #include "TextBrowser.h"
@@ -78,6 +80,8 @@ private slots:
     void on_timerPeriodSpinBox_valueChanged(int value);
 
     void statusLabel_mouseButtonEvent(QWidget *obj, QMouseEvent *event);
+
+    void showHotkey_activated();
 
     void portSelectComboBox_currentIndexChanged(int index);
     void serial_readyRead(int count, QByteArray *bytes);

@@ -33,6 +33,12 @@ MainWindow::MainWindow(QWidget *parent)
     setupUI();
 
     setupSerialPort();
+
+    QHotkey *hotkey = new QHotkey(QKeySequence("Ctrl+Alt+Z"), true);
+    qDebug() << "hotkey Is Registered: " << hotkey->isRegistered();
+
+    connect(hotkey, &QHotkey::activated,
+            this, &MainWindow::showHotkey_activated);
 }
 
 MainWindow::~MainWindow()
@@ -727,6 +733,23 @@ void MainWindow::statusLabel_mouseButtonEvent(QWidget *obj, QMouseEvent *event)
         {
             setStatusInfo(tr("Ready"));
         }
+    }
+}
+
+void MainWindow::showHotkey_activated()
+{
+    if (isActiveWindow())
+    {
+        showMinimized();
+    }
+    else
+    {
+        showNormal();
+        raise();
+        activateWindow();
+        raise();
+        QApplication::setActiveWindow(this);
+        raise();
     }
 }
 

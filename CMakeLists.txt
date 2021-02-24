@@ -201,6 +201,15 @@ target_compile_options(
 #     ${GLIB_LDFLAGS}
 #     )
 
+add_subdirectory("libs/QHotkey/")
+add_subdirectory("libs/fflua/")
+
+target_link_libraries(
+    ${PROJECT_NAME} PRIVATE
+    QHotkey::QHotkey
+    fflua
+)
+
 target_include_directories(
     ${PROJECT_NAME} PRIVATE
     "src/include/"
