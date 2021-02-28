@@ -38,7 +38,7 @@ public:
     int32_t count();
     void setCurrentPort(int32_t index);
     int currentIndex();
-    bool open();
+    int open();
     void close();
     bool isOpen(int32_t index);
     void sendRawData(QByteArray *bytes);

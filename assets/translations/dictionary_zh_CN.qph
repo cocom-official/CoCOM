@@ -248,4 +248,20 @@
     <source>FlowControl</source>
     <target>流控</target>
 </phrase>
+<phrase>
+    <source>,</source>
+    <target>，</target>
+</phrase>
+<phrase>
+    <source>Busy</source>
+    <target>忙</target>
+</phrase>
+<phrase>
+    <source>Null</source>
+    <target>空</target>
+</phrase>
+<phrase>
+    <source>Unknow Reason</source>
+    <target>未知原因</target>
+</phrase>
 </QPH>

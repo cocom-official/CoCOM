@@ -194,7 +194,7 @@ void MainWindow::setStatusBar()
     connect(statueLabelSignaler, &MouseButtonSignaler::mouseButtonEvent,
             this, &MainWindow::statusLabel_mouseButtonEvent);
 
-    for(size_t i = 0;i < sizeof(configBaudRate) / sizeof(configBaudRate[0]); i++)
+    for (size_t i = 0; i < sizeof(configBaudRate) / sizeof(configBaudRate[0]); i++)
     {
         baudrateComboBox->addItem(configBaudRate[i].str);
     }
@@ -202,28 +202,28 @@ void MainWindow::setStatusBar()
     baudrateComboBox->setCurrentIndex(defaultSerialConfig.baudRate);
     baudrateComboBox->setToolTip(tr("Baudrate"));
 
-    for(size_t i = 0;i < sizeof(configDataBits) / sizeof(configDataBits[0]); i++)
+    for (size_t i = 0; i < sizeof(configDataBits) / sizeof(configDataBits[0]); i++)
     {
         dataBitsComboBox->addItem(configDataBits[i].str);
     }
     dataBitsComboBox->setCurrentIndex(defaultSerialConfig.dataBits);
     dataBitsComboBox->setToolTip(tr("Data Bits"));
 
-    for(size_t i = 0;i < sizeof(configParity) / sizeof(configParity[0]); i++)
+    for (size_t i = 0; i < sizeof(configParity) / sizeof(configParity[0]); i++)
     {
         parityComboBox->addItem(configParity[i].str);
     }
     parityComboBox->setCurrentIndex(defaultSerialConfig.parity);
     parityComboBox->setToolTip(tr("Parity"));
 
-    for(size_t i = 0;i < sizeof(configStopBits) / sizeof(configStopBits[0]); i++)
+    for (size_t i = 0; i < sizeof(configStopBits) / sizeof(configStopBits[0]); i++)
     {
         stopBitsComboBox->addItem(configStopBits[i].str);
     }
     stopBitsComboBox->setCurrentIndex(defaultSerialConfig.stopBits);
     stopBitsComboBox->setToolTip(tr("Stop Bits"));
 
-    for(size_t i = 0;i < sizeof(configFlowControl) / sizeof(configFlowControl[0]); i++)
+    for (size_t i = 0; i < sizeof(configFlowControl) / sizeof(configFlowControl[0]); i++)
     {
         flowComboBox->addItem(configFlowControl[i].str);
     }
@@ -246,7 +246,7 @@ void MainWindow::setStatusBar()
     lineBreakBox->addItem("OFF");
     lineBreakBox->addItem("LF");
     lineBreakBox->addItem("CRLF");
-    lineBreakBox->setCurrentIndex(2);
+    lineBreakBox->setCurrentIndex(DEFAULT_LINEBREAK_INDEX);
     lineBreakBox->setToolTip(tr("Line Break"));
 
     encodingBox->addItem("Local");
@@ -532,7 +532,7 @@ void MainWindow::baudrateComboBox_currentTextChanged(const QString &text)
     {
         if (!serial->setBaudRate(text.toInt()))
         {
-            setStatusInfo(tr("set")+ " " + tr("BaudRate") + " " + tr("fail") + "!");
+            setStatusInfo(tr("set") + " " + tr("BaudRate") + " " + tr("fail") + "!");
             baudrateComboBox->setCurrentText(lastText);
         }
         else
@@ -547,7 +547,7 @@ void MainWindow::dataBitsComboBox_currentIndexChanged(int index)
     static int lastIndex = 0;
     if (!serial->setDataBits(index))
     {
-        setStatusInfo(tr("set")+ " " + tr("DataBits") + " " + tr("fail") + "!");
+        setStatusInfo(tr("set") + " " + tr("DataBits") + " " + tr("fail") + "!");
         dataBitsComboBox->setCurrentIndex(lastIndex);
     }
     else
@@ -561,7 +561,7 @@ void MainWindow::parityComboBox_currentIndexChanged(int index)
     static int lastIndex = 0;
     if (!serial->setParity(index))
     {
-        setStatusInfo(tr("set")+ " " + tr("Parity") + " " + tr("fail") + "!");
+        setStatusInfo(tr("set") + " " + tr("Parity") + " " + tr("fail") + "!");
         parityComboBox->setCurrentIndex(lastIndex);
     }
     else
@@ -575,7 +575,7 @@ void MainWindow::stopBitsComboBox_currentIndexChanged(int index)
     static int lastIndex = 0;
     if (!serial->setStopBits(index))
     {
-        setStatusInfo(tr("set")+ " " + tr("StopBits") + " " + tr("fail") + "!");
+        setStatusInfo(tr("set") + " " + tr("StopBits") + " " + tr("fail") + "!");
         stopBitsComboBox->setCurrentIndex(lastIndex);
     }
     else
@@ -589,7 +589,7 @@ void MainWindow::flowComboBox_currentIndexChanged(int index)
     static int lastIndex = 0;
     if (!serial->setFlowControl(index))
     {
-        setStatusInfo(tr("set")+ " " + tr("FlowControl") + " " + tr("fail") + "!");
+        setStatusInfo(tr("set") + " " + tr("FlowControl") + " " + tr("fail") + "!");
         flowComboBox->setCurrentIndex(lastIndex);
     }
     else
@@ -626,17 +626,37 @@ void MainWindow::encodingBox_currentIndexChanged(int index)
 
 void MainWindow::on_openAction_toggled(bool checked)
 {
-    QString portStr = serial->getPortStr(serial->currentIndex()).mid(2);
+    QString portName = serial->getPortStr(serial->currentIndex()).split("|")[0].mid(2);
+    QString portDesc = serial->getPortStr(serial->currentIndex()).split("|")[1];
     if (checked)
     {
-        if (!serial->open())
+        int ret = serial->open();
+
+        if (ret != OK)
         {
+            QString messageBoxTitle = tr("Open Failed!");
+            QString comma = tr(",");
             ui->openAction->setChecked(false);
-            QMessageBox::critical(this, tr("Open Failed!"), portStr + " " + tr("Open Failed!"));
+
+            switch (ret)
+            {
+            case E_Busy:
+                QMessageBox::critical(this, messageBoxTitle, portName + " " + portDesc + " " + tr("Busy") + comma + messageBoxTitle);
+                break;
+
+            case E_Null:
+                QMessageBox::critical(this, messageBoxTitle, portName + " " + portDesc + " " + tr("Null") + comma + messageBoxTitle);
+                break;
+
+            default:
+                QMessageBox::critical(this, messageBoxTitle, portName + " " + portDesc + " " + tr("Unknow Reason") + comma + messageBoxTitle);
+                break;
+            }
+
             return;
         }
 
-        setStatusInfo(tr("Open") + " " + portStr);
+        setStatusInfo(tr("Open") + " " + portName + " " + portDesc);
 
         ui->openAction->setIcon(QIcon(":/assets/icons/pause.svg"));
         ui->textSendButton->setEnabled(true);
@@ -647,7 +667,7 @@ void MainWindow::on_openAction_toggled(bool checked)
     {
         serial->close();
 
-        setStatusInfo(tr("Close") + " " + portStr);
+        setStatusInfo(tr("Close") + " " + portName + " " + portDesc);
 
         ui->openAction->setIcon(QIcon(":/assets/icons/play.svg"));
         ui->textSendButton->setEnabled(false);
@@ -694,9 +714,11 @@ void MainWindow::on_saveToFileAction_triggered(bool checked)
     QFile file(path);
     if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
     {
-        QTextStream stream(&file);
-        stream.setCodec(getEncodingCodecFromString(encodingBox->currentText()));
-        stream << ui->outputTextBrowser->document()->toPlainText();
+        file.write(getEncodingCodecFromString(
+                       encodingBox->currentText())
+                       ->fromUnicode(
+                           ui->outputTextBrowser->document()->toPlainText()));
+        file.close();
     }
 }
 

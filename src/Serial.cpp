@@ -67,13 +67,17 @@ int Serial::currentIndex()
     return currentPort.index;
 }
 
-bool Serial::open()
+int Serial::open()
 {
-    if (currentPort.port == nullptr || currentPort.info == nullptr ||
-        currentPort.info->isBusy() || currentPort.info->isNull())
+    if (currentPort.port == nullptr || currentPort.info == nullptr
+        || currentPort.info->isNull())
     {
-        qDebug() << "serial port open fail";
-        return false;
+        return E_Null;
+    }
+
+    if (currentPort.info->isBusy())
+    {
+        return E_Busy;
     }
 
     bool ret = currentPort.port->open(QIODevice::OpenModeFlag::ReadWrite);
@@ -84,7 +88,7 @@ bool Serial::open()
                 this, &Serial::currenPort_readyRead, Qt::QueuedConnection);
     }
 
-    return ret;
+    return OK;
 }
 
 void Serial::close()

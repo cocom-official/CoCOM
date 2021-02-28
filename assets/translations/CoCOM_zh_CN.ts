@@ -370,7 +370,7 @@
     </message>
     <message>
         <location filename="../../src/MainWindow.cpp" line="83"/>
-        <location filename="../../src/MainWindow.cpp" line="815"/>
+        <location filename="../../src/MainWindow.cpp" line="834"/>
         <source>Ready</source>
         <translation>就绪</translation>
     </message>
@@ -480,27 +480,47 @@
         <translation>流控</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="635"/>
+        <location filename="../../src/MainWindow.cpp" line="636"/>
         <source>Open Failed!</source>
         <translation>打开失败！</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="639"/>
+        <location filename="../../src/MainWindow.cpp" line="637"/>
+        <source>,</source>
+        <translation>，</translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="643"/>
+        <source>Busy</source>
+        <translation>忙</translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="647"/>
+        <source>Null</source>
+        <translation>空</translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="651"/>
+        <source>Unknow Reason</source>
+        <translation>未知原因</translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="658"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="650"/>
+        <location filename="../../src/MainWindow.cpp" line="669"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="685"/>
+        <location filename="../../src/MainWindow.cpp" line="704"/>
         <source>Save Output To File</source>
         <translation>保存输出到文件</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="687"/>
+        <location filename="../../src/MainWindow.cpp" line="706"/>
         <source>Text files (*.txt)</source>
         <translation>文本文件 (*.txt)</translation>
     </message>

@@ -16,6 +16,26 @@
 
 #define DEFAULT_ENCODING "Local"
 
+
+#ifdef _WIN32
+#define DEFAULT_LINEBREAK_INDEX 2
+#elif __APPLE__
+#define DEFAULT_LINEBREAK_INDEX 1
+#elif __linux__
+#define DEFAULT_LINEBREAK_INDEX 1
+#elif __unix__
+#define DEFAULT_LINEBREAK_INDEX 1
+#else
+#error "un-supported plantform"
+#endif
+enum CoCOM_Return
+{
+    OK = 0,
+    E_Null,
+    E_Busy,
+    E_Invalid,
+};
+
 enum DataType
 {
     TextType = 0,
