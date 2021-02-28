@@ -49,6 +49,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void setStatusInfo(QString text);
 
 private slots:
     void on_inputTabWidget_currentChanged(int index);
@@ -134,7 +135,6 @@ private:
     void periodicSend();
     void addTxCount(int count);
     void addRxCount(int count);
-    void setStatusInfo(QString text);
 
     /* event */
     void moveEvent(QMoveEvent *event);

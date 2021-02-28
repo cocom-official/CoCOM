@@ -69,22 +69,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/ConfigDialog.cpp" line="25"/>
+        <location filename="../../src/ConfigDialog.cpp" line="33"/>
         <source>Common</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/ConfigDialog.cpp" line="30"/>
+        <location filename="../../src/ConfigDialog.cpp" line="38"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/ConfigDialog.cpp" line="37"/>
+        <location filename="../../src/ConfigDialog.cpp" line="45"/>
         <source>Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/ConfigDialog.cpp" line="38"/>
+        <location filename="../../src/ConfigDialog.cpp" line="46"/>
         <source>Commit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -370,7 +370,7 @@
     </message>
     <message>
         <location filename="../../src/MainWindow.cpp" line="83"/>
-        <location filename="../../src/MainWindow.cpp" line="834"/>
+        <location filename="../../src/MainWindow.cpp" line="837"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -480,47 +480,47 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="636"/>
+        <location filename="../../src/MainWindow.cpp" line="637"/>
         <source>Open Failed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="637"/>
+        <location filename="../../src/MainWindow.cpp" line="638"/>
         <source>,</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="643"/>
+        <location filename="../../src/MainWindow.cpp" line="644"/>
         <source>Busy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="647"/>
+        <location filename="../../src/MainWindow.cpp" line="648"/>
         <source>Null</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="651"/>
+        <location filename="../../src/MainWindow.cpp" line="652"/>
         <source>Unknow Reason</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="658"/>
+        <location filename="../../src/MainWindow.cpp" line="659"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="669"/>
+        <location filename="../../src/MainWindow.cpp" line="670"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="704"/>
+        <location filename="../../src/MainWindow.cpp" line="705"/>
         <source>Save Output To File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="706"/>
+        <location filename="../../src/MainWindow.cpp" line="707"/>
         <source>Text files (*.txt)</source>
         <translation type="unfinished"></translation>
     </message>

@@ -6,9 +6,11 @@
 #include <QScreen>
 #include <QWindow>
 #include <QListWidgetItem>
+#include <QFile>
 
 #include "Common.h"
 #include "lua.hpp"
+#include "fflua.h"
 
 namespace Ui
 {
@@ -32,9 +34,12 @@ private slots:
 private:
     Ui::ConfigDialog *ui;
     float dpiScaling;
+    MouseButtonSignaler *luaLabelSignaler;
 
     void setupUI();
     void refreshDPI();
 
     void enumStyles();
+
+    void luaLabel_mouseButtonEvent(QWidget *obj, QMouseEvent *event);
 };

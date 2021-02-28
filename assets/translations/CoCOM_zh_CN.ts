@@ -69,22 +69,22 @@
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../../src/ConfigDialog.cpp" line="25"/>
+        <location filename="../../src/ConfigDialog.cpp" line="33"/>
         <source>Common</source>
         <translation>通用</translation>
     </message>
     <message>
-        <location filename="../../src/ConfigDialog.cpp" line="30"/>
+        <location filename="../../src/ConfigDialog.cpp" line="38"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../../src/ConfigDialog.cpp" line="37"/>
+        <location filename="../../src/ConfigDialog.cpp" line="45"/>
         <source>Version</source>
         <translation>版本号</translation>
     </message>
     <message>
-        <location filename="../../src/ConfigDialog.cpp" line="38"/>
+        <location filename="../../src/ConfigDialog.cpp" line="46"/>
         <source>Commit</source>
         <translation>提交</translation>
     </message>
@@ -370,7 +370,7 @@
     </message>
     <message>
         <location filename="../../src/MainWindow.cpp" line="83"/>
-        <location filename="../../src/MainWindow.cpp" line="834"/>
+        <location filename="../../src/MainWindow.cpp" line="837"/>
         <source>Ready</source>
         <translation>就绪</translation>
     </message>
@@ -480,47 +480,47 @@
         <translation>流控</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="636"/>
+        <location filename="../../src/MainWindow.cpp" line="637"/>
         <source>Open Failed!</source>
         <translation>打开失败！</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="637"/>
+        <location filename="../../src/MainWindow.cpp" line="638"/>
         <source>,</source>
         <translation>，</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="643"/>
+        <location filename="../../src/MainWindow.cpp" line="644"/>
         <source>Busy</source>
         <translation>忙</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="647"/>
+        <location filename="../../src/MainWindow.cpp" line="648"/>
         <source>Null</source>
         <translation>空</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="651"/>
+        <location filename="../../src/MainWindow.cpp" line="652"/>
         <source>Unknow Reason</source>
         <translation>未知原因</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="658"/>
+        <location filename="../../src/MainWindow.cpp" line="659"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="669"/>
+        <location filename="../../src/MainWindow.cpp" line="670"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="704"/>
+        <location filename="../../src/MainWindow.cpp" line="705"/>
         <source>Save Output To File</source>
         <translation>保存输出到文件</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="706"/>
+        <location filename="../../src/MainWindow.cpp" line="707"/>
         <source>Text files (*.txt)</source>
         <translation>文本文件 (*.txt)</translation>
     </message>

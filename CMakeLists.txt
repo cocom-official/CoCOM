@@ -236,11 +236,13 @@ if (CMAKE_BUILD_TYPE STREQUAL Release) # Release
 
     if (WIN32) # WIN32
         set(pack_dir CoCOM)
+        set(scripts_path ${CMAKE_SOURCE_DIR}/scripts)
         add_custom_command(
             TARGET ${PROJECT_NAME} POST_BUILD
             COMMAND bash -c "echo post build"
             COMMAND bash -c "mkdir -p ${pack_dir}"
             COMMAND bash -c "cp CoCOM.exe ${pack_dir}"
+            COMMAND bash -c "cp -r ${scripts_path} ${pack_dir}/scripts"
             COMMAND python3 "${CMAKE_SOURCE_DIR}/tools/mingw-bundledlls/mingw-bundledlls" --copy "${CMAKE_BINARY_DIR}/${pack_dir}/CoCOM.exe"
             COMMAND bash -c "windeployqt ${CMAKE_BINARY_DIR}/${pack_dir}/CoCOM.exe --no-translations"
         )

@@ -1,10 +1,18 @@
+#ifdef _WIN32
+#include <io.h>
+#else
+#include <unistd.h>
+#endif
+#include "MainWindow.h"
+
 #include "ConfigDialog.h"
 #include "ui_configDialog.h"
 
 ConfigDialog::ConfigDialog(QWidget *parent)
     : QDialog(parent),
       ui(new Ui::ConfigDialog),
-      dpiScaling(1.0)
+      dpiScaling(1.0),
+      luaLabelSignaler(new MouseButtonSignaler)
 {
     setupUI();
 
@@ -40,6 +48,10 @@ void ConfigDialog::setupUI()
     ui->luaVersionLabel->setText(QString("Lua: ") + QString(LUA_VERSION_MAJOR) + "." + QString(LUA_VERSION_MINOR) + "." + QString(LUA_VERSION_RELEASE));
 
     refreshDPI();
+
+    luaLabelSignaler->installOn(ui->luaVersionLabel);
+    connect(luaLabelSignaler, &MouseButtonSignaler::mouseButtonEvent,
+            this, &ConfigDialog::luaLabel_mouseButtonEvent);
 }
 
 void ConfigDialog::refreshDPI()
@@ -102,4 +114,34 @@ void ConfigDialog::on_okButton_pressed()
 void ConfigDialog::on_cancelButton_pressed()
 {
     close();
+}
+
+void ConfigDialog::luaLabel_mouseButtonEvent(QWidget *obj, QMouseEvent *event)
+{
+    Q_UNUSED(obj);
+    int old = dup(1);
+    if (event->type() == QEvent::MouseButtonDblClick)
+    {
+        QTemporaryFile dup2_file;
+        dup2_file.open();
+
+        ff::fflua_t lua;
+        try
+        {
+            if (-1 == dup2(dup2_file.handle(), _fileno(stdout)))
+            {
+                qDebug() << "dup2 fail";
+            }
+            lua.load_file("scripts/hello_lua.lua");
+            fflush(stdout);
+            dup2(old, 1);
+        }
+        catch (exception &e)
+        {
+            qDebug() << "exception:" << e.what();
+        }
+
+        dup2_file.seek(0);
+        ((MainWindow *)parent())->setStatusInfo(QString(dup2_file.readAll()));
+    }
 }
