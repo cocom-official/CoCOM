@@ -3,6 +3,7 @@
 #else
 #include <unistd.h>
 #endif
+#include <stdio.h>
 #include "MainWindow.h"
 
 #include "ConfigDialog.h"
@@ -128,7 +129,7 @@ void ConfigDialog::luaLabel_mouseButtonEvent(QWidget *obj, QMouseEvent *event)
         ff::fflua_t lua;
         try
         {
-            if (-1 == dup2(dup2_file.handle(), _fileno(stdout)))
+            if (-1 == dup2(dup2_file.handle(), fileno(stdout)))
             {
                 qDebug() << "dup2 fail";
             }
