@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QString>
 #include <QtWidgets>
 #include <QSerialPort>
 #include <QTextCodec>
@@ -15,15 +16,6 @@
 
 #define DEFAULT_ENCODING "Local"
 
-enum SerialConfigIndex
-{
-    IndexBaudRate = 0,
-    IndexDataBits,
-    IndexParity,
-    IndexStopBits,
-    IndexFlowControl,
-};
-
 enum DataType
 {
     TextType = 0,
@@ -37,12 +29,29 @@ enum LineBreakType
     LineBreakCRLF,
 };
 
-extern const int indexToBaudRate[5];
-extern const QSerialPort::DataBits indexToDataBits[4];
-extern const QSerialPort::Parity indexToParity[5];
-extern const QSerialPort::StopBits indexToStopBits[3];
-extern const QSerialPort::FlowControl indexToFlowControl[3];
-extern const int defaultSerialConfig[5];
+template<class T>
+struct ComboBoxConfig
+{
+    T param;
+    QString str;
+};
+
+extern const ComboBoxConfig<int> configBaudRate[5];
+extern const ComboBoxConfig<QSerialPort::DataBits> configDataBits[4];
+extern const ComboBoxConfig<QSerialPort::Parity> configParity[5];
+extern const ComboBoxConfig<QSerialPort::StopBits> configStopBits[3];
+extern const ComboBoxConfig<QSerialPort::FlowControl> configFlowControl[3];
+
+typedef struct
+{
+    int baudRate;
+    int dataBits;
+    int parity;
+    int stopBits;
+    int flowControl;
+} PortConfig;
+
+extern const PortConfig defaultSerialConfig;
 
 extern const QString successKey[4];
 extern const QString warnKey[2];

@@ -44,9 +44,16 @@ public:
     void sendRawData(QByteArray *bytes);
     void sendHexString(QString *bytes);
     void sendTextString(QString *bytes, QString encoding, LineBreakType linebreak);
-    bool config(uint baudrate, uint databits, uint parity, uint stopbits, uint flowControl);
+    bool config(PortConfig config);
+    PortConfig getConfig();
     QString getPortStr(int index);
     void enumPorts();
+    /**/
+    bool setBaudRate(int32_t baudRate);
+    bool setDataBits(int32_t dataBits);
+    bool setParity(int32_t parity);
+    bool setStopBits(int32_t stopBits);
+    bool setFlowControl(int32_t flowControl);
 
 private:
     QByteArray bytes;

@@ -3,42 +3,42 @@
 
 #include "Common.h"
 
-const int indexToBaudRate[5] = {
-    9600,
-    38400,
-    57600,
-    115200,
-    921600,
+const ComboBoxConfig<int> configBaudRate[] = {
+    {9600, "9600"},
+    {38400, "38400"},
+    {57600, "57600"},
+    {115200, "115200"},
+    {921600, "921600"},
 };
 
-const QSerialPort::DataBits indexToDataBits[4] = {
-    QSerialPort::DataBits::Data5,
-    QSerialPort::DataBits::Data6,
-    QSerialPort::DataBits::Data7,
-    QSerialPort::DataBits::Data8,
+const ComboBoxConfig<QSerialPort::DataBits> configDataBits[] = {
+    {QSerialPort::DataBits::Data5, "5"},
+    {QSerialPort::DataBits::Data6, "6"},
+    {QSerialPort::DataBits::Data7, "7"},
+    {QSerialPort::DataBits::Data8, "8"},
 };
 
-const QSerialPort::Parity indexToParity[5] = {
-    QSerialPort::Parity::NoParity,
-    QSerialPort::Parity::EvenParity,
-    QSerialPort::Parity::OddParity,
-    QSerialPort::Parity::SpaceParity,
-    QSerialPort::Parity::MarkParity,
+const ComboBoxConfig<QSerialPort::Parity> configParity[] = {
+    {QSerialPort::Parity::NoParity, "None"},
+    {QSerialPort::Parity::EvenParity, "Even"},
+    {QSerialPort::Parity::OddParity, "Odd"},
+    {QSerialPort::Parity::SpaceParity, "Space"},
+    {QSerialPort::Parity::MarkParity, "Mark"},
 };
 
-const QSerialPort::StopBits indexToStopBits[3] = {
-    QSerialPort::StopBits::OneStop,
-    QSerialPort::StopBits::OneAndHalfStop,
-    QSerialPort::StopBits::TwoStop,
+const ComboBoxConfig<QSerialPort::StopBits> configStopBits[] = {
+    {QSerialPort::StopBits::OneStop, "1"},
+    {QSerialPort::StopBits::OneAndHalfStop, "1.5"},
+    {QSerialPort::StopBits::TwoStop, "2"},
 };
 
-const QSerialPort::FlowControl indexToFlowControl[3] = {
-    QSerialPort::FlowControl::NoFlowControl,
-    QSerialPort::FlowControl::HardwareControl,
-    QSerialPort::FlowControl::SoftwareControl,
+const ComboBoxConfig<QSerialPort::FlowControl> configFlowControl[] = {
+    {QSerialPort::FlowControl::NoFlowControl, "OFF"},
+    {QSerialPort::FlowControl::HardwareControl, "HFC"},
+    {QSerialPort::FlowControl::SoftwareControl, "SFC"},
 };
 
-const int defaultSerialConfig[5] = {3, 3, 0, 0, 0};
+const PortConfig defaultSerialConfig = {3, 3, 0, 0, 0};
 
 const QString successKey[4] = {
     "success",
@@ -86,7 +86,8 @@ QTextCodec *getEncodingCodecFromString(QString encoding)
 
         if (codec == 0)
         {
-            qDebug() << "Encoding: " << encoding << "NOT Found!" << "use Local";
+            qDebug() << "Encoding: " << encoding << "NOT Found!"
+                     << "use Local";
             codec = QTextCodec::codecForLocale();
         }
     }

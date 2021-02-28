@@ -128,6 +128,7 @@ private:
     void setConfigToolBar();
     void setStatusBar();
     void updatePortSelectText();
+    void updatePortsConfigComboBox();
     void enumPorts();
     void updatePortConfig();
     void periodicSend();

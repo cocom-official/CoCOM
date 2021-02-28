@@ -150,12 +150,14 @@ void Serial::sendTextString(QString *string, QString encoding, LineBreakType lin
     currentPort.port->write(bytes);
 }
 
-bool Serial::config(uint baudrate, uint databits, uint parity, uint stopbits, uint flowControl)
+bool Serial::config(PortConfig config)
 {
-    if (databits >= sizeof(indexToDataBits) ||
-        parity >= sizeof(indexToParity) ||
-        stopbits >= sizeof(indexToStopBits) ||
-        flowControl >= sizeof(indexToFlowControl))
+    bool ret = false;
+
+    if (config.dataBits >= (int)sizeof(configDataBits) ||
+        config.parity >= (int)sizeof(configParity) ||
+        config.stopBits >= (int)sizeof(configStopBits) ||
+        config.flowControl >= (int)sizeof(configFlowControl))
     {
         return false;
     }
@@ -166,13 +168,110 @@ bool Serial::config(uint baudrate, uint databits, uint parity, uint stopbits, ui
         return false;
     }
 
-    currentPort.port->setBaudRate(baudrate);
-    currentPort.port->setDataBits(indexToDataBits[databits]);
-    currentPort.port->setParity(indexToParity[parity]);
-    currentPort.port->setStopBits(indexToStopBits[stopbits]);
-    currentPort.port->setFlowControl(indexToFlowControl[flowControl]);
+    ret = currentPort.port->setBaudRate(config.baudRate);
+    if (!ret)
+    {
+        qWarning() << "Serial::config "
+                   << "setBaudRate "
+                   << "fail";
+        return ret;
+    }
+    ret = currentPort.port->setDataBits(configDataBits[config.dataBits].param);
+    if (!ret)
+    {
+        qWarning() << "Serial::config "
+                   << "setDataBits "
+                   << "fail";
+        return ret;
+    }
+    ret = currentPort.port->setParity(configParity[config.parity].param);
+    if (!ret)
+    {
+        qWarning() << "Serial::config "
+                   << "setParity "
+                   << "fail";
+        return ret;
+    }
+    ret = currentPort.port->setStopBits(configStopBits[config.stopBits].param);
+    if (!ret)
+    {
+        qWarning() << "Serial::config "
+                   << "setStopBits "
+                   << "fail";
+        return ret;
+    }
+    ret = currentPort.port->setFlowControl(configFlowControl[config.flowControl].param);
+    if (!ret)
+    {
+        qWarning() << "Serial::config "
+                   << "setFlowControl "
+                   << "fail";
+        return ret;
+    }
 
     return true;
+}
+
+PortConfig Serial::getConfig()
+{
+    if (!currentPort.port->isOpen())
+    {
+        return defaultSerialConfig;
+    }
+
+    PortConfig config;
+    size_t i = 0;
+
+    for (i = 0; i < sizeof(configBaudRate) / sizeof(configBaudRate[0]); i++)
+    {
+        if (configBaudRate[i].param == currentPort.port->baudRate())
+        {
+            config.baudRate = i;
+            break;
+        }
+    }
+    if (i == (int)(sizeof(configBaudRate) / sizeof(configBaudRate[0])))
+    {
+        config.baudRate = currentPort.port->baudRate();
+    }
+
+    for (i = 0; i < sizeof(configDataBits) / sizeof(configDataBits[0]); i++)
+    {
+        if (configDataBits[i].param == currentPort.port->dataBits())
+        {
+            config.dataBits = i;
+            break;
+        }
+    }
+
+    for (i = 0; i < sizeof(configParity) / sizeof(configParity[0]); i++)
+    {
+        if (configParity[i].param == currentPort.port->parity())
+        {
+            config.parity = i;
+            break;
+        }
+    }
+
+    for (i = 0; i < sizeof(configStopBits) / sizeof(configStopBits[0]); i++)
+    {
+        if (configStopBits[i].param == currentPort.port->stopBits())
+        {
+            config.stopBits = i;
+            break;
+        }
+    }
+
+    for (i = 0; i < sizeof(configFlowControl) / sizeof(configFlowControl[0]); i++)
+    {
+        if (configFlowControl[i].param == currentPort.port->flowControl())
+        {
+            config.flowControl = i;
+            break;
+        }
+    }
+
+    return config;
 }
 
 QString Serial::getPortStr(int index)
@@ -232,7 +331,7 @@ void Serial::enumPorts()
             lPort.port = new QSerialPort(comInfo.portName(), this);
             lPort.info = new QSerialPortInfo(*lPort.port);
 
-            lPort.port->setBaudRate(indexToBaudRate[defaultSerialConfig[IndexBaudRate]]);
+            lPort.port->setBaudRate(configBaudRate[defaultSerialConfig.baudRate].param);
         }
 
         lPort.index = index++;
@@ -271,6 +370,31 @@ void Serial::enumPorts()
     currentPort = ports[currentIndex];
 
     mutex.unlock();
+}
+
+bool Serial::setBaudRate(int32_t baudRate)
+{
+    return currentPort.port->setBaudRate(baudRate);
+}
+
+bool Serial::setDataBits(int32_t dataBits)
+{
+    return currentPort.port->setDataBits(configDataBits[dataBits].param);
+}
+
+bool Serial::setParity(int32_t parity)
+{
+    return currentPort.port->setParity(configParity[parity].param);
+}
+
+bool Serial::setStopBits(int32_t stopBits)
+{
+    return currentPort.port->setStopBits(configStopBits[stopBits].param);
+}
+
+bool Serial::setFlowControl(int32_t flowControl)
+{
+    return currentPort.port->setFlowControl(configFlowControl[flowControl].param);
 }
 
 void Serial::currenPort_readyRead()

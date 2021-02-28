@@ -194,40 +194,40 @@ void MainWindow::setStatusBar()
     connect(statueLabelSignaler, &MouseButtonSignaler::mouseButtonEvent,
             this, &MainWindow::statusLabel_mouseButtonEvent);
 
-    baudrateComboBox->addItem("9600");
-    baudrateComboBox->addItem("38400");
-    baudrateComboBox->addItem("57600");
-    baudrateComboBox->addItem("115200");
-    baudrateComboBox->addItem("921600");
+    for(size_t i = 0;i < sizeof(configBaudRate) / sizeof(configBaudRate[0]); i++)
+    {
+        baudrateComboBox->addItem(configBaudRate[i].str);
+    }
     baudrateComboBox->addItem("Custom");
-    baudrateComboBox->setCurrentIndex(defaultSerialConfig[IndexBaudRate]);
+    baudrateComboBox->setCurrentIndex(defaultSerialConfig.baudRate);
     baudrateComboBox->setToolTip(tr("Baudrate"));
 
-    dataBitsComboBox->addItem("5");
-    dataBitsComboBox->addItem("6");
-    dataBitsComboBox->addItem("7");
-    dataBitsComboBox->addItem("8");
-    dataBitsComboBox->setCurrentIndex(defaultSerialConfig[IndexDataBits]);
+    for(size_t i = 0;i < sizeof(configDataBits) / sizeof(configDataBits[0]); i++)
+    {
+        dataBitsComboBox->addItem(configDataBits[i].str);
+    }
+    dataBitsComboBox->setCurrentIndex(defaultSerialConfig.dataBits);
     dataBitsComboBox->setToolTip(tr("Data Bits"));
 
-    parityComboBox->addItem("None");
-    parityComboBox->addItem("Even");
-    parityComboBox->addItem("Odd");
-    parityComboBox->addItem("Space");
-    parityComboBox->addItem("Mark");
-    parityComboBox->setCurrentIndex(defaultSerialConfig[IndexParity]);
+    for(size_t i = 0;i < sizeof(configParity) / sizeof(configParity[0]); i++)
+    {
+        parityComboBox->addItem(configParity[i].str);
+    }
+    parityComboBox->setCurrentIndex(defaultSerialConfig.parity);
     parityComboBox->setToolTip(tr("Parity"));
 
-    stopBitsComboBox->addItem("1");
-    stopBitsComboBox->addItem("1.5");
-    stopBitsComboBox->addItem("2");
-    stopBitsComboBox->setCurrentIndex(defaultSerialConfig[IndexStopBits]);
+    for(size_t i = 0;i < sizeof(configStopBits) / sizeof(configStopBits[0]); i++)
+    {
+        stopBitsComboBox->addItem(configStopBits[i].str);
+    }
+    stopBitsComboBox->setCurrentIndex(defaultSerialConfig.stopBits);
     stopBitsComboBox->setToolTip(tr("Stop Bits"));
 
-    flowComboBox->addItem("OFF");
-    flowComboBox->addItem("HFC");
-    flowComboBox->addItem("SFC");
-    flowComboBox->setCurrentIndex(defaultSerialConfig[IndexFlowControl]);
+    for(size_t i = 0;i < sizeof(configFlowControl) / sizeof(configFlowControl[0]); i++)
+    {
+        flowComboBox->addItem(configFlowControl[i].str);
+    }
+    flowComboBox->setCurrentIndex(defaultSerialConfig.flowControl);
     flowComboBox->setToolTip(tr("Flow Control"));
     flowComboBox->setItemData(0, tr("Flow Control OFF"), Qt::ToolTipRole);
     flowComboBox->setItemData(1, tr("Hardware Flow Control"), Qt::ToolTipRole);
@@ -310,6 +310,40 @@ void MainWindow::updatePortSelectText()
     }
 }
 
+void MainWindow::updatePortsConfigComboBox()
+{
+    PortConfig config = serial->getConfig();
+
+    portSelect->blockSignals(true);
+    baudrateComboBox->blockSignals(true);
+    dataBitsComboBox->blockSignals(true);
+    parityComboBox->blockSignals(true);
+    stopBitsComboBox->blockSignals(true);
+    flowComboBox->blockSignals(true);
+
+    if (config.baudRate < (int)(sizeof(configBaudRate) / sizeof(configBaudRate[0])))
+    {
+        baudrateComboBox->setCurrentIndex(config.baudRate);
+    }
+    else
+    {
+        baudrateComboBox->setCurrentIndex(sizeof(configBaudRate) / sizeof(configBaudRate[0]));
+        baudrateComboBox->setCurrentText(QString::number(config.baudRate));
+    }
+
+    dataBitsComboBox->setCurrentIndex(config.dataBits);
+    parityComboBox->setCurrentIndex(config.parity);
+    stopBitsComboBox->setCurrentIndex(config.stopBits);
+    flowComboBox->setCurrentIndex(config.flowControl);
+
+    baudrateComboBox->blockSignals(false);
+    dataBitsComboBox->blockSignals(false);
+    parityComboBox->blockSignals(false);
+    stopBitsComboBox->blockSignals(false);
+    flowComboBox->blockSignals(false);
+    portSelect->blockSignals(false);
+}
+
 void MainWindow::enumPorts()
 {
     QAbstractItemView *view = portSelect->view();
@@ -339,11 +373,13 @@ void MainWindow::enumPorts()
 
 void MainWindow::updatePortConfig()
 {
-    bool ret = serial->config(baudrateComboBox->currentText().toInt(),
-                              dataBitsComboBox->currentIndex(),
-                              parityComboBox->currentIndex(),
-                              stopBitsComboBox->currentIndex(),
-                              flowComboBox->currentIndex());
+    PortConfig config;
+    config.baudRate = baudrateComboBox->currentText().toInt();
+    config.dataBits = dataBitsComboBox->currentIndex();
+    config.parity = parityComboBox->currentIndex();
+    config.stopBits = stopBitsComboBox->currentIndex();
+    config.flowControl = flowComboBox->currentIndex();
+    bool ret = serial->config(config);
     if (!ret)
     {
         qDebug() << "port config fail";
@@ -487,35 +523,79 @@ void MainWindow::baudrateComboBox_currentIndexChanged(int index)
 
 void MainWindow::baudrateComboBox_currentTextChanged(const QString &text)
 {
+    static QString lastText;
     if (text == "Custom")
     {
         baudrateComboBox->setCurrentText("");
     }
-    updatePortConfig();
+    else
+    {
+        if (!serial->setBaudRate(text.toInt()))
+        {
+            setStatusInfo(tr("set BaudRate fail!"));
+            baudrateComboBox->setCurrentText(lastText);
+        }
+        else
+        {
+            lastText = text;
+        }
+    }
 }
 
 void MainWindow::dataBitsComboBox_currentIndexChanged(int index)
 {
-    Q_UNUSED(index);
-    updatePortConfig();
+    static int lastIndex = 0;
+    if (!serial->setDataBits(index))
+    {
+        setStatusInfo(tr("set DataBits fail!"));
+        dataBitsComboBox->setCurrentIndex(lastIndex);
+    }
+    else
+    {
+        lastIndex = index;
+    }
 }
 
 void MainWindow::parityComboBox_currentIndexChanged(int index)
 {
-    Q_UNUSED(index);
-    updatePortConfig();
+    static int lastIndex = 0;
+    if (!serial->setParity(index))
+    {
+        setStatusInfo(tr("set Parity fail!"));
+        parityComboBox->setCurrentIndex(lastIndex);
+    }
+    else
+    {
+        lastIndex = index;
+    }
 }
 
 void MainWindow::stopBitsComboBox_currentIndexChanged(int index)
 {
-    Q_UNUSED(index);
-    updatePortConfig();
+    static int lastIndex = 0;
+    if (!serial->setStopBits(index))
+    {
+        setStatusInfo(tr("set StopBits fail!"));
+        stopBitsComboBox->setCurrentIndex(lastIndex);
+    }
+    else
+    {
+        lastIndex = index;
+    }
 }
 
 void MainWindow::flowComboBox_currentIndexChanged(int index)
 {
-    Q_UNUSED(index);
-    updatePortConfig();
+    static int lastIndex = 0;
+    if (!serial->setFlowControl(index))
+    {
+        setStatusInfo(tr("set FlowControl fail!"));
+        flowComboBox->setCurrentIndex(lastIndex);
+    }
+    else
+    {
+        lastIndex = index;
+    }
 }
 
 void MainWindow::rxTypeComboBox_currentIndexChanged(int index)
@@ -714,6 +794,7 @@ void MainWindow::portSelectComboBox_currentIndexChanged(int index)
 {
     serial->setCurrentPort(index);
     updatePortSelectText();
+    updatePortsConfigComboBox();
 }
 
 void MainWindow::statusLabel_mouseButtonEvent(QWidget *obj, QMouseEvent *event)
