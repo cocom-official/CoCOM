@@ -51,7 +51,7 @@ jobs:
       id: create_release
       with:
         draft: false
-        prerelease: true
+        # prerelease: true
         release_name: ${{ steps.version.outputs.version }}
         tag_name: ${{ github.ref }}
         # body_path: CHANGELOG.md
