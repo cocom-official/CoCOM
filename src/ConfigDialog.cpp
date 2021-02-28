@@ -35,9 +35,9 @@ void ConfigDialog::setupUI()
     ui->stackedWidget->setCurrentIndex(0);
 
     ui->versionLabel->setText(tr("Version") + QString(": v") + QString(COCOM_VERSION_STRING_WITH_SUFFIX));
-    ui->commitLabel->setText(QString("Commit ID: ") + QString(COCOM_COMMIT_ID));
+    ui->commitLabel->setText(tr("Commit") + QString(": ") + QString(COCOM_COMMIT_ID));
     ui->qtVersionLabel->setText(QString("Qt: ") + QString(QT_VERSION_STR));
-    ui->luaVersionLabel->setText(QString("Lua: ") + "5.3.6");
+    ui->luaVersionLabel->setText(QString("Lua: ") + QString(LUA_VERSION_MAJOR) + "." + QString(LUA_VERSION_MINOR) + "." + QString(LUA_VERSION_RELEASE));
 
     refreshDPI();
 }

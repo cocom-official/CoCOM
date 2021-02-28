@@ -8,6 +8,7 @@
 #include <QListWidgetItem>
 
 #include "Common.h"
+#include "lua.hpp"
 
 namespace Ui
 {

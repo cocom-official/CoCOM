@@ -139,7 +139,7 @@ set(src_list
 
 
 # qt5_add_translation(QM_FILES ${ts_list})
-qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${ts_raw_list} ${src_list})
+qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${ts_list})
 
 configure_file(assets/translations.qrc ${CMAKE_BINARY_DIR} COPYONLY)
 
@@ -202,6 +202,7 @@ target_compile_options(
 #     )
 
 add_subdirectory("libs/QHotkey/")
+set (NO_FFLUA_TEST "y")
 add_subdirectory("libs/fflua/")
 
 target_link_libraries(

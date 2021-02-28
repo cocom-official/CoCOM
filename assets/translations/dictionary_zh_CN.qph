@@ -208,4 +208,44 @@
     <source>go down</source>
     <target>转到底部</target>
 </phrase>
+<phrase>
+    <source>Version</source>
+    <target>版本</target>
+</phrase>
+<phrase>
+    <source>Commit</source>
+    <target>提交</target>
+</phrase>
+<phrase>
+    <source>Commit</source>
+    <target>提交</target>
+</phrase>
+<phrase>
+    <source>set</source>
+    <target>设置</target>
+</phrase>
+<phrase>
+    <source>BaudRate</source>
+    <target>波特率</target>
+</phrase>
+<phrase>
+    <source>fail</source>
+    <target>失败</target>
+</phrase>
+<phrase>
+    <source>DataBits</source>
+    <target>数据位</target>
+</phrase>
+<phrase>
+    <source>StopBits</source>
+    <target>停止位</target>
+</phrase>
+<phrase>
+    <source>StopBits</source>
+    <target>停止位</target>
+</phrase>
+<phrase>
+    <source>FlowControl</source>
+    <target>流控</target>
+</phrase>
 </QPH>

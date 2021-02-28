@@ -532,7 +532,7 @@ void MainWindow::baudrateComboBox_currentTextChanged(const QString &text)
     {
         if (!serial->setBaudRate(text.toInt()))
         {
-            setStatusInfo(tr("set BaudRate fail!"));
+            setStatusInfo(tr("set")+ " " + tr("BaudRate") + " " + tr("fail") + "!");
             baudrateComboBox->setCurrentText(lastText);
         }
         else
@@ -547,7 +547,7 @@ void MainWindow::dataBitsComboBox_currentIndexChanged(int index)
     static int lastIndex = 0;
     if (!serial->setDataBits(index))
     {
-        setStatusInfo(tr("set DataBits fail!"));
+        setStatusInfo(tr("set")+ " " + tr("DataBits") + " " + tr("fail") + "!");
         dataBitsComboBox->setCurrentIndex(lastIndex);
     }
     else
@@ -561,7 +561,7 @@ void MainWindow::parityComboBox_currentIndexChanged(int index)
     static int lastIndex = 0;
     if (!serial->setParity(index))
     {
-        setStatusInfo(tr("set Parity fail!"));
+        setStatusInfo(tr("set")+ " " + tr("Parity") + " " + tr("fail") + "!");
         parityComboBox->setCurrentIndex(lastIndex);
     }
     else
@@ -575,7 +575,7 @@ void MainWindow::stopBitsComboBox_currentIndexChanged(int index)
     static int lastIndex = 0;
     if (!serial->setStopBits(index))
     {
-        setStatusInfo(tr("set StopBits fail!"));
+        setStatusInfo(tr("set")+ " " + tr("StopBits") + " " + tr("fail") + "!");
         stopBitsComboBox->setCurrentIndex(lastIndex);
     }
     else
@@ -589,7 +589,7 @@ void MainWindow::flowComboBox_currentIndexChanged(int index)
     static int lastIndex = 0;
     if (!serial->setFlowControl(index))
     {
-        setStatusInfo(tr("set FlowControl fail!"));
+        setStatusInfo(tr("set")+ " " + tr("FlowControl") + " " + tr("fail") + "!");
         flowComboBox->setCurrentIndex(lastIndex);
     }
     else
