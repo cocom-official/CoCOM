@@ -16,7 +16,6 @@
 
 #define DEFAULT_ENCODING "Local"
 
-
 #ifdef _WIN32
 #define DEFAULT_LINEBREAK_INDEX 2
 #elif __APPLE__
@@ -49,7 +48,7 @@ enum LineBreakType
     LineBreakCRLF,
 };
 
-template<class T>
+template <class T>
 struct ComboBoxConfig
 {
     T param;
@@ -91,8 +90,10 @@ private:
              ev->type() == QEvent::MouseButtonRelease ||
              ev->type() == QEvent::MouseButtonDblClick) &&
             obj->isWidgetType())
+        {
             emit mouseButtonEvent(static_cast<QWidget *>(obj),
                                   static_cast<QMouseEvent *>(ev));
+        }
         return false;
     };
 
@@ -107,4 +108,35 @@ public:
 
 signals:
     void mouseButtonEvent(QWidget *, QMouseEvent *);
+};
+
+class EnterKeySignaler : public QObject
+{
+    Q_OBJECT
+
+private:
+    bool eventFilter(QObject *obj, QEvent *ev) Q_DECL_OVERRIDE
+    {
+        if ((ev->type() == QEvent::KeyPress &&
+             ((static_cast<QKeyEvent *>(ev))->key() == Qt::Key_Enter ||
+              (static_cast<QKeyEvent *>(ev))->key() == Qt::Key_Return)) &&
+            obj->isWidgetType())
+        {
+            emit enterKeyEvent(static_cast<QWidget *>(obj),
+                               static_cast<QKeyEvent *>(ev));
+        }
+        return false;
+    };
+
+public:
+    explicit EnterKeySignaler(QObject *parent = 0) : QObject(parent){};
+    ~EnterKeySignaler(){};
+
+    void installOn(QWidget *widget)
+    {
+        widget->installEventFilter(this);
+    };
+
+signals:
+    void enterKeyEvent(QWidget *, QKeyEvent *);
 };

@@ -264,4 +264,8 @@
     <source>Unknow Reason</source>
     <target>未知原因</target>
 </phrase>
+<phrase>
+    <source>Send</source>
+    <target>发送</target>
+</phrase>
 </QPH>

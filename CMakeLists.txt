@@ -107,6 +107,7 @@ qt5_wrap_ui(ui_list
 
 qt5_wrap_cpp(moc_list
     "src/include/Common.h"
+    "src/include/CommandsTab.h"
     "src/include/MainWindow.h"
     "src/include/Serial.h"
     "src/include/TextBrowser.h"
@@ -131,6 +132,7 @@ set(ts_raw_list
 set(src_list
     "src/main.cpp"
     "src/Common.cpp"
+    "src/CommandsTab.cpp"
     "src/MainWindow.cpp"
     "src/Serial.cpp"
     "src/TextBrowser.cpp"

@@ -55,6 +55,8 @@ void MainWindow::setupUI()
 
     setConfigToolBar();
 
+    setInputTabWidget();
+
     setStatusBar();
 
     loadFont();
@@ -64,21 +66,9 @@ void MainWindow::setupUI()
 
     connect(periodicSendTimer, &QTimer::timeout, this, &MainWindow::periodicSend);
 
-    inputTabWidgetHeight
-        << ui->sendTab->minimumSizeHint().height()
-        << ui->commandLineTab->minimumSizeHint().height()
-        << ui->multiCommandTab->minimumSizeHint().height();
-
-    ui->commandLineTab->setMaximumHeight(inputTabWidgetHeight[0]);
-    ui->multiCommandTab->setMaximumHeight(inputTabWidgetHeight[0]);
-
     refreshDPI();
 
     on_openAction_toggled(false);
-
-    /* current disable */
-    ui->multiCommandTab->setEnabled(false);
-    ui->multiCommandTab->setToolTip(tr("Not Implement Current!"));
 
     setStatusInfo(tr("Ready"));
 }
@@ -90,13 +80,11 @@ void MainWindow::setLayout(double rate)
     ui->centralVerticalLayout->setMargin(defaultMargin * rate);
     ui->sendTabHorizontalLayout->setMargin(defaultMargin * rate);
     ui->commandLineTabHorizontalLayout->setMargin(defaultMargin * rate);
-    ui->multiCommandTabGridLayout->setMargin(defaultMargin * rate);
     ui->sendTabVerticalLayout->setMargin(0);
 
     ui->centralVerticalLayout->setSpacing(defaultMargin * rate);
     ui->sendTabHorizontalLayout->setSpacing(defaultMargin * rate);
     ui->commandLineTabHorizontalLayout->setSpacing(defaultMargin * rate);
-    ui->multiCommandTabGridLayout->setSpacing(defaultMargin * rate);
     ui->sendTabVerticalLayout->setSpacing(defaultMargin * rate);
 }
 
@@ -107,6 +95,25 @@ void MainWindow::setupSerialPort()
     enumPorts();
     connect(timer, &QTimer::timeout, this, &MainWindow::enumPorts);
     timer->start(1000);
+}
+
+void MainWindow::setInputTabWidget()
+{
+    multiCommandsTab = new QTabWidget(ui->inputTabWidget);
+    ui->inputTabWidget->addTab(multiCommandsTab, tr("Multi Command"));
+
+    CommandsTab *tab = nullptr;
+
+    tab = new CommandsTab(this);
+    connect(tab, &CommandsTab::sendText, this, &MainWindow::sendText);
+    multiCommandsTab->addTab(tab, "1");
+
+    for (int i = 1; i < ui->inputTabWidget->count(); i++)
+    {
+        ui->inputTabWidget->widget(i)->setMaximumHeight(0);
+    }
+
+    ui->inputTabWidget->setCurrentIndex(0);
 }
 
 void MainWindow::refreshDPI()
@@ -256,7 +263,7 @@ void MainWindow::setStatusBar()
     encodingBox->setToolTip(tr("Encoding"));
 
     QWidget *statusWidget = new QWidget(this);
-    QHBoxLayout *statusLayout = new QHBoxLayout(this);
+    QHBoxLayout *statusLayout = new QHBoxLayout;
     statusLayout->setMargin(0);
     statusLayout->addWidget(baudrateComboBox);
     statusLayout->addWidget(dataBitsComboBox);
@@ -391,6 +398,23 @@ void MainWindow::periodicSend()
     on_textSendButton_pressed();
 }
 
+void MainWindow::sendText(QString text)
+{
+    if (nullptr == text)
+    {
+        return;
+    }
+
+    if (txTypeComboBox->currentIndex() == TextType)
+    {
+        serial->sendTextString(&text, encodingBox->currentText(), (LineBreakType)lineBreakBox->currentIndex());
+    }
+    else
+    {
+        serial->sendHexString(&text);
+    }
+}
+
 void MainWindow::addTxCount(int count)
 {
     static int txCount = 0;
@@ -473,13 +497,13 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event)
 
 void MainWindow::on_inputTabWidget_currentChanged(int index)
 {
-    int maxHeight = inputTabWidgetHeight[index];
+    Q_UNUSED(index);
 
     for (int i = 0; i < ui->inputTabWidget->count(); i++)
     {
         if (ui->inputTabWidget->widget(i) != ui->inputTabWidget->currentWidget())
         {
-            ui->inputTabWidget->widget(i)->setMaximumHeight(maxHeight);
+            ui->inputTabWidget->widget(i)->setMaximumHeight(0);
         }
         else
         {
@@ -757,16 +781,7 @@ void MainWindow::on_commandLineSendButton_pressed()
         return;
     }
 
-    QString string = ui->commandLineSendComboBox->currentText();
-
-    if (txTypeComboBox->currentIndex() == TextType)
-    {
-        serial->sendTextString(&string, encodingBox->currentText(), (LineBreakType)lineBreakBox->currentIndex());
-    }
-    else
-    {
-        serial->sendHexString(&string);
-    }
+    sendText(ui->commandLineSendComboBox->currentText());
 }
 
 void MainWindow::on_textSendButton_pressed()
@@ -776,16 +791,7 @@ void MainWindow::on_textSendButton_pressed()
         return;
     }
 
-    QString string = ui->sendTextEdit->toPlainText();
-
-    if (txTypeComboBox->currentIndex() == TextType)
-    {
-        serial->sendTextString(&string, encodingBox->currentText(), (LineBreakType)lineBreakBox->currentIndex());
-    }
-    else
-    {
-        serial->sendHexString(&string);
-    }
+    sendText(ui->sendTextEdit->toPlainText());
 }
 
 void MainWindow::on_periodicSendCheckBox_stateChanged(int state)

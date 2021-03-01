@@ -12,6 +12,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QSplitter>
+#include <QVBoxLayout>
 #include <QWidget>
 #include <QHBoxLayout>
 #include <QSpacerItem>
@@ -36,6 +37,7 @@
 #include "ConfigDialog.h"
 #include "Serial.h"
 #include "TextBrowser.h"
+#include "CommandsTab.h"
 
 namespace Ui
 {
@@ -84,15 +86,21 @@ private slots:
 
     void showHotkey_activated();
 
+    void sendText(QString text);
+
     void portSelectComboBox_currentIndexChanged(int index);
     void serial_readyRead(int count, QByteArray *bytes);
     void serial_bytesSend(int count);
+
 
 private:
     Ui::MainWindow *ui;
     float dpiScaling;
 
     QComboBox *portSelect;
+
+    QTabWidget *multiCommandsTab;
+
     QLabel *statusInfoLabel;
     QLabel *statusTxLabel;
     QLabel *statusRxLabel;
@@ -111,8 +119,6 @@ private:
 
     ConfigDialog *configDialog;
 
-    QList<int> inputTabWidgetHeight;
-
     Serial *serial;
     TextBrowser *textBrowser;
 
@@ -124,6 +130,7 @@ private:
     void setupUI();
     void setLayout(double rate);
     void setupSerialPort();
+    void setInputTabWidget();
     void refreshDPI();
     void loadFont();
     void setConfigToolBar();
