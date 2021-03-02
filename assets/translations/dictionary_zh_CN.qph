@@ -264,4 +264,8 @@
     <source>Click &apos;+&apos; to add a new tab</source>
     <target>单击 “+” 添加新标签页</target>
 </phrase>
+<phrase>
+    <source>Double Click to Close</source>
+    <target>双击关闭</target>
+</phrase>
 </QPH>

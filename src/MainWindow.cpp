@@ -105,10 +105,12 @@ void MainWindow::setInputTabWidget()
     QToolButton *newTabButton = new QToolButton;
     newTabButton->setText("+");
     newTabButton->setToolTip(tr("Click '+' to add a new tab"));
-    connect(newTabButton, &QPushButton::pressed, this, &MainWindow::newMultiCommandTabButton_pressed);
+    connect(newTabButton, &QPushButton::clicked, this, &MainWindow::newMultiCommandTabButton_clicked);
     multiCommandsTab->addTab(new QLabel, QString());
     multiCommandsTab->setTabEnabled(0, false);
     multiCommandsTab->tabBar()->setTabButton(0, QTabBar::LeftSide, newTabButton);
+    connect(multiCommandsTab->tabBar(), &QTabBar::tabBarDoubleClicked,
+            this, &MainWindow::multiCommandTabBar_doubleclicked);
 
     addMultiCommandTab();
 
@@ -360,9 +362,11 @@ void MainWindow::addMultiCommandTab()
     int tabCount = multiCommandsTab->count();
     CommandsTab *tab = new CommandsTab(this);
     connect(tab, &CommandsTab::sendText, this, &MainWindow::sendText);
-    multiCommandsTab->insertTab(tabCount - 1, tab, QString::number(tabCount));
+    multiCommandsTab->insertTab(tabCount - 1, tab, QString::number(tabCount - 1));
     multiCommandsTab->setCurrentIndex(tabCount - 1);
-    multiCommandsTab->tabBar()->setTabToolTip(tabCount - 1, tr("Tab") + " " + QString::number(tabCount));
+
+    multiCommandsTab->tabBar()->setTabToolTip(tabCount - 1,
+                                              tr("Tab") + " " + QString::number(tabCount - 1) + ", " + tr("Double Click to Close"));
 }
 
 void MainWindow::enumPorts()
@@ -836,9 +840,29 @@ void MainWindow::on_timerPeriodSpinBox_valueChanged(int value)
     }
 }
 
-void MainWindow::newMultiCommandTabButton_pressed()
+void MainWindow::newMultiCommandTabButton_clicked()
 {
     addMultiCommandTab();
+}
+
+void MainWindow::multiCommandTabBar_doubleclicked(int index)
+{
+    if ((index == 0 && multiCommandsTab->count() == 2) ||
+        index == multiCommandsTab->count() - 1)
+    {
+        return;
+    }
+
+    multiCommandsTab->removeTab(index);
+
+    for (int i = index; i < multiCommandsTab->count() - 1; i++)
+    {
+        multiCommandsTab->setTabText(i, QString::number(i));
+        multiCommandsTab->tabBar()->setTabToolTip(i,
+                                                  tr("Tab") + " " + QString::number(i) + ", " + tr("Double Click to Close"));
+    }
+
+    multiCommandsTab->setCurrentIndex(index - 1);
 }
 
 void MainWindow::portSelectComboBox_currentIndexChanged(int index)

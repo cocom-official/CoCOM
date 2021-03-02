@@ -82,7 +82,8 @@ private slots:
     void on_periodicSendCheckBox_stateChanged(int state);
     void on_timerPeriodSpinBox_valueChanged(int value);
 
-    void newMultiCommandTabButton_pressed();
+    void newMultiCommandTabButton_clicked();
+    void multiCommandTabBar_doubleclicked(int index);
 
     void statusLabel_mouseButtonEvent(QWidget *obj, QMouseEvent *event);
 
