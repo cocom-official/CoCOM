@@ -189,10 +189,6 @@
     <target>双击清空计数！</target>
 </phrase>
 <phrase>
-    <source>Version</source>
-    <target>版本号</target>
-</phrase>
-<phrase>
     <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/cocom-official/CoCOM&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Home Page&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
     <target>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/cocom-official/CoCOM&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;主页&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</target>
 </phrase>
@@ -205,16 +201,8 @@
     <target>转到底部</target>
 </phrase>
 <phrase>
-    <source>go down</source>
-    <target>转到底部</target>
-</phrase>
-<phrase>
     <source>Version</source>
     <target>版本</target>
-</phrase>
-<phrase>
-    <source>Commit</source>
-    <target>提交</target>
 </phrase>
 <phrase>
     <source>Commit</source>
@@ -267,5 +255,13 @@
 <phrase>
     <source>Send</source>
     <target>发送</target>
+</phrase>
+<phrase>
+    <source>Tab</source>
+    <target>标签页</target>
+</phrase>
+<phrase>
+    <source>Click &apos;+&apos; to add a new tab</source>
+    <target>单击 “+” 添加新标签页</target>
 </phrase>
 </QPH>

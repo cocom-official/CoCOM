@@ -102,11 +102,15 @@ void MainWindow::setInputTabWidget()
     multiCommandsTab = new QTabWidget(ui->inputTabWidget);
     ui->inputTabWidget->addTab(multiCommandsTab, tr("Multi Command"));
 
-    CommandsTab *tab = nullptr;
+    QToolButton *newTabButton = new QToolButton;
+    newTabButton->setText("+");
+    newTabButton->setToolTip(tr("Click '+' to add a new tab"));
+    connect(newTabButton, &QPushButton::pressed, this, &MainWindow::newMultiCommandTabButton_pressed);
+    multiCommandsTab->addTab(new QLabel, QString());
+    multiCommandsTab->setTabEnabled(0, false);
+    multiCommandsTab->tabBar()->setTabButton(0, QTabBar::LeftSide, newTabButton);
 
-    tab = new CommandsTab(this);
-    connect(tab, &CommandsTab::sendText, this, &MainWindow::sendText);
-    multiCommandsTab->addTab(tab, "1");
+    addMultiCommandTab();
 
     for (int i = 1; i < ui->inputTabWidget->count(); i++)
     {
@@ -351,6 +355,16 @@ void MainWindow::updatePortsConfigComboBox()
     portSelect->blockSignals(false);
 }
 
+void MainWindow::addMultiCommandTab()
+{
+    int tabCount = multiCommandsTab->count();
+    CommandsTab *tab = new CommandsTab(this);
+    connect(tab, &CommandsTab::sendText, this, &MainWindow::sendText);
+    multiCommandsTab->insertTab(tabCount - 1, tab, QString::number(tabCount));
+    multiCommandsTab->setCurrentIndex(tabCount - 1);
+    multiCommandsTab->tabBar()->setTabToolTip(tabCount - 1, tr("Tab") + " " + QString::number(tabCount));
+}
+
 void MainWindow::enumPorts()
 {
     QAbstractItemView *view = portSelect->view();
@@ -472,7 +486,9 @@ void MainWindow::moveEvent(QMoveEvent *event)
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     if (event->isAutoRepeat())
+    {
         return;
+    }
 
     if (event->key() == Qt::Key_Enter ||
         event->key() == Qt::Key_Return)
@@ -492,7 +508,9 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 void MainWindow::keyReleaseEvent(QKeyEvent *event)
 {
     if (event->isAutoRepeat())
+    {
         return;
+    }
 }
 
 void MainWindow::on_inputTabWidget_currentChanged(int index)
@@ -816,6 +834,11 @@ void MainWindow::on_timerPeriodSpinBox_valueChanged(int value)
     {
         periodicSendTimer->stop();
     }
+}
+
+void MainWindow::newMultiCommandTabButton_pressed()
+{
+    addMultiCommandTab();
 }
 
 void MainWindow::portSelectComboBox_currentIndexChanged(int index)

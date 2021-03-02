@@ -27,6 +27,8 @@ private:
     QLineEdit *edit[COMMANDS_TAB_ITEM_COUNT];
     QPushButton *button[COMMANDS_TAB_ITEM_COUNT];
 
+    void keyPressEvent(QKeyEvent *event);
+
 private slots:
     void buttonsEvent(QWidget *obj, QMouseEvent *event);
     void editEvent(QWidget *obj, QKeyEvent *event);

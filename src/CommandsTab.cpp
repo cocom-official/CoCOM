@@ -35,6 +35,20 @@ CommandsTab::CommandsTab(QWidget *parent)
             this, &CommandsTab::editEvent);
 }
 
+void CommandsTab::keyPressEvent(QKeyEvent *event)
+{
+    if (event->isAutoRepeat())
+    {
+        return;
+    }
+
+    if (event->modifiers() == Qt::ControlModifier &&
+        (event->key() >= Qt::Key_0 &&  event->key() <= Qt::Key_9))
+    {
+        emit sendText(edit[event->key() - Qt::Key_0]->text());
+    }
+}
+
 void CommandsTab::buttonsEvent(QWidget *obj, QMouseEvent *event)
 {
     if (event->type() != QEvent::MouseButtonPress &&

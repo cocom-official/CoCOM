@@ -82,6 +82,8 @@ private slots:
     void on_periodicSendCheckBox_stateChanged(int state);
     void on_timerPeriodSpinBox_valueChanged(int value);
 
+    void newMultiCommandTabButton_pressed();
+
     void statusLabel_mouseButtonEvent(QWidget *obj, QMouseEvent *event);
 
     void showHotkey_activated();
@@ -127,9 +129,9 @@ private:
 
     int  lineBreakType;
 
+    /* UI */
     void setupUI();
     void setLayout(double rate);
-    void setupSerialPort();
     void setInputTabWidget();
     void refreshDPI();
     void loadFont();
@@ -137,6 +139,10 @@ private:
     void setStatusBar();
     void updatePortSelectText();
     void updatePortsConfigComboBox();
+    void addMultiCommandTab();
+
+    /* no UI */
+    void setupSerialPort();
     void enumPorts();
     void updatePortConfig();
     void periodicSend();
