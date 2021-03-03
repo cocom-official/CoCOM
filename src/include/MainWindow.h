@@ -83,7 +83,9 @@ private slots:
     void on_timerPeriodSpinBox_valueChanged(int value);
 
     void newMultiCommandTabButton_clicked();
+    void multiCommandTabBar_clicked(int index);
     void multiCommandTabBar_doubleclicked(int index);
+    void multiCommandTabWidget_currentChanged(int index);
 
     void statusLabel_mouseButtonEvent(QWidget *obj, QMouseEvent *event);
 
@@ -99,6 +101,8 @@ private slots:
 private:
     Ui::MainWindow *ui;
     float dpiScaling;
+
+    bool tabBarClicked;
 
     QComboBox *portSelect;
 

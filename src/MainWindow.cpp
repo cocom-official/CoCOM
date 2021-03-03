@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
       dpiScaling(1.0),
+      tabBarClicked(false),
       portSelect(new QComboBox(this)),
       statusInfoLabel(new QLabel(this)),
       statusTxLabel(new QLabel(this)),
@@ -102,15 +103,15 @@ void MainWindow::setInputTabWidget()
     multiCommandsTab = new QTabWidget(ui->inputTabWidget);
     ui->inputTabWidget->addTab(multiCommandsTab, tr("Multi Command"));
 
-    QToolButton *newTabButton = new QToolButton;
-    newTabButton->setText("+");
-    newTabButton->setToolTip(tr("Click '+' to add a new tab"));
-    connect(newTabButton, &QPushButton::clicked, this, &MainWindow::newMultiCommandTabButton_clicked);
     multiCommandsTab->addTab(new QLabel, QString());
-    multiCommandsTab->setTabEnabled(0, false);
-    multiCommandsTab->tabBar()->setTabButton(0, QTabBar::LeftSide, newTabButton);
-    connect(multiCommandsTab->tabBar(), &QTabBar::tabBarDoubleClicked,
+    multiCommandsTab->setTabText(0, "+");
+    multiCommandsTab->setTabToolTip(0, tr("Click '+' to add a new tab"));
+    connect(multiCommandsTab, &QTabWidget::currentChanged,
+            this, &MainWindow::multiCommandTabWidget_currentChanged);
+    connect(multiCommandsTab, &QTabWidget ::tabBarDoubleClicked,
             this, &MainWindow::multiCommandTabBar_doubleclicked);
+    connect(multiCommandsTab, &QTabWidget ::tabBarClicked,
+            this, &MainWindow::multiCommandTabBar_clicked);
 
     addMultiCommandTab();
 
@@ -188,7 +189,7 @@ void MainWindow::loadFont()
 
 void MainWindow::setConfigToolBar()
 {
-    portSelect->setMinimumContentsLength(20);
+    portSelect->setMinimumContentsLength(30);
     portSelect->setSizeAdjustPolicy(QComboBox::SizeAdjustPolicy::AdjustToMinimumContentsLengthWithIcon);
     ui->configToolBar->addWidget(portSelect);
 }
@@ -858,11 +859,34 @@ void MainWindow::multiCommandTabBar_doubleclicked(int index)
     for (int i = index; i < multiCommandsTab->count() - 1; i++)
     {
         multiCommandsTab->setTabText(i, QString::number(i));
-        multiCommandsTab->tabBar()->setTabToolTip(i,
-                                                  tr("Tab") + " " + QString::number(i) + ", " + tr("Double Click to Close"));
+        multiCommandsTab->tabBar()->setTabToolTip(i, tr("Tab") + " " + QString::number(i) + ", " + tr("Double Click to Close"));
     }
 
     multiCommandsTab->setCurrentIndex(index - 1);
+}
+
+void MainWindow::multiCommandTabBar_clicked(int index)
+{
+    if (index == multiCommandsTab->count() - 1)
+    {
+        tabBarClicked = true;
+    }
+}
+
+void MainWindow::multiCommandTabWidget_currentChanged(int index)
+{
+    if (index == multiCommandsTab->count() - 1)
+    {
+        if (tabBarClicked == true)
+        {
+            addMultiCommandTab();
+            tabBarClicked = false;
+        }
+        else
+        {
+            multiCommandsTab->setCurrentIndex(index - 1);
+        }
+    }
 }
 
 void MainWindow::portSelectComboBox_currentIndexChanged(int index)
