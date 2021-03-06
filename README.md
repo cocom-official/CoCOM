@@ -4,13 +4,13 @@ CoCOM is a Serial Port Utility for Embedded Software Engineer.
 
 ## Feature
 
-- [ ] basic send && receive
+- [x] basic send && receive
   - [x] receive text
   - [x] send text
   - [x] receive Hex
   - [x] send Hex
-  - [ ] send command
-- [ ] high level send && receive
+  - [x] send command
+- [x] high level send && receive
   - [x] text encoding
   - [x] line break
   - [x] auto periodic send
@@ -19,7 +19,7 @@ CoCOM is a Serial Port Utility for Embedded Software Engineer.
   - [x] success && warn && error colorful hint
   - [ ] output filer
   - [ ] custom colorful hint
-  - [ ] Ctrl + F, find anything in output view
+  - [x] Ctrl + F, find anything in output view
 - [x] high DPI support
   - [x] auto scaling according to dpi
   - [x] auto scaling when moves betweens different dpi screen
@@ -36,7 +36,7 @@ CoCOM is a Serial Port Utility for Embedded Software Engineer.
   - [ ] upgrade MCU firmware
 - [ ] small but useful feature
   - [x] window pin
-  - [ ] global shortcuts
+  - [x] global shortcuts
 
 ## Build
 

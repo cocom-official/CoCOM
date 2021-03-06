@@ -94,3 +94,32 @@ QTextCodec *getEncodingCodecFromString(QString encoding)
 
     return codec;
 }
+
+QTextCharFormat *getcharFormatHighlite()
+{
+    QTextCharFormat *charFormatHighlite = nullptr;
+
+    if (charFormatHighlite == nullptr)
+    {
+        charFormatHighlite = new QTextCharFormat();
+        charFormatHighlite->setBackground(QBrush(QColor(237, 184, 154)));
+    }
+
+    return charFormatHighlite;
+}
+
+QTextCharFormat *getCharFormatHighliteSelect()
+{
+    static QTextCharFormat *charFormatHighliteSelect = nullptr;
+
+    if (charFormatHighliteSelect == nullptr)
+    {
+        charFormatHighliteSelect = new QTextCharFormat();
+
+        charFormatHighliteSelect->setBackground(QBrush(Qt::yellow));
+        charFormatHighliteSelect->setFontUnderline(true);
+        charFormatHighliteSelect->setFontWeight(charFormatHighliteSelect->fontWeight() * 2);
+    }
+
+    return charFormatHighliteSelect;
+}

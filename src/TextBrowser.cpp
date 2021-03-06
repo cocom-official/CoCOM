@@ -6,7 +6,8 @@ TextBrowser::TextBrowser(QObject *parent, QTextBrowser *browser)
       dataType(TextType),
       encoding(DEFAULT_ENCODING),
       hexSeparator(' '),
-      hexUpperCase(true)
+      hexUpperCase(true),
+      currentFindResultIndex(0)
 {
     if (browser == nullptr)
     {
@@ -30,6 +31,7 @@ void TextBrowser::lock()
     scroll = browser->verticalScrollBar()->value();
     maxScroll = browser->verticalScrollBar()->maximum();
 }
+
 void TextBrowser::unlock()
 {
     browser->setTextCursor(lockCursor);
@@ -116,6 +118,43 @@ void TextBrowser::processHintFormant(HintFormat *hint)
     }
 }
 
+int TextBrowser::findHighlite(QString &text, int from)
+{
+    int count = 0;
+    QTextDocument *document = browser->document();
+    QTextCursor fromCursor;
+    QTextCursor resultCursor;
+    QTextCharFormat charFormatDefault;
+
+    lock();
+
+    fromCursor = browser->textCursor();
+    fromCursor.setPosition(from);
+    resultCursor = document->find(findText, fromCursor, QTextDocument::FindWholeWords);
+    while (!resultCursor.isNull())
+    {
+        setFormat(resultCursor.selectionStart(), resultCursor.selectionEnd(), &charFormatDefault);
+        resultCursor.clearSelection();
+        resultCursor = document->find(findText, resultCursor, QTextDocument::FindWholeWords);
+    }
+
+    fromCursor = browser->textCursor();
+    fromCursor.setPosition(from);
+    resultCursor = document->find(text, fromCursor, QTextDocument::FindWholeWords);
+    while (!resultCursor.isNull())
+    {
+        count++;
+        findResultPos << resultCursor.position();
+        setFormat(resultCursor.selectionStart(), resultCursor.selectionEnd(), getcharFormatHighlite());
+        resultCursor.clearSelection();
+        resultCursor = document->find(text, resultCursor, QTextDocument::FindWholeWords);
+    }
+
+    unlock();
+
+    return count;
+}
+
 void TextBrowser::processAllHintFormants()
 {
     processHintFormant(&successHint);
@@ -152,6 +191,23 @@ void TextBrowser::setFormat(int start, int end, QTextCharFormat *format)
 
     browser->setTextCursor(lCursor);
     browser->setCurrentCharFormat(*format);
+}
+
+void TextBrowser::setFindResultFormat(QTextCharFormat *format, int index)
+{
+    int findIndex = (index == -1) ? currentFindResultIndex : index;
+
+    QTextCursor lCursor = browser->textCursor();
+    int start = findResultPos[findIndex] - findText.length();
+    int end = findResultPos[findIndex];
+
+    lCursor.setPosition(start);
+    lCursor.setPosition(end, QTextCursor::KeepAnchor);
+
+    browser->setTextCursor(lCursor);
+    browser->setCurrentCharFormat(*format);
+    lCursor.setPosition(start);
+    browser->setTextCursor(lCursor);
 }
 
 void TextBrowser::insertData(QByteArray *data)
@@ -204,6 +260,126 @@ void TextBrowser::insertData(QByteArray *data)
     unlock();
 }
 
+void TextBrowser::find(QString &text)
+{
+    int cur = 0;
+    findResultPos.clear();
+    currentFindResultIndex = 0;
+    findResultCount = findHighlite(text);
+
+    findText = text;
+    if (findResultCount != 0)
+    {
+        mutex.lock();
+        setFindResultFormat(getCharFormatHighliteSelect());
+        mutex.unlock();
+        cur = 1;
+    }
+
+    emit findResultChanged(cur, findResultCount);
+}
+
+void TextBrowser::findFromCurrent(QString &text)
+{
+    int count = findHighlite(text, findResultPos[currentFindResultIndex]);
+
+    if (count != 0)
+    {
+        findResultCount += count;
+    }
+}
+
+void TextBrowser::moveToNextFindResult()
+{
+    if (currentFindResultIndex + 1 == findResultCount)
+    {
+        findFromCurrent(findText);
+    }
+
+    mutex.lock();
+
+    QTextCursor lCursor = browser->textCursor();
+
+    setFindResultFormat(getcharFormatHighlite());
+    if (currentFindResultIndex + 1 == findResultCount)
+    {
+        currentFindResultIndex = 0;
+    }
+    else
+    {
+        currentFindResultIndex++;
+    }
+    lCursor.setPosition(findResultPos[currentFindResultIndex]);
+    setFindResultFormat(getCharFormatHighliteSelect());
+
+    mutex.unlock();
+
+    emit findResultChanged(currentFindResultIndex + 1, findResultCount);
+}
+
+void TextBrowser::moveToPrivFindResult()
+{
+    mutex.lock();
+
+    QTextCursor lCursor = browser->textCursor();
+
+    setFindResultFormat(getcharFormatHighlite());
+    if (currentFindResultIndex == 0)
+    {
+        currentFindResultIndex = findResultCount - 1;
+    }
+    else
+    {
+        currentFindResultIndex--;
+    }
+    lCursor.setPosition(findResultPos[currentFindResultIndex]);
+    setFindResultFormat(getCharFormatHighliteSelect());
+
+    browser->setTextCursor(lCursor);
+
+    mutex.unlock();
+
+    emit findResultChanged(currentFindResultIndex + 1, findResultCount);
+}
+
+void TextBrowser::moveToLastFindResult()
+{
+    int lastPos = findResultPos.last();
+
+    mutex.lock();
+
+    QTextCursor lCursor = browser->textCursor();
+
+    setFindResultFormat(getcharFormatHighlite());
+    lCursor.setPosition(lastPos);
+    setFindResultFormat(getCharFormatHighliteSelect(), findResultPos.size() - 1);
+
+    browser->setTextCursor(lCursor);
+
+    mutex.unlock();
+
+    emit findResultChanged(findResultCount, findResultCount);
+}
+
+void TextBrowser::moveToFirstFindResult()
+{
+    int firstPos = findResultPos.first();
+
+    mutex.lock();
+
+    QTextCursor lCursor = browser->textCursor();
+
+    setFindResultFormat(getcharFormatHighlite());
+    lCursor.setPosition(firstPos);
+    setFindResultFormat(getCharFormatHighliteSelect(), 0);
+
+    browser->setTextCursor(lCursor);
+
+    mutex.unlock();
+
+    emit findResultChanged(1, findResultCount);
+}
+
 void TextBrowser::clear()
 {
     lock();
@@ -212,6 +388,8 @@ void TextBrowser::clear()
     resetHintFormant(&successHint);
     resetHintFormant(&warnHint);
     resetHintFormant(&errorHint);
+    currentFindResultIndex = 0;
+    findResultPos.clear();
 
     unlock();
 }

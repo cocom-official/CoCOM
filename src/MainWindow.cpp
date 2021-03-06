@@ -8,10 +8,18 @@ MainWindow::MainWindow(QWidget *parent)
       dpiScaling(1.0),
       tabBarClicked(false),
       portSelect(new QComboBox(this)),
+      findToolBar(new QToolBar()),
+      findEdit(new QLineEdit(this)),
+      findResultLabel(new QLabel(this)),
+      findNextButton(new QPushButton(this)),
+      findPrivButton(new QPushButton(this)),
+      findCloseButton(new QPushButton(this)),
       statusInfoLabel(new QLabel(this)),
       statusTxLabel(new QLabel(this)),
       statusRxLabel(new QLabel(this)),
       statueLabelSignaler(new MouseButtonSignaler(this)),
+      findToolbarEscapeSignaler(new EscapeKeySignaler(this)),
+      findToolbarEnterSignaler(new EnterKeySignaler(this)),
       baudrateComboBox(new QComboBox(this)),
       dataBitsComboBox(new QComboBox(this)),
       parityComboBox(new QComboBox(this)),
@@ -54,7 +62,7 @@ void MainWindow::setupUI()
 
     setWindowTitle(QString(COCOM_APPLICATIONNAME) + " -- " + tr("Serial Port Utility"));
 
-    setConfigToolBar();
+    setToolBar();
 
     setInputTabWidget();
 
@@ -185,13 +193,53 @@ void MainWindow::loadFont()
     ui->sendTextEdit->setFont(font);
     ui->commandLineSendComboBox->setFont(font);
     statusInfoLabel->setFont(font);
+
+    findNextButton->setFont(font);
+    findPrivButton->setFont(font);
+    findCloseButton->setFont(font);
 }
 
-void MainWindow::setConfigToolBar()
+void MainWindow::setToolBar()
 {
     portSelect->setMinimumContentsLength(30);
     portSelect->setSizeAdjustPolicy(QComboBox::SizeAdjustPolicy::AdjustToMinimumContentsLengthWithIcon);
     ui->configToolBar->addWidget(portSelect);
+
+    /* find toolbar */
+    findResultLabel->setText(" 0:0 ");
+    findNextButton->setIcon(QIcon(":/assets/icons/arrow-down.svg"));
+    findPrivButton->setIcon(QIcon(":/assets/icons/arrow-up.svg"));
+    findCloseButton->setIcon(QIcon(":/assets/icons/cross.svg"));
+    findNextButton->setFixedWidth(findNextButton->height());
+    findPrivButton->setFixedWidth(findPrivButton->height());
+    findCloseButton->setFixedWidth(findCloseButton->height());
+
+    findToolBar->addWidget(findEdit);
+    findToolBar->addWidget(findResultLabel);
+    findToolBar->addWidget(findNextButton);
+    findToolBar->addWidget(findPrivButton);
+    findToolBar->addWidget(findCloseButton);
+    findToolBar->setAllowedAreas(Qt::NoToolBarArea);
+    findToolBar->setFloatable(true);
+    addToolBar(Qt::BottomToolBarArea, findToolBar);
+    findToolBar->setWindowFlags(Qt::Tool | Qt::FramelessWindowHint | Qt::X11BypassWindowManagerHint);
+
+    connect(findEdit, &QLineEdit::textChanged, this, &MainWindow::findEdit_textChanged);
+    connect(textBrowser, &TextBrowser::findResultChanged, this, &MainWindow::findResultChanged);
+    connect(findCloseButton, &QPushButton::clicked, this, &MainWindow::findCloseButton_clicked);
+    connect(findNextButton, &QPushButton::clicked, this, &MainWindow::findNextButton_clicked);
+    connect(findPrivButton, &QPushButton::clicked, this, &MainWindow::findPrivButton_clicked);
+
+    findToolbarEscapeSignaler->installOn(findToolBar);
+    connect(findToolbarEscapeSignaler, &EscapeKeySignaler::escapeKeyEvent,
+            this, &MainWindow::findToolbar_escapeKeyEvent);
+
+    findToolbarEnterSignaler->installOn(findEdit);
+    findToolbarEnterSignaler->installOn(findNextButton);
+    findToolbarEnterSignaler->installOn(findPrivButton);
+    findToolbarEnterSignaler->installOn(findCloseButton);
+    connect(findToolbarEnterSignaler, &EnterKeySignaler::enterKeyEvent,
+            this, &MainWindow::findToolbar_enterKeyEvent);
 }
 
 void MainWindow::setStatusBar()
@@ -370,6 +418,25 @@ void MainWindow::addMultiCommandTab()
                                               tr("Tab") + " " + QString::number(tabCount - 1) + ", " + tr("Double Click to Close"));
 }
 
+void MainWindow::moveFindToolBar(bool force, QPoint moveOffset)
+{
+    QPoint findPos = findToolBar->pos();
+    QPoint outputPosGlobal = mapToGlobal(ui->outputTextBrowser->pos());
+
+    int moveToX = outputPosGlobal.x() + ui->outputTextBrowser->width() - findToolBar->width() -
+                  ui->outputTextBrowser->verticalScrollBar()->width() - 5;
+    int moveToY = outputPosGlobal.y() + findToolBar->height() + 5;
+
+    int offsetThreshold = findToolBar->height() + 2 * qMax(qAbs(moveOffset.x()), qAbs(moveOffset.y()));
+    int offsetX = qAbs(qAbs(findPos.x() - moveToX) + moveOffset.x());
+    int offsetY = qAbs(qAbs(findPos.y() - moveToY) + moveOffset.y());
+
+    if (force || (offsetX < offsetThreshold && offsetY < offsetThreshold))
+    {
+        findToolBar->move(moveToX, moveToY);
+    }
+}
+
 void MainWindow::enumPorts()
 {
     QAbstractItemView *view = portSelect->view();
@@ -482,10 +549,29 @@ void MainWindow::setStatusInfo(QString text)
     statusInfoLabel->setText(elideText);
 }
 
+void MainWindow::findResultChanged(int cur, int all)
+{
+    QString result = " %1:%2 ";
+    findResultLabel->setText(result.arg(QString::number(cur), QString::number(all)));
+}
+
 void MainWindow::moveEvent(QMoveEvent *event)
 {
-    Q_UNUSED(event);
     refreshDPI();
+
+    if (!findToolBar->isHidden())
+    {
+        moveFindToolBar(false, event->pos() - event->oldPos());
+    }
+}
+
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    QSize sizeoffset = event->size() - event->oldSize();
+    if (!findToolBar->isHidden())
+    {
+        moveFindToolBar(false, QPoint(sizeoffset.width(), sizeoffset.height()));
+    }
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
@@ -506,6 +592,28 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         {
             on_commandLineSendButton_pressed();
             ui->commandLineSendComboBox->setCurrentText("");
+        }
+    }
+
+    if (event->key() == Qt::Key_F &&
+        event->modifiers() == Qt::ControlModifier)
+    {
+        if (findToolBar->isHidden())
+        {
+            findToolBar->showNormal();
+            findToolBar->raise();
+            findToolBar->activateWindow();
+            findToolBar->raise();
+            QApplication::setActiveWindow(findToolBar);
+            findToolBar->raise();
+            findEdit->setFocus();
+            moveFindToolBar(true);
+        }
+        else if (!findToolBar->isHidden() && !findToolBar->isActiveWindow())
+        {
+            QApplication::setActiveWindow(findToolBar);
+            findToolBar->raise();
+            findEdit->setFocus();
         }
     }
 }
@@ -913,6 +1021,80 @@ void MainWindow::statusLabel_mouseButtonEvent(QWidget *obj, QMouseEvent *event)
         {
             setStatusInfo(tr("Ready"));
         }
+    }
+}
+
+void MainWindow::findToolbar_escapeKeyEvent(QWidget *obj, QKeyEvent *event)
+{
+    Q_UNUSED(obj);
+    Q_UNUSED(event);
+
+    findCloseButton_clicked();
+}
+
+void MainWindow::findToolbar_enterKeyEvent(QWidget *obj, QKeyEvent *event)
+{
+    QPushButton *button = static_cast<QPushButton *>(obj);
+
+    if (button == findNextButton)
+    {
+        findNextButton_clicked();
+    }
+    else if (button == findPrivButton)
+    {
+        findPrivButton_clicked();
+    }
+    else if (button == findCloseButton)
+    {
+        findCloseButton_clicked();
+    }
+    else if (static_cast<QWidget *>(findEdit) == obj)
+    {
+        if ((event->modifiers() & Qt::ControlModifier) == Qt::ControlModifier)
+        {
+            findPrivButton_clicked();
+        }
+        else
+        {
+            findNextButton_clicked();
+        }
+    }
+}
+
+void MainWindow::findEdit_textChanged(const QString &text)
+{
+    QString findText = text;
+    textBrowser->find(findText);
+}
+
+void MainWindow::findCloseButton_clicked()
+{
+    findEdit->setText(" ");
+    findEdit->clear();
+    findToolBar->hide();
+}
+
+void MainWindow::findNextButton_clicked()
+{
+    if ((QGuiApplication::keyboardModifiers() & Qt::ShiftModifier) == Qt::ShiftModifier)
+    {
+        textBrowser->moveToLastFindResult();
+    }
+    else
+    {
+        textBrowser->moveToNextFindResult();
+    }
+}
+
+void MainWindow::findPrivButton_clicked()
+{
+    if ((QGuiApplication::keyboardModifiers() & Qt::ShiftModifier) == Qt::ShiftModifier)
+    {
+        textBrowser->moveToFirstFindResult();
+    }
+    else
+    {
+        textBrowser->moveToPrivFindResult();
     }
 }
 

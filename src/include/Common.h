@@ -4,6 +4,7 @@
 #include <QtWidgets>
 #include <QSerialPort>
 #include <QTextCodec>
+#include <QTextCharFormat>
 
 /* dummy definitions */
 #ifndef COCOM_APPLICATIONNAME
@@ -79,6 +80,10 @@ extern const QString errorKey[3];
 extern void changeObjectSize(const QObject &o, double objectRate);
 extern QTextCodec *getEncodingCodecFromString(QString encoding);
 
+/* format */
+extern QTextCharFormat *getcharFormatHighlite();
+extern QTextCharFormat *getCharFormatHighliteSelect();
+
 class MouseButtonSignaler : public QObject
 {
     Q_OBJECT
@@ -139,4 +144,34 @@ public:
 
 signals:
     void enterKeyEvent(QWidget *, QKeyEvent *);
+};
+
+class EscapeKeySignaler : public QObject
+{
+    Q_OBJECT
+
+private:
+    bool eventFilter(QObject *obj, QEvent *ev) Q_DECL_OVERRIDE
+    {
+        if ((ev->type() == QEvent::KeyPress &&
+             (static_cast<QKeyEvent *>(ev))->key() == Qt::Key_Escape) &&
+            obj->isWidgetType())
+        {
+            emit escapeKeyEvent(static_cast<QWidget *>(obj),
+                                static_cast<QKeyEvent *>(ev));
+        }
+        return false;
+    };
+
+public:
+    explicit EscapeKeySignaler(QObject *parent = 0) : QObject(parent){};
+    ~EscapeKeySignaler(){};
+
+    void installOn(QWidget *widget)
+    {
+        widget->installEventFilter(this);
+    };
+
+signals:
+    void escapeKeyEvent(QWidget *, QKeyEvent *);
 };

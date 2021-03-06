@@ -27,6 +27,7 @@
 #include <QFile>
 #include <QIODevice>
 #include <QDateTime>
+#include <QResizeEvent>
 
 #ifdef Q_OS_WIN32
 #include <QtWinExtras>
@@ -52,6 +53,7 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void setStatusInfo(QString text);
+    void findResultChanged(int cur, int all);
 
 private slots:
     void on_inputTabWidget_currentChanged(int index);
@@ -87,7 +89,15 @@ private slots:
     void multiCommandTabBar_doubleclicked(int index);
     void multiCommandTabWidget_currentChanged(int index);
 
+    /* find toolbar */
+    void findEdit_textChanged(const QString &text);
+    void findCloseButton_clicked();
+    void findNextButton_clicked();
+    void findPrivButton_clicked();
+
     void statusLabel_mouseButtonEvent(QWidget *obj, QMouseEvent *event);
+    void findToolbar_escapeKeyEvent(QWidget *obj, QKeyEvent *event);
+    void findToolbar_enterKeyEvent(QWidget *obj, QKeyEvent *event);
 
     void showHotkey_activated();
 
@@ -97,7 +107,6 @@ private slots:
     void serial_readyRead(int count, QByteArray *bytes);
     void serial_bytesSend(int count);
 
-
 private:
     Ui::MainWindow *ui;
     float dpiScaling;
@@ -105,6 +114,12 @@ private:
     bool tabBarClicked;
 
     QComboBox *portSelect;
+    QToolBar *findToolBar;
+    QLineEdit *findEdit;
+    QLabel *findResultLabel;
+    QPushButton *findNextButton;
+    QPushButton *findPrivButton;
+    QPushButton *findCloseButton;
 
     QTabWidget *multiCommandsTab;
 
@@ -112,6 +127,8 @@ private:
     QLabel *statusTxLabel;
     QLabel *statusRxLabel;
     MouseButtonSignaler *statueLabelSignaler;
+    EscapeKeySignaler *findToolbarEscapeSignaler;
+    EnterKeySignaler *findToolbarEnterSignaler;
 
     /* status bar combobox */
     QComboBox *baudrateComboBox;
@@ -132,7 +149,7 @@ private:
     QTimer *timer;
     QTimer *periodicSendTimer;
 
-    int  lineBreakType;
+    int lineBreakType;
 
     /* UI */
     void setupUI();
@@ -140,11 +157,12 @@ private:
     void setInputTabWidget();
     void refreshDPI();
     void loadFont();
-    void setConfigToolBar();
+    void setToolBar();
     void setStatusBar();
     void updatePortSelectText();
     void updatePortsConfigComboBox();
     void addMultiCommandTab();
+    void moveFindToolBar(bool force = false, QPoint moveOffset = QPoint(0, 0));
 
     /* no UI */
     void setupSerialPort();
@@ -156,6 +174,7 @@ private:
 
     /* event */
     void moveEvent(QMoveEvent *event);
+    void resizeEvent(QResizeEvent *event);
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
 };
