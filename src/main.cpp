@@ -5,6 +5,8 @@
 #include <QApplication>
 #include <QTranslator>
 
+#include "Common.h"
+
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
@@ -16,5 +18,13 @@ int main(int argc, char *argv[])
     MainWindow windows;
     windows.show();
 
-    return app.exec();
+    int retCode = app.exec();
+
+    if (retCode == restartExitCode)
+    {
+        QProcess::startDetached(qApp->applicationFilePath(), QStringList());
+        return 0;
+    }
+
+    return retCode;
 }

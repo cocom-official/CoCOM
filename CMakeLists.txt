@@ -8,14 +8,22 @@ IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
     EXECUTE_PROCESS(
       COMMAND ${GIT_EXECUTABLE} rev-parse --short HEAD
       WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-      OUTPUT_VARIABLE "CoCOM_COMMIT_ID"
+      OUTPUT_VARIABLE "CoCOM_SHORT_COMMIT_ID"
       ERROR_QUIET
       OUTPUT_STRIP_TRAILING_WHITESPACE)
+      EXECUTE_PROCESS(
+        COMMAND ${GIT_EXECUTABLE} rev-parse HEAD
+        WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+        OUTPUT_VARIABLE "CoCOM_LONG_COMMIT_ID"
+        ERROR_QUIET
+        OUTPUT_STRIP_TRAILING_WHITESPACE)
   ELSE(GIT_FOUND)
-    SET(CoCOM_COMMIT_ID 0)
+    SET(CoCOM_SHORT_COMMIT_ID 0)
+    SET(CoCOM_LONG_COMMIT_ID 0)
   ENDIF(GIT_FOUND)
 ENDIF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
-add_definitions(-DCOCOM_COMMIT_ID="${CoCOM_COMMIT_ID}")
+add_definitions(-DCOCOM_SHORT_COMMIT_ID="${CoCOM_SHORT_COMMIT_ID}")
+add_definitions(-DCOCOM_LONG_COMMIT_ID="${CoCOM_LONG_COMMIT_ID}")
 
 file(STRINGS "${CMAKE_SOURCE_DIR}/makespec/VERSION" CoCOM_VERSION)
 file(STRINGS "${CMAKE_SOURCE_DIR}/makespec/BUILD_VERSION" CoCOM_BUILD_VERSION)
@@ -25,6 +33,7 @@ set(CoCOM_VERSION_STRING "${CoCOM_VERSION}.${CoCOM_BUILD_VERSION}")
 set(CoCOM_VERSION_STRING_WITH_SUFFIX "${CoCOM_VERSION}.${CoCOM_BUILD_VERSION}${CoCOM_VERSION_SUFFIX}")
 set(CoCOM_VENDER "CoCOM-Official")
 set(CoCOM_HOMEPAGE "https://github.com/cocom-official")
+set(CoCOM_PORTABLE_FILE_NAME "CoCOM-Portable.txt")
 
 set(VERSION_LIST ${CoCOM_VERSION})
 string(REPLACE "." ";" VERSION_LIST ${VERSION_LIST})
@@ -43,6 +52,7 @@ add_definitions(-DCOCOM_VERSION_STRING_WITH_SUFFIX="${CoCOM_VERSION_STRING_WITH_
 add_definitions(-DCOCOM_APPLICATIONNAME="${PROJECT_NAME}")
 add_definitions(-DCOCOM_VENDER="${CoCOM_VENDER}")
 add_definitions(-DCOCOM_HOMEPAGE="${CoCOM_HOMEPAGE}")
+add_definitions(-DCOCOM_PORTABLE_FILE_NAME="${CoCOM_PORTABLE_FILE_NAME}")
 
 # For Windows RC file.
 set(rc_flag_major   "-DCOCOM_VERSION_MAJOR=${CMAKE_PROJECT_VERSION_MAJOR}")
@@ -56,7 +66,7 @@ set(rc_flag_vender_str "-DCOCOM_VENDER=${CoCOM_VENDER}")
 message(" ")
 message("CoCOM Version: ${CoCOM_VERSION_STRING_WITH_SUFFIX}")
 message("CoCOM Build Version: ${CoCOM_BUILD_VERSION}")
-message("Git Commit ID: ${CoCOM_COMMIT_ID}")
+message("Git Commit ID: ${CoCOM_LONG_COMMIT_ID}")
 message("┌─────────────────────────────────────────────────────────┐")
 message("│ CoCOM, A Cross Platform Serial Port Utility.            │")
 message("│ Licenced under GPLv3                                    │")
@@ -203,8 +213,9 @@ target_compile_options(
 #     ${GLIB_LDFLAGS}
 #     )
 
+set(QHOTKEY_INSTALL OFF)
 add_subdirectory("libs/QHotkey/")
-set (NO_FFLUA_TEST "y")
+set(NO_FFLUA_TEST "y")
 add_subdirectory("libs/fflua/")
 
 target_link_libraries(
@@ -230,6 +241,10 @@ if (CMAKE_BUILD_TYPE STREQUAL Release) # Release
     set(CPACK_PACKAGE_INSTALL_DIRECTORY ${PROJECT_NAME})
     set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_SOURCE_DIR}/LICENSE.txt)
     install(FILES ${CMAKE_SOURCE_DIR}/LICENSE.txt DESTINATION /)
+
+    if (CPACK_GENERATOR STREQUAL 7Z)
+        install(FILES ${CMAKE_SOURCE_DIR}/assets/${CoCOM_PORTABLE_FILE_NAME} DESTINATION /)
+    endif()
 
     set(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/assets/logos\\\\CoCOM.bmp")
     set(CPACK_PACKAGE_EXECUTABLES ${PROJECT_NAME} ${PROJECT_NAME})

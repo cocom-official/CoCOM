@@ -1,0 +1,5 @@
+This file is used to turn portable mode on.
+In portable mode, settings are saved in application dir.
+
+这个文件用来开启便携模式。
+在便携模式中，设置存储在应用所在文件夹。

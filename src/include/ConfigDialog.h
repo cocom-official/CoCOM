@@ -27,19 +27,21 @@ public:
 
 private slots:
     void on_styleComboBox_currentIndexChanged(const QString &text);
+    void on_restoreButton_clicked();
+
     void on_listWidget_currentRowChanged(int currentRow);
-    void on_okButton_pressed();
-    void on_cancelButton_pressed();
+    void on_okButton_clicked();
+    void on_cancelButton_clicked();
 
 private:
     Ui::ConfigDialog *ui;
     float dpiScaling;
-    MouseButtonSignaler *luaLabelSignaler;
+    MouseButtonSignaler *aboutLabelsSignaler;
 
     void setupUI();
     void refreshDPI();
 
     void enumStyles();
 
-    void luaLabel_mouseButtonEvent(QWidget *obj, QMouseEvent *event);
+    void aboutLabels_mouseButtonEvent(QWidget *obj, QMouseEvent *event);
 };

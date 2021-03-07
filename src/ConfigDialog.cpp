@@ -13,7 +13,7 @@ ConfigDialog::ConfigDialog(QWidget *parent)
     : QDialog(parent),
       ui(new Ui::ConfigDialog),
       dpiScaling(1.0),
-      luaLabelSignaler(new MouseButtonSignaler)
+      aboutLabelsSignaler(new MouseButtonSignaler)
 {
     setupUI();
 
@@ -44,15 +44,18 @@ void ConfigDialog::setupUI()
     ui->stackedWidget->setCurrentIndex(0);
 
     ui->versionLabel->setText(tr("Version") + QString(": v") + QString(COCOM_VERSION_STRING_WITH_SUFFIX));
-    ui->commitLabel->setText(tr("Commit") + QString(": ") + QString(COCOM_COMMIT_ID));
+    ui->commitLabel->setText(tr("Commit") + QString(": ") + QString(COCOM_SHORT_COMMIT_ID));
+    ui->buildTimeLabel->setText(tr("Build Time") + QString(": ") + QString(__DATE__ " " __TIME__));
     ui->qtVersionLabel->setText(QString("Qt: ") + QString(QT_VERSION_STR));
     ui->luaVersionLabel->setText(QString("Lua: ") + QString(LUA_VERSION_MAJOR) + "." + QString(LUA_VERSION_MINOR) + "." + QString(LUA_VERSION_RELEASE));
 
     refreshDPI();
 
-    luaLabelSignaler->installOn(ui->luaVersionLabel);
-    connect(luaLabelSignaler, &MouseButtonSignaler::mouseButtonEvent,
-            this, &ConfigDialog::luaLabel_mouseButtonEvent);
+    aboutLabelsSignaler->installOn(ui->commitLabel);
+    aboutLabelsSignaler->installOn(ui->qtVersionLabel);
+    aboutLabelsSignaler->installOn(ui->luaVersionLabel);
+    connect(aboutLabelsSignaler, &MouseButtonSignaler::mouseButtonEvent,
+            this, &ConfigDialog::aboutLabels_mouseButtonEvent);
 }
 
 void ConfigDialog::refreshDPI()
@@ -102,27 +105,39 @@ void ConfigDialog::on_styleComboBox_currentIndexChanged(const QString &text)
     QApplication::setStyle(QStyleFactory::create(text));
 }
 
+void ConfigDialog::on_restoreButton_clicked()
+{
+    ((MainWindow *)parent())->restoreDefaultSettings();
+}
+
 void ConfigDialog::on_listWidget_currentRowChanged(int currentRow)
 {
     ui->stackedWidget->setCurrentIndex(currentRow);
 }
 
-void ConfigDialog::on_okButton_pressed()
+void ConfigDialog::on_okButton_clicked()
 {
     close();
 }
 
-void ConfigDialog::on_cancelButton_pressed()
+void ConfigDialog::on_cancelButton_clicked()
 {
     close();
 }
 
-void ConfigDialog::luaLabel_mouseButtonEvent(QWidget *obj, QMouseEvent *event)
+void ConfigDialog::aboutLabels_mouseButtonEvent(QWidget *obj, QMouseEvent *event)
 {
-    Q_UNUSED(obj);
-    int old = dup(1);
-    if (event->type() == QEvent::MouseButtonDblClick)
+    if (event->type() != QEvent::MouseButtonDblClick)
     {
+        return;
+    }
+
+    QLabel *label = static_cast<QLabel *>(obj);
+
+    if (label == ui->luaVersionLabel)
+    {
+        int old = dup(1);
+
         QTemporaryFile dup2_file;
         dup2_file.open();
 
@@ -144,5 +159,23 @@ void ConfigDialog::luaLabel_mouseButtonEvent(QWidget *obj, QMouseEvent *event)
 
         dup2_file.seek(0);
         ((MainWindow *)parent())->setStatusInfo(QString(dup2_file.readAll()));
+    }
+    else if (label == ui->qtVersionLabel)
+    {
+        QApplication::aboutQt();
+    }
+    else if (label == ui->commitLabel)
+    {
+        static int count = 0;
+        count++;
+
+        if (count % 2 == 0)
+        {
+            ui->commitLabel->setText(tr("Commit") + QString(": ") + QString(COCOM_SHORT_COMMIT_ID));
+        }
+        else
+        {
+            ui->commitLabel->setText(tr("Commit") + QString(": ") + QString(COCOM_LONG_COMMIT_ID));
+        }
     }
 }

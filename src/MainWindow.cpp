@@ -7,6 +7,8 @@ MainWindow::MainWindow(QWidget *parent)
       ui(new Ui::MainWindow),
       dpiScaling(1.0),
       tabBarClicked(false),
+      restoreSettings(false),
+      shortcut(new QHotkey(this)),
       portSelect(new QComboBox(this)),
       findToolBar(new QToolBar()),
       findEdit(new QLineEdit(this)),
@@ -31,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
       encodingBox(new QComboBox(this)),
       configDialog(nullptr),
       serial(new Serial(this)),
+      settings(nullptr),
       timer(new QTimer(this)),
       periodicSendTimer(new QTimer(this)),
       lineBreakType(LineBreakOFF)
@@ -39,19 +42,18 @@ MainWindow::MainWindow(QWidget *parent)
     QCoreApplication::setOrganizationName(QString(COCOM_VENDER));
     QCoreApplication::setOrganizationDomain(QString(COCOM_HOMEPAGE));
 
+    initSettings();
+
     setupUI();
 
     setupSerialPort();
 
-    QHotkey *hotkey = new QHotkey(QKeySequence("Ctrl+Alt+Z"), true);
-    qDebug() << "hotkey Is Registered: " << hotkey->isRegistered();
-
-    connect(hotkey, &QHotkey::activated,
-            this, &MainWindow::showHotkey_activated);
+    readSettings();
 }
 
 MainWindow::~MainWindow()
 {
+    writeSettings();
     delete ui;
 }
 
@@ -95,6 +97,78 @@ void MainWindow::setLayout(double rate)
     ui->sendTabHorizontalLayout->setSpacing(defaultMargin * rate);
     ui->commandLineTabHorizontalLayout->setSpacing(defaultMargin * rate);
     ui->sendTabVerticalLayout->setSpacing(defaultMargin * rate);
+}
+
+void MainWindow::readSettings()
+{
+    settings->beginGroup("MainWindow");
+    resize(settings->value("size", QSize(1000, 800)).toSize());
+    move(settings->value("pos", QPoint(200, 200)).toPoint());
+    settings->endGroup();
+
+    settings->beginGroup("HotKey");
+    shortcut->setShortcut(QKeySequence().fromString(
+                              settings->value("shortcut", QString("Ctrl+Alt+Z")).toString()),
+                          true);
+    settings->endGroup();
+    if (shortcut->isRegistered())
+    {
+        connect(shortcut, &QHotkey::activated,
+                this, &MainWindow::showHotkey_activated);
+    }
+    qDebug() << "HotKey::shortcut"
+             << shortcut->shortcut().toString()
+             << (shortcut->isRegistered() ? "is Registered Success" : "is Registered Failed");
+}
+
+void MainWindow::writeSettings()
+{
+    if (restoreSettings)
+    {
+        return;
+    }
+
+    settings->beginGroup("MainWindow");
+    settings->setValue("size", size());
+    settings->setValue("pos", pos());
+    settings->endGroup();
+
+    settings->beginGroup("HotKey");
+    settings->setValue("shortcut", shortcut->shortcut());
+    settings->endGroup();
+}
+
+void MainWindow::restoreDefaultSettings()
+{
+    settings->beginGroup("MainWindow");
+    settings->remove("");
+    settings->endGroup();
+
+    settings->beginGroup("HotKey");
+    settings->remove("");
+    settings->endGroup();
+
+    restoreSettings = true;
+
+    onRestart();
+}
+
+void MainWindow::initSettings()
+{
+    QFile portableFile(QCoreApplication::applicationDirPath() + "/" + QString(COCOM_PORTABLE_FILE_NAME));
+
+    if (portableFile.open(QIODevice::ReadOnly))
+    {
+        qDebug() << "CoCOM Portable Mode";
+        settings = new QSettings(QCoreApplication::applicationDirPath() + "/CoCOM.ini", QSettings::IniFormat, this);
+    }
+    else
+    {
+        settings = new QSettings(QSettings::IniFormat,
+                                 QSettings::UserScope,
+                                 QString(COCOM_VENDER),
+                                 QString(COCOM_APPLICATIONNAME), this);
+    }
 }
 
 void MainWindow::setupSerialPort()
@@ -234,12 +308,18 @@ void MainWindow::setToolBar()
     connect(findToolbarEscapeSignaler, &EscapeKeySignaler::escapeKeyEvent,
             this, &MainWindow::findToolbar_escapeKeyEvent);
 
+    findEdit->setToolTip(tr("Find"));
+    findNextButton->setToolTip(tr("Next Match") + " (Enter), " + tr("Last Match") + " (Shift + Enter)");
+    findPrivButton->setToolTip(tr("Previous Match") + " (Ctrl + Enter), " + tr("First Match") + " (Ctrl + Shift + Enter)");
+    findCloseButton->setToolTip(tr("Close") + " (Esc)");
     findToolbarEnterSignaler->installOn(findEdit);
     findToolbarEnterSignaler->installOn(findNextButton);
     findToolbarEnterSignaler->installOn(findPrivButton);
     findToolbarEnterSignaler->installOn(findCloseButton);
     connect(findToolbarEnterSignaler, &EnterKeySignaler::enterKeyEvent,
             this, &MainWindow::findToolbar_enterKeyEvent);
+
+    findResultChanged(0, 0);
 }
 
 void MainWindow::setStatusBar()
@@ -553,6 +633,17 @@ void MainWindow::findResultChanged(int cur, int all)
 {
     QString result = " %1:%2 ";
     findResultLabel->setText(result.arg(QString::number(cur), QString::number(all)));
+
+    if (all == 0)
+    {
+        findNextButton->setDisabled(true);
+        findPrivButton->setDisabled(true);
+    }
+    else
+    {
+        findNextButton->setDisabled(false);
+        findPrivButton->setDisabled(false);
+    }
 }
 
 void MainWindow::moveEvent(QMoveEvent *event)
@@ -624,6 +715,11 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event)
     {
         return;
     }
+}
+
+void MainWindow::onRestart()
+{
+    qApp->exit(restartExitCode);
 }
 
 void MainWindow::on_inputTabWidget_currentChanged(int index)

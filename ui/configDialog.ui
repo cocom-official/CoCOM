@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>753</height>
+    <width>1000</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,7 +35,7 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="page">
         <widget class="QWidget" name="layoutWidget">
@@ -73,9 +73,25 @@
           </item>
          </layout>
         </widget>
+        <widget class="QPushButton" name="restoreButton">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>80</y>
+           <width>211</width>
+           <height>28</height>
+          </rect>
+         </property>
+         <property name="toolTip">
+          <string>This will delete all settings, and restart application.</string>
+         </property>
+         <property name="text">
+          <string>Restore Default Settings</string>
+         </property>
+        </widget>
        </widget>
        <widget class="QWidget" name="page_2">
-        <layout class="QVBoxLayout" name="verticalLayout_4">
+        <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
           <widget class="QLabel" name="nameLabel">
            <property name="sizePolicy">
@@ -99,9 +115,9 @@
           </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_9">
+          <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
-            <layout class="QVBoxLayout" name="verticalLayout_2">
+            <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="1,1">
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_5">
                <item>
@@ -138,7 +154,7 @@
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_6">
                <item>
-                <widget class="QLabel" name="qtVersionLabel">
+                <widget class="QLabel" name="commitLabel">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -146,7 +162,7 @@
                   </sizepolicy>
                  </property>
                  <property name="text">
-                  <string>Qt:x.x.x.x</string>
+                  <string>Commit: x.x.x.x</string>
                  </property>
                  <property name="textInteractionFlags">
                   <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
@@ -171,11 +187,27 @@
             </layout>
            </item>
            <item>
-            <layout class="QVBoxLayout" name="verticalLayout_3">
+            <widget class="QLabel" name="buildTimeLabel">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Build Time: x.x.x.x</string>
+             </property>
+             <property name="textInteractionFlags">
+              <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_10" stretch="1,1">
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_7">
                <item>
-                <widget class="QLabel" name="commitLabel">
+                <widget class="QLabel" name="qtVersionLabel">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -183,7 +215,7 @@
                   </sizepolicy>
                  </property>
                  <property name="text">
-                  <string>Commit: x.x.x.x</string>
+                  <string>Qt:x.x.x.x</string>
                  </property>
                  <property name="textInteractionFlags">
                   <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>

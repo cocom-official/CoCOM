@@ -296,6 +296,11 @@ void TextBrowser::moveToNextFindResult()
         findFromCurrent(findText);
     }
 
+    if (0 == findResultCount)
+    {
+        return;
+    }
+
     mutex.lock();
 
     QTextCursor lCursor = browser->textCursor();
@@ -319,6 +324,11 @@ void TextBrowser::moveToNextFindResult()
 
 void TextBrowser::moveToPrivFindResult()
 {
+    if (0 == findResultCount)
+    {
+        return;
+    }
+
     mutex.lock();
 
     QTextCursor lCursor = browser->textCursor();
@@ -344,6 +354,11 @@ void TextBrowser::moveToPrivFindResult()
 
 void TextBrowser::moveToLastFindResult()
 {
+    if (0 == findResultCount)
+    {
+        return;
+    }
+
     int lastPos = findResultPos.last();
 
     mutex.lock();
@@ -363,6 +378,11 @@ void TextBrowser::moveToLastFindResult()
 
 void TextBrowser::moveToFirstFindResult()
 {
+    if (0 == findResultCount)
+    {
+        return;
+    }
+
     int firstPos = findResultPos.first();
 
     mutex.lock();

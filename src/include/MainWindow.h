@@ -28,6 +28,8 @@
 #include <QIODevice>
 #include <QDateTime>
 #include <QResizeEvent>
+#include <QSettings>
+#include <QDir>
 
 #ifdef Q_OS_WIN32
 #include <QtWinExtras>
@@ -54,6 +56,7 @@ public:
     ~MainWindow();
     void setStatusInfo(QString text);
     void findResultChanged(int cur, int all);
+    void restoreDefaultSettings();
 
 private slots:
     void on_inputTabWidget_currentChanged(int index);
@@ -112,6 +115,8 @@ private:
     float dpiScaling;
 
     bool tabBarClicked;
+    bool restoreSettings;
+    QHotkey *shortcut;
 
     QComboBox *portSelect;
     QToolBar *findToolBar;
@@ -145,6 +150,7 @@ private:
 
     Serial *serial;
     TextBrowser *textBrowser;
+    QSettings *settings;
 
     QTimer *timer;
     QTimer *periodicSendTimer;
@@ -165,6 +171,9 @@ private:
     void moveFindToolBar(bool force = false, QPoint moveOffset = QPoint(0, 0));
 
     /* no UI */
+    void readSettings();
+    void writeSettings();
+    void initSettings();
     void setupSerialPort();
     void enumPorts();
     void updatePortConfig();
@@ -177,4 +186,6 @@ private:
     void resizeEvent(QResizeEvent *event);
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
+
+    void onRestart();
 };

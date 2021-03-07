@@ -44,10 +44,12 @@ jobs:
         cd $GITHUB_WORKSPACE
         mkdir release
         cd release
-        cmake -GNinja -DCMAKE_BUILD_TYPE=Release ..
+        cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=WIX ..
         ninja -j $(nproc)
-        cpack -G WIX
-        cpack -G 7Z
+        cpack
+        cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=7Z ..
+        ninja -j $(nproc)
+        cpack
 
     - name: uploading Windows installer artifact
       uses: actions/upload-artifact@master

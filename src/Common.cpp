@@ -3,6 +3,8 @@
 
 #include "Common.h"
 
+const int restartExitCode = 777;
+
 const ComboBoxConfig<int> configBaudRate[] = {
     {9600, "9600"},
     {38400, "38400"},

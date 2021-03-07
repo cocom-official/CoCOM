@@ -12,7 +12,9 @@
 #define COCOM_VENDER ""
 #define COCOM_HOMEPAGE ""
 #define COCOM_VERSION_STRING_WITH_SUFFIX ""
-#define COCOM_COMMIT_ID ""
+#define COCOM_SHORT_COMMIT_ID ""
+#define COCOM_LONG_COMMIT_ID ""
+#define COCOM_PORTABLE_FILE_NAME ""
 #endif
 
 #define DEFAULT_ENCODING "Local"
@@ -28,6 +30,7 @@
 #else
 #error "un-supported plantform"
 #endif
+
 enum CoCOM_Return
 {
     OK = 0,
@@ -55,6 +58,8 @@ struct ComboBoxConfig
     T param;
     QString str;
 };
+
+extern const int restartExitCode;
 
 extern const ComboBoxConfig<int> configBaudRate[5];
 extern const ComboBoxConfig<QSerialPort::DataBits> configDataBits[4];

@@ -268,4 +268,36 @@
     <source>Double Click to Close</source>
     <target>双击关闭</target>
 </phrase>
+<phrase>
+    <source>Find</source>
+    <target>查找</target>
+</phrase>
+<phrase>
+    <source>Next Match</source>
+    <target>下一个匹配项</target>
+</phrase>
+<phrase>
+    <source>Last Match</source>
+    <target>上一个匹配项</target>
+</phrase>
+<phrase>
+    <source>Last Match</source>
+    <target>最后一个匹配项</target>
+</phrase>
+<phrase>
+    <source>First Match</source>
+    <target>第一个匹配项</target>
+</phrase>
+<phrase>
+    <source>Restore Default Settings</source>
+    <target>恢复默认设置</target>
+</phrase>
+<phrase>
+    <source>Build Time</source>
+    <target>构建时间</target>
+</phrase>
+<phrase>
+    <source>This will delete all settings, and restart application.</source>
+    <target>这会删除所有设置，并重启应用。</target>
+</phrase>
 </QPH>
