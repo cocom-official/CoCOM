@@ -319,10 +319,18 @@
         <translation type="vanished">按钮</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="198"/>
-        <location filename="../../ui/mainWindow.ui" line="209"/>
         <source>toolBar</source>
-        <translation>工具栏</translation>
+        <translation type="vanished">工具栏</translation>
+    </message>
+    <message>
+        <location filename="../../ui/mainWindow.ui" line="198"/>
+        <source>Port Select ToolBar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/mainWindow.ui" line="209"/>
+        <source>Buttons ToolBar</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../ui/mainWindow.ui" line="242"/>
@@ -390,7 +398,7 @@
     </message>
     <message>
         <location filename="../../src/MainWindow.cpp" line="84"/>
-        <location filename="../../src/MainWindow.cpp" line="1105"/>
+        <location filename="../../src/MainWindow.cpp" line="1117"/>
         <source>Ready</source>
         <translation>就绪</translation>
     </message>
@@ -400,27 +408,32 @@
         <translation>单击 “+” 添加新标签页</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="311"/>
+        <location filename="../../src/MainWindow.cpp" line="288"/>
+        <source>Find ToolBar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/MainWindow.cpp" line="309"/>
         <source>Find</source>
         <translation>查找</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="312"/>
+        <location filename="../../src/MainWindow.cpp" line="310"/>
         <source>Next Match</source>
         <translation>下一个匹配项</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="312"/>
+        <location filename="../../src/MainWindow.cpp" line="310"/>
         <source>Last Match</source>
         <translation>最后一个匹配项</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="313"/>
+        <location filename="../../src/MainWindow.cpp" line="311"/>
         <source>Previous Match</source>
         <translation>上一个匹配项</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="313"/>
+        <location filename="../../src/MainWindow.cpp" line="311"/>
         <source>First Match</source>
         <translation>第一个匹配项</translation>
     </message>
@@ -442,7 +455,7 @@
     </message>
     <message>
         <location filename="../../src/MainWindow.cpp" line="357"/>
-        <location filename="../../src/MainWindow.cpp" line="802"/>
+        <location filename="../../src/MainWindow.cpp" line="814"/>
         <source>Parity</source>
         <translation>校验位</translation>
     </message>
@@ -493,99 +506,122 @@
     </message>
     <message>
         <location filename="../../src/MainWindow.cpp" line="496"/>
-        <location filename="../../src/MainWindow.cpp" line="1053"/>
+        <location filename="../../src/MainWindow.cpp" line="1065"/>
         <source>Tab</source>
         <translation>标签页</translation>
     </message>
     <message>
         <location filename="../../src/MainWindow.cpp" line="496"/>
-        <location filename="../../src/MainWindow.cpp" line="1053"/>
+        <location filename="../../src/MainWindow.cpp" line="1065"/>
         <source>Double Click to Close</source>
         <translation>双击关闭</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="773"/>
-        <location filename="../../src/MainWindow.cpp" line="788"/>
-        <location filename="../../src/MainWindow.cpp" line="802"/>
-        <location filename="../../src/MainWindow.cpp" line="816"/>
-        <location filename="../../src/MainWindow.cpp" line="830"/>
+        <location filename="../../src/MainWindow.cpp" line="785"/>
+        <location filename="../../src/MainWindow.cpp" line="800"/>
+        <location filename="../../src/MainWindow.cpp" line="814"/>
+        <location filename="../../src/MainWindow.cpp" line="828"/>
+        <location filename="../../src/MainWindow.cpp" line="842"/>
         <source>set</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="773"/>
+        <location filename="../../src/MainWindow.cpp" line="785"/>
         <source>BaudRate</source>
         <translation>波特率</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="773"/>
-        <location filename="../../src/MainWindow.cpp" line="788"/>
-        <location filename="../../src/MainWindow.cpp" line="802"/>
-        <location filename="../../src/MainWindow.cpp" line="816"/>
-        <location filename="../../src/MainWindow.cpp" line="830"/>
+        <location filename="../../src/MainWindow.cpp" line="785"/>
+        <location filename="../../src/MainWindow.cpp" line="800"/>
+        <location filename="../../src/MainWindow.cpp" line="814"/>
+        <location filename="../../src/MainWindow.cpp" line="828"/>
+        <location filename="../../src/MainWindow.cpp" line="842"/>
         <source>fail</source>
         <translation>失败</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="788"/>
+        <location filename="../../src/MainWindow.cpp" line="800"/>
         <source>DataBits</source>
         <translation>数据位</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="816"/>
+        <location filename="../../src/MainWindow.cpp" line="828"/>
         <source>StopBits</source>
         <translation>停止位</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="830"/>
+        <location filename="../../src/MainWindow.cpp" line="842"/>
         <source>FlowControl</source>
         <translation>流控</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="875"/>
+        <location filename="../../src/MainWindow.cpp" line="887"/>
         <source>Open Failed!</source>
         <translation>打开失败！</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="876"/>
+        <location filename="../../src/MainWindow.cpp" line="888"/>
         <source>,</source>
         <translation>，</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="882"/>
+        <location filename="../../src/MainWindow.cpp" line="894"/>
         <source>Busy</source>
         <translation>忙</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="886"/>
+        <location filename="../../src/MainWindow.cpp" line="898"/>
         <source>Null</source>
         <translation>空</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="890"/>
+        <location filename="../../src/MainWindow.cpp" line="902"/>
         <source>Unknow Reason</source>
         <translation>未知原因</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="897"/>
+        <location filename="../../src/MainWindow.cpp" line="909"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="314"/>
-        <location filename="../../src/MainWindow.cpp" line="908"/>
+        <location filename="../../src/MainWindow.cpp" line="312"/>
+        <location filename="../../src/MainWindow.cpp" line="920"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="943"/>
+        <location filename="../../src/MainWindow.cpp" line="955"/>
         <source>Save Output To File</source>
         <translation>保存输出到文件</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="945"/>
+        <location filename="../../src/MainWindow.cpp" line="957"/>
         <source>Text files (*.txt)</source>
         <translation>文本文件 (*.txt)</translation>
+    </message>
+</context>
+<context>
+    <name>PortConfigDialog</name>
+    <message>
+        <source>Baudrate</source>
+        <translation type="vanished">波特率</translation>
+    </message>
+    <message>
+        <source>Data Bits</source>
+        <translation type="vanished">数据位</translation>
+    </message>
+    <message>
+        <source>Parity</source>
+        <translation type="vanished">校验位</translation>
+    </message>
+    <message>
+        <source>Stop Bits</source>
+        <translation type="vanished">停止位</translation>
+    </message>
+    <message>
+        <source>Flow Control</source>
+        <translation type="vanished">流控</translation>
     </message>
 </context>
 <context>

@@ -161,6 +161,7 @@ private:
     void setupUI();
     void setLayout(double rate);
     void setInputTabWidget();
+    void setDarkStyle();
     void refreshDPI();
     void loadFont();
     void setToolBar();

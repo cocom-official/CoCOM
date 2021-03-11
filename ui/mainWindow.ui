@@ -195,7 +195,7 @@
   </widget>
   <widget class="QToolBar" name="configToolBar">
    <property name="windowTitle">
-    <string>toolBar</string>
+    <string>Port Select ToolBar</string>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -206,7 +206,7 @@
   </widget>
   <widget class="QToolBar" name="buttosToolBar">
    <property name="windowTitle">
-    <string>toolBar</string>
+    <string>Buttons ToolBar</string>
    </property>
    <property name="iconSize">
     <size>

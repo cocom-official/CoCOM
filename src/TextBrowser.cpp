@@ -408,8 +408,11 @@ void TextBrowser::clear()
     resetHintFormant(&successHint);
     resetHintFormant(&warnHint);
     resetHintFormant(&errorHint);
+    findResultCount = 0;
     currentFindResultIndex = 0;
     findResultPos.clear();
+
+    emit findResultChanged(0, 0);
 
     unlock();
 }

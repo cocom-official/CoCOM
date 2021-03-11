@@ -205,6 +205,36 @@ void MainWindow::setInputTabWidget()
     ui->inputTabWidget->setCurrentIndex(0);
 }
 
+void MainWindow::setDarkStyle()
+{
+    QFile file(":/themes/darkstyle/darkstyle.qss");
+    file.open(QFile::ReadOnly | QFile::Text);
+    qApp->setStyleSheet(file.readAll());
+
+    QPalette darkPalette;
+    darkPalette.setColor(QPalette::Window, QColor(53, 53, 53));
+    darkPalette.setColor(QPalette::WindowText, Qt::white);
+    darkPalette.setColor(QPalette::Disabled, QPalette::WindowText, QColor(127, 127, 127));
+    darkPalette.setColor(QPalette::Base, QColor(42, 42, 42));
+    darkPalette.setColor(QPalette::AlternateBase, QColor(66, 66, 66));
+    darkPalette.setColor(QPalette::ToolTipBase, Qt::white);
+    darkPalette.setColor(QPalette::ToolTipText, QColor(53, 53, 53));
+    darkPalette.setColor(QPalette::Text, Qt::white);
+    darkPalette.setColor(QPalette::Disabled, QPalette::Text, QColor(127, 127, 127));
+    darkPalette.setColor(QPalette::Dark, QColor(35, 35, 35));
+    darkPalette.setColor(QPalette::Shadow, QColor(20, 20, 20));
+    darkPalette.setColor(QPalette::Button, QColor(53, 53, 53));
+    darkPalette.setColor(QPalette::ButtonText, Qt::white);
+    darkPalette.setColor(QPalette::Disabled, QPalette::ButtonText, QColor(127, 127, 127));
+    darkPalette.setColor(QPalette::BrightText, Qt::red);
+    darkPalette.setColor(QPalette::Link, QColor(42, 130, 218));
+    darkPalette.setColor(QPalette::Highlight, QColor(42, 130, 218));
+    darkPalette.setColor(QPalette::Disabled, QPalette::Highlight, QColor(80, 80, 80));
+    darkPalette.setColor(QPalette::HighlightedText, Qt::white);
+    darkPalette.setColor(QPalette::Disabled, QPalette::HighlightedText, QColor(127, 127, 127));
+    qApp->setPalette(darkPalette);
+}
+
 void MainWindow::refreshDPI()
 {
     QScreen *screen = nullptr;
@@ -268,9 +298,7 @@ void MainWindow::loadFont()
     ui->commandLineSendComboBox->setFont(font);
     statusInfoLabel->setFont(font);
 
-    findNextButton->setFont(font);
-    findPrivButton->setFont(font);
-    findCloseButton->setFont(font);
+    findResultLabel->setFont(font);
 }
 
 void MainWindow::setToolBar()
@@ -280,7 +308,6 @@ void MainWindow::setToolBar()
     ui->configToolBar->addWidget(portSelect);
 
     /* find toolbar */
-    findResultLabel->setText(" 0:0 ");
     findNextButton->setIcon(QIcon(":/assets/icons/arrow-down.svg"));
     findPrivButton->setIcon(QIcon(":/assets/icons/arrow-up.svg"));
     findCloseButton->setIcon(QIcon(":/assets/icons/cross.svg"));
@@ -288,6 +315,8 @@ void MainWindow::setToolBar()
     findPrivButton->setFixedWidth(findPrivButton->height());
     findCloseButton->setFixedWidth(findCloseButton->height());
 
+    findToolBar->setObjectName("findToolBar");
+    findToolBar->setWindowTitle(tr("Find ToolBar"));
     findToolBar->addWidget(findEdit);
     findToolBar->addWidget(findResultLabel);
     findToolBar->addWidget(findNextButton);
@@ -631,16 +660,17 @@ void MainWindow::setStatusInfo(QString text)
 
 void MainWindow::findResultChanged(int cur, int all)
 {
-    QString result = " %1:%2 ";
-    findResultLabel->setText(result.arg(QString::number(cur), QString::number(all)));
+    QString result = " %1/%2 ";
 
     if (all == 0)
     {
+        findResultLabel->setText(result.arg("-", "-"));
         findNextButton->setDisabled(true);
         findPrivButton->setDisabled(true);
     }
     else
     {
+        findResultLabel->setText(result.arg(QString::number(cur), QString::number(all)));
         findNextButton->setDisabled(false);
         findPrivButton->setDisabled(false);
     }
