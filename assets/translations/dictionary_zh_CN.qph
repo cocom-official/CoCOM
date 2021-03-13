@@ -300,4 +300,80 @@
     <source>This will delete all settings, and restart application.</source>
     <target>这会删除所有设置，并重启应用。</target>
 </phrase>
+<phrase>
+    <source>Apperence</source>
+    <target>外观</target>
+</phrase>
+<phrase>
+    <source>Interface Language</source>
+    <target>语言</target>
+</phrase>
+<phrase>
+    <source>Dark Mode</source>
+    <target>黑暗模式</target>
+</phrase>
+<phrase>
+    <source>Keep Window Size</source>
+    <target>保持窗口大小</target>
+</phrase>
+<phrase>
+    <source>Keep Window Postion</source>
+    <target>保持窗口位置</target>
+</phrase>
+<phrase>
+    <source>Window Style</source>
+    <target>窗体风格</target>
+</phrase>
+<phrase>
+    <source>Hint Highlight</source>
+    <target>高亮提示</target>
+</phrase>
+<phrase>
+    <source>Advanced</source>
+    <target>高级</target>
+</phrase>
+<phrase>
+    <source>Port Select ToolBar</source>
+    <target>串口选择工具栏</target>
+</phrase>
+<phrase>
+    <source>Buttons ToolBar</source>
+    <target>按钮工具栏</target>
+</phrase>
+<phrase>
+    <source>Show/Hide</source>
+    <target>显示/隐藏</target>
+</phrase>
+<phrase>
+    <source>is Registered Success!</source>
+    <target>注册成功</target>
+</phrase>
+<phrase>
+    <source>is Registered Success!</source>
+    <target>注册成功！</target>
+</phrase>
+<phrase>
+    <source>is Registered Failed!</source>
+    <target>注册失败！</target>
+</phrase>
+<phrase>
+    <source>Find ToolBar</source>
+    <target>查找工具栏</target>
+</phrase>
+<phrase>
+    <source>Failed to register %1. Error: %2</source>
+    <target>注册 %q 失败，%2</target>
+</phrase>
+<phrase>
+    <source>Failed to register %1. Error: %2</source>
+    <target>注册 %q 失败。%2</target>
+</phrase>
+<phrase>
+    <source>Failed to register %1. Error: %2</source>
+    <target>注册 %q 失败。错误：%2</target>
+</phrase>
+<phrase>
+    <source>Failed to unregister %1. Error: %2</source>
+    <target>取消注册 %q 失败。错误：%2</target>
+</phrase>
 </QPH>

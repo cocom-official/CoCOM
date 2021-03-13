@@ -117,6 +117,8 @@ qt5_wrap_ui(ui_list
 
 qt5_wrap_cpp(moc_list
     "src/include/Common.h"
+    "src/include/GlobalSettings.h"
+    "src/include/CommandSettings.h"
     "src/include/CommandsTab.h"
     "src/include/MainWindow.h"
     "src/include/Serial.h"
@@ -142,6 +144,8 @@ set(ts_raw_list
 set(src_list
     "src/main.cpp"
     "src/Common.cpp"
+    "src/GlobalSettings.cpp"
+    "src/CommandSettings.cpp"
     "src/CommandsTab.cpp"
     "src/MainWindow.cpp"
     "src/Serial.cpp"

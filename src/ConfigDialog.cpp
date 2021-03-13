@@ -9,15 +9,14 @@
 #include "ConfigDialog.h"
 #include "ui_configDialog.h"
 
-ConfigDialog::ConfigDialog(QWidget *parent)
+ConfigDialog::ConfigDialog(GlobalSettings *_settings, QWidget *parent)
     : QDialog(parent),
       ui(new Ui::ConfigDialog),
       dpiScaling(1.0),
-      aboutLabelsSignaler(new MouseButtonSignaler)
+      aboutLabelsSignaler(new MouseButtonSignaler),
+      settings(_settings)
 {
     setupUI();
-
-    enumStyles();
 }
 
 ConfigDialog::~ConfigDialog()
@@ -29,19 +28,9 @@ void ConfigDialog::setupUI()
 {
     ui->setupUi(this);
 
-    QListWidgetItem *common = new QListWidgetItem(ui->listWidget);
-    common->setIcon(QIcon(":/assets/icons/sliders.svg"));
-    common->setText(tr("Common"));
-    ui->listWidget->addItem(common);
-
-    QListWidgetItem *about = new QListWidgetItem(ui->listWidget);
-    about->setIcon(QIcon(":/assets/logos/CoCOM.svg"));
-    about->setText(tr("About"));
-    ui->listWidget->addItem(about);
-
-    ui->listWidget->setCurrentRow(0);
-
-    ui->stackedWidget->setCurrentIndex(0);
+    ui->iconLabel->setPixmap(QPixmap::fromImage(
+                                 QImage(":/assets/logos/CoCOM_128.png"))
+                                 .scaled(ui->iconLabel->size(), Qt::KeepAspectRatio));
 
     ui->versionLabel->setText(tr("Version") + QString(": v") + QString(COCOM_VERSION_STRING_WITH_SUFFIX));
     ui->commitLabel->setText(tr("Commit") + QString(": ") + QString(COCOM_SHORT_COMMIT_ID));
@@ -56,6 +45,56 @@ void ConfigDialog::setupUI()
     aboutLabelsSignaler->installOn(ui->luaVersionLabel);
     connect(aboutLabelsSignaler, &MouseButtonSignaler::mouseButtonEvent,
             this, &ConfigDialog::aboutLabels_mouseButtonEvent);
+
+    refreshUI();
+}
+
+void ConfigDialog::refreshUI()
+{
+    /* styleComboBox */
+    ui->styleComboBox->clear();
+    int styleIndex = 0;
+    QString style = settings->getValue("windosStyle").toString();
+    QStringList styleList = QStyleFactory::keys();
+    for (int index = 0; index < styleList.size(); index++)
+    {
+        if (!styleList[index].startsWith("bb10"))
+        {
+            ui->styleComboBox->addItem(styleList[index]);
+            if (style == styleList[index])
+            {
+                styleIndex = index;
+            }
+        }
+    }
+    ui->styleComboBox->setCurrentIndex(styleIndex);
+
+    if (settings->getValue("darkMode").toBool())
+    {
+        ui->darkModeCheckBox->setCheckState(Qt::Checked);
+    }
+    else
+    {
+        ui->darkModeCheckBox->setCheckState(Qt::Unchecked);
+    }
+
+    if (settings->getValue("keepWindowSize").toBool())
+    {
+        ui->keepWindowsSizeCheckBox->setCheckState(Qt::Checked);
+    }
+    else
+    {
+        ui->keepWindowsSizeCheckBox->setCheckState(Qt::Unchecked);
+    }
+
+    if (settings->getValue("keepWindowPos").toBool())
+    {
+        ui->keepWindowsPosCheckBox->setCheckState(Qt::Checked);
+    }
+    else
+    {
+        ui->keepWindowsPosCheckBox->setCheckState(Qt::Unchecked);
+    }
 }
 
 void ConfigDialog::refreshDPI()
@@ -89,39 +128,86 @@ void ConfigDialog::refreshDPI()
     // resize(width() * objectRate, height() * objectRate);
 }
 
-void ConfigDialog::enumStyles()
+void ConfigDialog::on_languageComboBox_currentIndexChanged(const QString &text)
 {
-    for (auto style : QStyleFactory::keys())
-    {
-        if (!style.startsWith("bb10"))
-        {
-            ui->styleComboBox->addItem(style);
-        }
-    }
+    settings->setUndoableValue("language", QVariant(text));
 }
 
 void ConfigDialog::on_styleComboBox_currentIndexChanged(const QString &text)
 {
-    QApplication::setStyle(QStyleFactory::create(text));
+    settings->setUndoableValue("windosStyle", QVariant(text));
+}
+
+void ConfigDialog::on_darkModeCheckBox_stateChanged(int state)
+{
+    static QString style;
+    if (Qt::Checked == state)
+    {
+        style = ui->styleComboBox->currentText();
+        for (int i = 0; i < ui->styleComboBox->count(); i++)
+        {
+            if (ui->styleComboBox->itemText(i) == "Fusion")
+            {
+                ui->styleComboBox->setCurrentIndex(i);
+                ui->styleComboBox->setDisabled(true);
+                break;
+            }
+        }
+        settings->setUndoableValue("darkMode", QVariant(true));
+    }
+    else
+    {
+        for (int i = 0; i < ui->styleComboBox->count(); i++)
+        {
+            if (ui->styleComboBox->itemText(i) == style)
+            {
+                ui->styleComboBox->setCurrentIndex(i);
+                ui->styleComboBox->setDisabled(false);
+                break;
+            }
+        }
+        settings->setUndoableValue("darkMode", QVariant(false));
+    }
+}
+
+void ConfigDialog::on_keepWindowsSizeCheckBox_stateChanged(int state)
+{
+    if (Qt::Checked == state)
+    {
+        settings->setUndoableValue("keepWindowSize", QVariant(true));
+    }
+    else
+    {
+        settings->setUndoableValue("keepWindowSize", QVariant(false));
+    }
+}
+
+void ConfigDialog::on_keepWindowsPosCheckBox_stateChanged(int state)
+{
+    if (Qt::Checked == state)
+    {
+        settings->setUndoableValue("keepWindowPos", QVariant(true));
+    }
+    else
+    {
+        settings->setUndoableValue("keepWindowPos", QVariant(false));
+    }
 }
 
 void ConfigDialog::on_restoreButton_clicked()
 {
-    ((MainWindow *)parent())->restoreDefaultSettings();
-}
-
-void ConfigDialog::on_listWidget_currentRowChanged(int currentRow)
-{
-    ui->stackedWidget->setCurrentIndex(currentRow);
+    emit onRestore();
 }
 
 void ConfigDialog::on_okButton_clicked()
 {
+    settings->applyTrackChange();
     close();
 }
 
 void ConfigDialog::on_cancelButton_clicked()
 {
+    settings->undoChange();
     close();
 }
 
@@ -178,4 +264,19 @@ void ConfigDialog::aboutLabels_mouseButtonEvent(QWidget *obj, QMouseEvent *event
             ui->commitLabel->setText(tr("Commit") + QString(": ") + QString(COCOM_LONG_COMMIT_ID));
         }
     }
+}
+
+void ConfigDialog::showEvent(QShowEvent *event)
+{
+    refreshUI();
+    settings->startTrackChange();
+
+    event->accept();
+}
+
+void ConfigDialog::closeEvent(QCloseEvent *event)
+{
+    settings->undoChange();
+
+    event->accept();
 }

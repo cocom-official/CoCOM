@@ -35,6 +35,38 @@ CommandsTab::CommandsTab(QWidget *parent)
             this, &CommandsTab::editEvent);
 }
 
+void CommandsTab::readSettings(CommandSettings *setting, int tab)
+{
+    setting->beginTab(tab);
+
+    for (int index = 0; index < COMMANDS_TAB_ITEM_COUNT; index++)
+    {
+        edit[index]->setText(setting->getValue(index));
+    }
+
+    setting->endTab();
+}
+
+void CommandsTab::writeSettings(CommandSettings *setting, int tab)
+{
+    setting->beginTab(tab);
+
+    for (int index = 0; index < COMMANDS_TAB_ITEM_COUNT; index++)
+    {
+        setting->setValue(index, edit[index]->text());
+    }
+
+    setting->endTab();
+}
+
+void CommandsTab::clear()
+{
+    for (int index = 0; index < COMMANDS_TAB_ITEM_COUNT; index++)
+    {
+        edit[index]->clear();
+    }
+}
+
 void CommandsTab::keyPressEvent(QKeyEvent *event)
 {
     if (event->isAutoRepeat())
@@ -43,7 +75,7 @@ void CommandsTab::keyPressEvent(QKeyEvent *event)
     }
 
     if (event->modifiers() == Qt::ControlModifier &&
-        (event->key() >= Qt::Key_0 &&  event->key() <= Qt::Key_9))
+        (event->key() >= Qt::Key_0 && event->key() <= Qt::Key_9))
     {
         emit sendText(edit[event->key() - Qt::Key_0]->text());
     }

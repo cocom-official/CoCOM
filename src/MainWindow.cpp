@@ -31,9 +31,11 @@ MainWindow::MainWindow(QWidget *parent)
       txTypeComboBox(new QComboBox(this)),
       lineBreakBox(new QComboBox(this)),
       encodingBox(new QComboBox(this)),
+      trayIcon(new QSystemTrayIcon(this)),
       configDialog(nullptr),
       serial(new Serial(this)),
-      settings(nullptr),
+      globalSettings(new GlobalSettings(this)),
+      commandSettings(new CommandSettings(this)),
       timer(new QTimer(this)),
       periodicSendTimer(new QTimer(this)),
       lineBreakType(LineBreakOFF)
@@ -42,13 +44,13 @@ MainWindow::MainWindow(QWidget *parent)
     QCoreApplication::setOrganizationName(QString(COCOM_VENDER));
     QCoreApplication::setOrganizationDomain(QString(COCOM_HOMEPAGE));
 
-    initSettings();
-
     setupUI();
 
     setupSerialPort();
 
     readSettings();
+
+    connect(globalSettings, &GlobalSettings::onSaved, this, &MainWindow::globalSetting_onSaved);
 }
 
 MainWindow::~MainWindow()
@@ -61,6 +63,10 @@ void MainWindow::setupUI()
 {
     ui->setupUi(this);
     textBrowser = new TextBrowser(this, ui->outputTextBrowser);
+
+    trayIcon->setIcon(QIcon(":assets/logos/CoCOM.svg"));
+    trayIcon->setToolTip(QString(COCOM_APPLICATIONNAME));
+    trayIcon->show();
 
     setWindowTitle(QString(COCOM_APPLICATIONNAME) + " -- " + tr("Serial Port Utility"));
 
@@ -101,24 +107,49 @@ void MainWindow::setLayout(double rate)
 
 void MainWindow::readSettings()
 {
-    settings->beginGroup("MainWindow");
-    resize(settings->value("size", QSize(1000, 800)).toSize());
-    move(settings->value("pos", QPoint(200, 200)).toPoint());
-    settings->endGroup();
+    if (globalSettings->getValue("keepWindowSize").toBool())
+    {
+        resize(globalSettings->getValue("size").toSize());
+    }
 
-    settings->beginGroup("HotKey");
+    if (globalSettings->getValue("keepWindowPos").toBool())
+    {
+        move(globalSettings->getValue("pos").toPoint());
+    }
+
     shortcut->setShortcut(QKeySequence().fromString(
-                              settings->value("shortcut", QString("Ctrl+Alt+Z")).toString()),
+                              globalSettings->getValue("showAndHideKey").toString()),
                           true);
-    settings->endGroup();
+
     if (shortcut->isRegistered())
     {
         connect(shortcut, &QHotkey::activated,
                 this, &MainWindow::showHotkey_activated);
     }
-    qDebug() << "HotKey::shortcut"
-             << shortcut->shortcut().toString()
-             << (shortcut->isRegistered() ? "is Registered Success" : "is Registered Failed");
+
+    if (shortcut->isRegistered())
+    {
+        sendToastMessage(tr("Show/Hide") + QString(" HotKey ") + shortcut->shortcut().toString() + QString(" ") + tr("is Registered Success!"));
+    }
+    else
+    {
+        sendToastMessage(tr("Show/Hide") + QString((" HotKey ")) + shortcut->shortcut().toString() + QString(" ") + tr("is Registered Failed!"), WarningLevel);
+    }
+
+    QString style = globalSettings->getValue("windosStyle").toString();
+    if (!style.isEmpty())
+    {
+        QApplication::setStyle(QStyleFactory::create(style));
+    }
+
+    if (globalSettings->getValue("darkMode").toBool())
+    {
+        setDarkStyle(true);
+    }
+    else
+    {
+        setDarkStyle(false);
+    }
 }
 
 void MainWindow::writeSettings()
@@ -128,47 +159,27 @@ void MainWindow::writeSettings()
         return;
     }
 
-    settings->beginGroup("MainWindow");
-    settings->setValue("size", size());
-    settings->setValue("pos", pos());
-    settings->endGroup();
+    globalSettings->setValue("size", size());
+    globalSettings->setValue("pos", pos());
 
-    settings->beginGroup("HotKey");
-    settings->setValue("shortcut", shortcut->shortcut());
-    settings->endGroup();
+    globalSettings->setValue("showAndHideKey", shortcut->shortcut());
+
+    int commandTabCount = multiCommandsTab->count();
+    commandSettings->setTabCount(commandTabCount - 1);
+    commandSettings->setCurrentTab(multiCommandsTab->currentIndex());
+    for (int index = 0; index < commandTabCount - 1; index++)
+    {
+        static_cast<CommandsTab *>(multiCommandsTab->widget(index))->writeSettings(commandSettings, index);
+    }
 }
 
 void MainWindow::restoreDefaultSettings()
 {
-    settings->beginGroup("MainWindow");
-    settings->remove("");
-    settings->endGroup();
-
-    settings->beginGroup("HotKey");
-    settings->remove("");
-    settings->endGroup();
+    globalSettings->restoreDefault();
 
     restoreSettings = true;
 
     onRestart();
-}
-
-void MainWindow::initSettings()
-{
-    QFile portableFile(QCoreApplication::applicationDirPath() + "/" + QString(COCOM_PORTABLE_FILE_NAME));
-
-    if (portableFile.open(QIODevice::ReadOnly))
-    {
-        qDebug() << "CoCOM Portable Mode";
-        settings = new QSettings(QCoreApplication::applicationDirPath() + "/CoCOM.ini", QSettings::IniFormat, this);
-    }
-    else
-    {
-        settings = new QSettings(QSettings::IniFormat,
-                                 QSettings::UserScope,
-                                 QString(COCOM_VENDER),
-                                 QString(COCOM_APPLICATIONNAME), this);
-    }
 }
 
 void MainWindow::setupSerialPort()
@@ -195,7 +206,21 @@ void MainWindow::setInputTabWidget()
     connect(multiCommandsTab, &QTabWidget ::tabBarClicked,
             this, &MainWindow::multiCommandTabBar_clicked);
 
-    addMultiCommandTab();
+    int tabCount = commandSettings->getTabCount();
+    if (tabCount > 0)
+    {
+        for (int i = 0; i < tabCount; i++)
+        {
+            CommandsTab *tab = addMultiCommandTab();
+            tab->readSettings(commandSettings, i);
+        }
+        multiCommandsTab->setCurrentIndex(commandSettings->getCurrentTab());
+    }
+
+    if (multiCommandsTab->count() == 1)
+    {
+        addMultiCommandTab();
+    }
 
     for (int i = 1; i < ui->inputTabWidget->count(); i++)
     {
@@ -205,34 +230,61 @@ void MainWindow::setInputTabWidget()
     ui->inputTabWidget->setCurrentIndex(0);
 }
 
-void MainWindow::setDarkStyle()
+void MainWindow::setDarkStyle(bool dark)
 {
-    QFile file(":/themes/darkstyle/darkstyle.qss");
-    file.open(QFile::ReadOnly | QFile::Text);
-    qApp->setStyleSheet(file.readAll());
+    static bool isDark = false;
+    static QString defaultStyleSheet;
 
-    QPalette darkPalette;
-    darkPalette.setColor(QPalette::Window, QColor(53, 53, 53));
-    darkPalette.setColor(QPalette::WindowText, Qt::white);
-    darkPalette.setColor(QPalette::Disabled, QPalette::WindowText, QColor(127, 127, 127));
-    darkPalette.setColor(QPalette::Base, QColor(42, 42, 42));
-    darkPalette.setColor(QPalette::AlternateBase, QColor(66, 66, 66));
-    darkPalette.setColor(QPalette::ToolTipBase, Qt::white);
-    darkPalette.setColor(QPalette::ToolTipText, QColor(53, 53, 53));
-    darkPalette.setColor(QPalette::Text, Qt::white);
-    darkPalette.setColor(QPalette::Disabled, QPalette::Text, QColor(127, 127, 127));
-    darkPalette.setColor(QPalette::Dark, QColor(35, 35, 35));
-    darkPalette.setColor(QPalette::Shadow, QColor(20, 20, 20));
-    darkPalette.setColor(QPalette::Button, QColor(53, 53, 53));
-    darkPalette.setColor(QPalette::ButtonText, Qt::white);
-    darkPalette.setColor(QPalette::Disabled, QPalette::ButtonText, QColor(127, 127, 127));
-    darkPalette.setColor(QPalette::BrightText, Qt::red);
-    darkPalette.setColor(QPalette::Link, QColor(42, 130, 218));
-    darkPalette.setColor(QPalette::Highlight, QColor(42, 130, 218));
-    darkPalette.setColor(QPalette::Disabled, QPalette::Highlight, QColor(80, 80, 80));
-    darkPalette.setColor(QPalette::HighlightedText, Qt::white);
-    darkPalette.setColor(QPalette::Disabled, QPalette::HighlightedText, QColor(127, 127, 127));
-    qApp->setPalette(darkPalette);
+    if (isDark == dark)
+    {
+        return;
+    }
+
+    if (dark)
+    {
+        if (defaultStyleSheet.isEmpty())
+        {
+            defaultStyleSheet = styleSheet();
+        }
+
+        QFile file(":/themes/darkstyle/darkstyle.qss");
+        file.open(QFile::ReadOnly | QFile::Text);
+        qApp->setStyleSheet(file.readAll());
+
+        QPalette darkPalette;
+        darkPalette.setColor(QPalette::Window, QColor(53, 53, 53));
+        darkPalette.setColor(QPalette::WindowText, Qt::white);
+        darkPalette.setColor(QPalette::Disabled, QPalette::WindowText, QColor(127, 127, 127));
+        darkPalette.setColor(QPalette::Base, QColor(42, 42, 42));
+        darkPalette.setColor(QPalette::AlternateBase, QColor(66, 66, 66));
+        darkPalette.setColor(QPalette::ToolTipBase, Qt::white);
+        darkPalette.setColor(QPalette::ToolTipText, QColor(53, 53, 53));
+        darkPalette.setColor(QPalette::Text, Qt::white);
+        darkPalette.setColor(QPalette::Disabled, QPalette::Text, QColor(127, 127, 127));
+        darkPalette.setColor(QPalette::Dark, QColor(35, 35, 35));
+        darkPalette.setColor(QPalette::Shadow, QColor(20, 20, 20));
+        darkPalette.setColor(QPalette::Button, QColor(53, 53, 53));
+        darkPalette.setColor(QPalette::ButtonText, Qt::white);
+        darkPalette.setColor(QPalette::Disabled, QPalette::ButtonText, QColor(127, 127, 127));
+        darkPalette.setColor(QPalette::BrightText, Qt::red);
+        darkPalette.setColor(QPalette::Link, QColor(42, 130, 218));
+        darkPalette.setColor(QPalette::Highlight, QColor(42, 130, 218));
+        darkPalette.setColor(QPalette::Disabled, QPalette::Highlight, QColor(80, 80, 80));
+        darkPalette.setColor(QPalette::HighlightedText, Qt::white);
+        darkPalette.setColor(QPalette::Disabled, QPalette::HighlightedText, QColor(127, 127, 127));
+        qApp->setPalette(darkPalette);
+
+        isDark= true;
+    }
+    else
+    {
+        qApp->setStyleSheet(defaultStyleSheet);
+
+        QPalette defaultPalette;
+        qApp->setPalette(defaultPalette);
+
+        isDark= false;
+    }
 }
 
 void MainWindow::refreshDPI()
@@ -515,7 +567,7 @@ void MainWindow::updatePortsConfigComboBox()
     portSelect->blockSignals(false);
 }
 
-void MainWindow::addMultiCommandTab()
+CommandsTab *MainWindow::addMultiCommandTab()
 {
     int tabCount = multiCommandsTab->count();
     CommandsTab *tab = new CommandsTab(this);
@@ -525,6 +577,7 @@ void MainWindow::addMultiCommandTab()
 
     multiCommandsTab->tabBar()->setTabToolTip(tabCount - 1,
                                               tr("Tab") + " " + QString::number(tabCount - 1) + ", " + tr("Double Click to Close"));
+    return tab;
 }
 
 void MainWindow::moveFindToolBar(bool force, QPoint moveOffset)
@@ -544,6 +597,34 @@ void MainWindow::moveFindToolBar(bool force, QPoint moveOffset)
     {
         findToolBar->move(moveToX, moveToY);
     }
+}
+
+void MainWindow::sendToastMessage(QString msg, int level, int index)
+{
+    if (index != 0)
+    {
+    }
+
+    QIcon icon;
+
+    switch (level)
+    {
+    case InfoLevel:
+        icon = style()->standardIcon(QStyle::SP_MessageBoxInformation);
+        break;
+
+    case WarningLevel:
+        icon = style()->standardIcon(QStyle::SP_MessageBoxWarning);
+        break;
+
+    case CriticalLevel:
+        icon = style()->standardIcon(QStyle::SP_MessageBoxCritical);
+        break;
+    default:
+        break;
+    }
+
+    trayIcon->showMessage(QString(COCOM_APPLICATIONNAME), msg, icon);
 }
 
 void MainWindow::enumPorts()
@@ -1025,7 +1106,8 @@ void MainWindow::on_configAction_triggered(bool checked)
 
     if (nullptr == configDialog)
     {
-        configDialog = new ConfigDialog(this);
+        configDialog = new ConfigDialog(globalSettings, this);
+        connect(configDialog, &ConfigDialog::onRestore, this, &MainWindow::restoreDefaultSettings);
     }
 
     configDialog->show();
@@ -1085,6 +1167,10 @@ void MainWindow::multiCommandTabBar_doubleclicked(int index)
     if ((index == 0 && multiCommandsTab->count() == 2) ||
         index == multiCommandsTab->count() - 1)
     {
+        if (index == 0)
+        {
+            static_cast<CommandsTab *>(multiCommandsTab->widget(0))->clear();
+        }
         return;
     }
 
@@ -1121,6 +1207,12 @@ void MainWindow::multiCommandTabWidget_currentChanged(int index)
             multiCommandsTab->setCurrentIndex(index - 1);
         }
     }
+}
+
+void MainWindow::globalSetting_onSaved()
+{
+    globalSettings->setValue("pos", pos());
+    readSettings();
 }
 
 void MainWindow::portSelectComboBox_currentIndexChanged(int index)

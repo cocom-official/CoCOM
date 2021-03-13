@@ -40,13 +40,9 @@
     <file>../assets/icons/cross.svg</file>
     <!-- logos -->
     <file>../assets/logos/CoCOM.svg</file>
+    <file>../assets/logos/CoCOM_128.png</file>
     <!-- fonts -->
     <file>../assets/fonts/CascadiaCodePL.ttf</file>
-  </qresource>
-
-  <qresource prefix="/">
-    <!-- default StyleSheet -->
-    <file>themes/default/default.qss</file>
   </qresource>
 
   <qresource prefix="/">

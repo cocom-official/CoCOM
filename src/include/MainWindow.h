@@ -29,6 +29,7 @@
 #include <QDateTime>
 #include <QResizeEvent>
 #include <QSettings>
+#include <CommandSettings.h>
 #include <QDir>
 
 #ifdef Q_OS_WIN32
@@ -41,6 +42,8 @@
 #include "Serial.h"
 #include "TextBrowser.h"
 #include "CommandsTab.h"
+#include "GlobalSettings.h"
+#include "CommandSettings.h"
 
 namespace Ui
 {
@@ -56,7 +59,6 @@ public:
     ~MainWindow();
     void setStatusInfo(QString text);
     void findResultChanged(int cur, int all);
-    void restoreDefaultSettings();
 
 private slots:
     void on_inputTabWidget_currentChanged(int index);
@@ -91,6 +93,8 @@ private slots:
     void multiCommandTabBar_clicked(int index);
     void multiCommandTabBar_doubleclicked(int index);
     void multiCommandTabWidget_currentChanged(int index);
+    void globalSetting_onSaved();
+    void restoreDefaultSettings();
 
     /* find toolbar */
     void findEdit_textChanged(const QString &text);
@@ -146,11 +150,14 @@ private:
     QComboBox *lineBreakBox;
     QComboBox *encodingBox;
 
+    QSystemTrayIcon *trayIcon;
+
     ConfigDialog *configDialog;
 
     Serial *serial;
     TextBrowser *textBrowser;
-    QSettings *settings;
+    GlobalSettings *globalSettings;
+    CommandSettings *commandSettings;
 
     QTimer *timer;
     QTimer *periodicSendTimer;
@@ -161,20 +168,20 @@ private:
     void setupUI();
     void setLayout(double rate);
     void setInputTabWidget();
-    void setDarkStyle();
+    void setDarkStyle(bool dark);
     void refreshDPI();
     void loadFont();
     void setToolBar();
     void setStatusBar();
     void updatePortSelectText();
     void updatePortsConfigComboBox();
-    void addMultiCommandTab();
     void moveFindToolBar(bool force = false, QPoint moveOffset = QPoint(0, 0));
+    void sendToastMessage(QString msg, int level = InfoLevel, int index = 0);
+    CommandsTab *addMultiCommandTab();
 
     /* no UI */
     void readSettings();
     void writeSettings();
-    void initSettings();
     void setupSerialPort();
     void enumPorts();
     void updatePortConfig();

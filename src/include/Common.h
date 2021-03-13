@@ -52,6 +52,13 @@ enum LineBreakType
     LineBreakCRLF,
 };
 
+enum MessageLevelType
+{
+    InfoLevel = 0,
+    WarningLevel,
+    CriticalLevel,
+};
+
 template <class T>
 struct ComboBoxConfig
 {

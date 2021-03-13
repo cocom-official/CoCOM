@@ -9,6 +9,7 @@
 #include <QGridLayout>
 
 #include "Common.h"
+#include "CommandSettings.h"
 
 #define COMMANDS_TAB_ITEM_COUNT 10
 #define COMMANDS_TAB_GRID_COLUMN 2
@@ -18,6 +19,9 @@ class CommandsTab : public QWidget
     Q_OBJECT
 public:
     explicit CommandsTab(QWidget *parent = nullptr);
+    void readSettings(CommandSettings *setting, int tab);
+    void writeSettings(CommandSettings *setting, int tab);
+    void clear();
 
 private:
     MouseButtonSignaler *buttonSignaler;
