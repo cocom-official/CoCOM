@@ -8,7 +8,9 @@ MainWindow::MainWindow(QWidget *parent)
       dpiScaling(1.0),
       tabBarClicked(false),
       restoreSettings(false),
-      shortcut(new QHotkey(this)),
+      showHideShortcut(new QHotkey(this)),
+      clearOutputShortcut(new QShortcut(this)),
+      scrollToEndShortcut(new QShortcut(this)),
       translator(new QTranslator(this)),
       portSelect(new QComboBox(this)),
       findToolBar(new QToolBar()),
@@ -52,6 +54,11 @@ MainWindow::MainWindow(QWidget *parent)
     setupSerialPort();
 
     readSettings();
+
+    /* ShortKey */
+    connect(showHideShortcut, &QHotkey::activated,this, &MainWindow::showHotkey_activated);
+    connect(clearOutputShortcut, &QShortcut::activated, this, [this]() { this->on_clearAction_triggered(true); });
+    connect(scrollToEndShortcut, &QShortcut::activated, this, [this]() { this->on_goDownAction_triggered(true); });
 
     connect(globalSettings, &GlobalSettings::onSaved, this, &MainWindow::globalSetting_onSaved);
 }
@@ -128,23 +135,36 @@ void MainWindow::readSettings()
         move(globalSettings->getValue("pos").toPoint());
     }
 
-    shortcut->setShortcut(QKeySequence().fromString(
-                              globalSettings->getValue("showAndHideKey").toString()),
-                          true);
+    QString shortcutKey;
 
-    if (shortcut->isRegistered())
+    shortcutKey = globalSettings->getValue("showAndHideKey").toString();
+    if (globalSettings->getValue("showAndHideEnable").toBool() &&
+        !shortcutKey.isEmpty())
     {
-        connect(shortcut, &QHotkey::activated,
-                this, &MainWindow::showHotkey_activated);
+        showHideShortcut->setShortcut(QKeySequence().fromString(shortcutKey), true);
+
+        if (showHideShortcut->isRegistered())
+        {
+            sendToastMessage(tr("Show/Hide") + QString(" HotKey ") + showHideShortcut->shortcut().toString() + QString(" ") + tr("is Registered Success!"));
+        }
+        else
+        {
+            sendToastMessage(tr("Show/Hide") + QString((" HotKey ")) + showHideShortcut->shortcut().toString() + QString(" ") + tr("is Registered Failed!"), WarningLevel);
+        }
     }
 
-    if (shortcut->isRegistered())
+    shortcutKey = globalSettings->getValue("clearOutputKey").toString();
+    if (globalSettings->getValue("clearOutputEnable").toBool() &&
+        !shortcutKey.isEmpty())
     {
-        sendToastMessage(tr("Show/Hide") + QString(" HotKey ") + shortcut->shortcut().toString() + QString(" ") + tr("is Registered Success!"));
+        clearOutputShortcut->setKey(QKeySequence::fromString(shortcutKey));
     }
-    else
+
+    shortcutKey = globalSettings->getValue("scrollToEndKey").toString();
+    if (globalSettings->getValue("scrollToEndEnable").toBool() &&
+        !shortcutKey.isEmpty())
     {
-        sendToastMessage(tr("Show/Hide") + QString((" HotKey ")) + shortcut->shortcut().toString() + QString(" ") + tr("is Registered Failed!"), WarningLevel);
+        scrollToEndShortcut->setKey(QKeySequence::fromString(shortcutKey));
     }
 
     QString style = globalSettings->getValue("windosStyle").toString();
@@ -173,7 +193,7 @@ void MainWindow::writeSettings()
     globalSettings->setValue("size", size());
     globalSettings->setValue("pos", pos());
 
-    globalSettings->setValue("showAndHideKey", shortcut->shortcut());
+    globalSettings->setValue("showAndHideKey", showHideShortcut->shortcut());
 
     int commandTabCount = multiCommandsTab->count();
     commandSettings->setTabCount(commandTabCount - 1);
@@ -375,7 +395,7 @@ void MainWindow::loadLanguage()
 
         for (auto &&i : langs)
         {
-            if(i == local)
+            if (i == local)
             {
                 hasLocal = true;
                 break;

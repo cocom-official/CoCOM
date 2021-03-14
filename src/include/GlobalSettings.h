@@ -42,8 +42,11 @@ private:
         {"Interface", "darkMode", QVariant(false), false},
         {"Interface", "sendNotice", QVariant(true), false},
         {"HotKey", "showAndHideKey", QVariant(QString("Ctrl+Alt+Z")), false},
-        {"HotKey", "clearOutputKey", QVariant(0), false},
-        {"HotKey", "scrollToEndKey", QVariant(0), false},
+        {"HotKey", "clearOutputKey", QVariant(""), false},
+        {"HotKey", "scrollToEndKey", QVariant(""), false},
+        {"HotKey", "showAndHideEnable", QVariant(true), false},
+        {"HotKey", "clearOutputEnable", QVariant(false), false},
+        {"HotKey", "scrollToEndEnable", QVariant(false), false},
     };
 
     typedef struct

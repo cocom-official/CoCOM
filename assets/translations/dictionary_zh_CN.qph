@@ -388,4 +388,16 @@
     <source>Some settings need restart to take effect, restart application?</source>
     <target>一些设置需要重启才能生效，重启应用？</target>
 </phrase>
+<phrase>
+    <source>Shortcut Key</source>
+    <target>快捷键</target>
+</phrase>
+<phrase>
+    <source>scrollToEndKey</source>
+    <target>滚动到底部</target>
+</phrase>
+<phrase>
+    <source>Clear Output</source>
+    <target>清空输出</target>
+</phrase>
 </QPH>

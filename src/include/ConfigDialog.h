@@ -33,6 +33,12 @@ private slots:
     void on_keepWindowsSizeCheckBox_stateChanged(int state);
     void on_keepWindowsPosCheckBox_stateChanged(int state);
     void on_noticeCheckBox_stateChanged(int state);
+    void on_showHideKeyCheckBox_stateChanged(int state);
+    void on_clearOutputKeyCheckBox_stateChanged(int state);
+    void on_scrollToEndKeyCheckBox_stateChanged(int state);
+    void on_showHideKeySequenceEdit_keySequenceChanged(const QKeySequence &keySequence);
+    void on_clearOutputKeySequenceEdit_keySequenceChanged(const QKeySequence &keySequence);
+    void on_scrollToEndKeySequenceEdit_keySequenceChanged(const QKeySequence &keySequence);
     void on_restoreButton_clicked();
 
     void on_okButton_clicked();

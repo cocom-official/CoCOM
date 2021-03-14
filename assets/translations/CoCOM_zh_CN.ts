@@ -22,57 +22,57 @@
         <translation type="vanished">窗口风格:</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="170"/>
+        <location filename="../../ui/configDialog.ui" line="279"/>
         <source>This will delete all settings, and restart application.</source>
         <translation>这会删除所有设置，并重启应用。</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="173"/>
+        <location filename="../../ui/configDialog.ui" line="282"/>
         <source>Restore Default Settings</source>
         <translation>恢复默认设置</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="214"/>
+        <location filename="../../ui/configDialog.ui" line="323"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;CoCOM&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="251"/>
+        <location filename="../../ui/configDialog.ui" line="360"/>
         <source>Version: vx.x.x.x</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="284"/>
+        <location filename="../../ui/configDialog.ui" line="393"/>
         <source>Commit: x.x.x.x</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="317"/>
+        <location filename="../../ui/configDialog.ui" line="426"/>
         <source>Build Time: x.x.x.x</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="337"/>
+        <location filename="../../ui/configDialog.ui" line="446"/>
         <source>Qt:x.x.x.x</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="370"/>
+        <location filename="../../ui/configDialog.ui" line="479"/>
         <source>Lua:x.x.x.x</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="432"/>
+        <location filename="../../ui/configDialog.ui" line="541"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/cocom-official/CoCOM&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Home Page&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/cocom-official/CoCOM&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;主页&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="451"/>
+        <location filename="../../ui/configDialog.ui" line="560"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/zt-luo&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;GitHub&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="405"/>
+        <location filename="../../ui/configDialog.ui" line="514"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;CoCOM is a Serial Port Utility for Embedded Software Engineer.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
     </message>
@@ -118,21 +118,41 @@
     </message>
     <message>
         <location filename="../../ui/configDialog.ui" line="151"/>
+        <source>Shortcut Key</source>
+        <translation>快捷键</translation>
+    </message>
+    <message>
+        <location filename="../../ui/configDialog.ui" line="180"/>
+        <source>scrollToEndKey</source>
+        <translation>滚动到底部</translation>
+    </message>
+    <message>
+        <location filename="../../ui/configDialog.ui" line="197"/>
+        <source>Clear Output</source>
+        <translation>清空输出</translation>
+    </message>
+    <message>
+        <location filename="../../ui/configDialog.ui" line="224"/>
+        <source>Show/Hide</source>
+        <translation>显示/隐藏</translation>
+    </message>
+    <message>
+        <location filename="../../ui/configDialog.ui" line="260"/>
         <source>Advanced</source>
         <translation>高级</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="470"/>
+        <location filename="../../ui/configDialog.ui" line="579"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://blog.ztluo.dev/&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Blog&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://blog.ztluo.dev/&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;博客&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="529"/>
+        <location filename="../../ui/configDialog.ui" line="638"/>
         <source>OK</source>
         <translation>确认</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="536"/>
+        <location filename="../../ui/configDialog.ui" line="645"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -141,7 +161,7 @@
         <translation type="vanished">通用</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="181"/>
+        <location filename="../../ui/configDialog.ui" line="290"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
@@ -152,8 +172,8 @@
     </message>
     <message>
         <location filename="../../src/ConfigDialog.cpp" line="36"/>
-        <location filename="../../src/ConfigDialog.cpp" line="307"/>
-        <location filename="../../src/ConfigDialog.cpp" line="311"/>
+        <location filename="../../src/ConfigDialog.cpp" line="419"/>
+        <location filename="../../src/ConfigDialog.cpp" line="423"/>
         <source>Commit</source>
         <translation>提交</translation>
     </message>
@@ -163,12 +183,12 @@
         <translation>构建时间</translation>
     </message>
     <message>
-        <location filename="../../src/ConfigDialog.cpp" line="244"/>
+        <location filename="../../src/ConfigDialog.cpp" line="356"/>
         <source>Restart Application is Needed!</source>
         <translation>需要重启应用！</translation>
     </message>
     <message>
-        <location filename="../../src/ConfigDialog.cpp" line="245"/>
+        <location filename="../../src/ConfigDialog.cpp" line="357"/>
         <source>Some settings need restart to take effect, restart application?</source>
         <translation>一些设置需要重启才能生效，重启应用？</translation>
     </message>
@@ -363,7 +383,7 @@
         <translation>命令行</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="208"/>
+        <location filename="../../src/MainWindow.cpp" line="228"/>
         <source>Multi Command</source>
         <translation>多条发送</translation>
     </message>
@@ -441,7 +461,7 @@
         <translation>转到底部</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="73"/>
+        <location filename="../../src/MainWindow.cpp" line="80"/>
         <source>Serial Port Utility</source>
         <translation>串口调试助手</translation>
     </message>
@@ -450,222 +470,222 @@
         <translation type="vanished">暂时没有还没有做！</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="92"/>
-        <location filename="../../src/MainWindow.cpp" line="1282"/>
+        <location filename="../../src/MainWindow.cpp" line="99"/>
+        <location filename="../../src/MainWindow.cpp" line="1304"/>
         <source>Ready</source>
         <translation>就绪</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="143"/>
-        <location filename="../../src/MainWindow.cpp" line="147"/>
+        <location filename="../../src/MainWindow.cpp" line="148"/>
+        <location filename="../../src/MainWindow.cpp" line="152"/>
         <source>Show/Hide</source>
         <translation>显示/隐藏</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="143"/>
+        <location filename="../../src/MainWindow.cpp" line="148"/>
         <source>is Registered Success!</source>
         <translation>注册成功！</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="147"/>
+        <location filename="../../src/MainWindow.cpp" line="152"/>
         <source>is Registered Failed!</source>
         <translation>注册失败！</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="212"/>
+        <location filename="../../src/MainWindow.cpp" line="232"/>
         <source>Click &apos;+&apos; to add a new tab</source>
         <translation>单击 “+” 添加新标签页</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="412"/>
+        <location filename="../../src/MainWindow.cpp" line="434"/>
         <source>Find ToolBar</source>
         <translation>查找工具栏</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="433"/>
+        <location filename="../../src/MainWindow.cpp" line="455"/>
         <source>Find</source>
         <translation>查找</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="434"/>
+        <location filename="../../src/MainWindow.cpp" line="456"/>
         <source>Next Match</source>
         <translation>下一个匹配项</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="434"/>
+        <location filename="../../src/MainWindow.cpp" line="456"/>
         <source>Last Match</source>
         <translation>最后一个匹配项</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="435"/>
+        <location filename="../../src/MainWindow.cpp" line="457"/>
         <source>Previous Match</source>
         <translation>上一个匹配项</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="435"/>
+        <location filename="../../src/MainWindow.cpp" line="457"/>
         <source>First Match</source>
         <translation>第一个匹配项</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="449"/>
-        <location filename="../../src/MainWindow.cpp" line="450"/>
+        <location filename="../../src/MainWindow.cpp" line="471"/>
+        <location filename="../../src/MainWindow.cpp" line="472"/>
         <source>Double Click to Clear Count!</source>
         <translation>双击清空计数！</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="467"/>
+        <location filename="../../src/MainWindow.cpp" line="489"/>
         <source>Baudrate</source>
         <translation>波特率</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="474"/>
+        <location filename="../../src/MainWindow.cpp" line="496"/>
         <source>Data Bits</source>
         <translation>数据位</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="481"/>
-        <location filename="../../src/MainWindow.cpp" line="967"/>
+        <location filename="../../src/MainWindow.cpp" line="503"/>
+        <location filename="../../src/MainWindow.cpp" line="989"/>
         <source>Parity</source>
         <translation>校验位</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="488"/>
+        <location filename="../../src/MainWindow.cpp" line="510"/>
         <source>Stop Bits</source>
         <translation>停止位</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="495"/>
+        <location filename="../../src/MainWindow.cpp" line="517"/>
         <source>Flow Control</source>
         <translation>流控</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="496"/>
+        <location filename="../../src/MainWindow.cpp" line="518"/>
         <source>Flow Control OFF</source>
         <translation>关闭流控</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="497"/>
+        <location filename="../../src/MainWindow.cpp" line="519"/>
         <source>Hardware Flow Control</source>
         <translation>硬件流控</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="498"/>
+        <location filename="../../src/MainWindow.cpp" line="520"/>
         <source>Software Flow Control</source>
         <translation>软件流控</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="503"/>
+        <location filename="../../src/MainWindow.cpp" line="525"/>
         <source>Rx Type</source>
         <translation>接收类型</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="508"/>
+        <location filename="../../src/MainWindow.cpp" line="530"/>
         <source>Tx Type</source>
         <translation>发送类型</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="514"/>
+        <location filename="../../src/MainWindow.cpp" line="536"/>
         <source>Line Break</source>
         <translation>行尾结束符</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="520"/>
+        <location filename="../../src/MainWindow.cpp" line="542"/>
         <source>Encoding</source>
         <translation>编码格式</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="620"/>
-        <location filename="../../src/MainWindow.cpp" line="1224"/>
+        <location filename="../../src/MainWindow.cpp" line="642"/>
+        <location filename="../../src/MainWindow.cpp" line="1246"/>
         <source>Tab</source>
         <translation>标签页</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="620"/>
-        <location filename="../../src/MainWindow.cpp" line="1224"/>
+        <location filename="../../src/MainWindow.cpp" line="642"/>
+        <location filename="../../src/MainWindow.cpp" line="1246"/>
         <source>Double Click to Close</source>
         <translation>双击关闭</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="938"/>
-        <location filename="../../src/MainWindow.cpp" line="953"/>
-        <location filename="../../src/MainWindow.cpp" line="967"/>
-        <location filename="../../src/MainWindow.cpp" line="981"/>
-        <location filename="../../src/MainWindow.cpp" line="995"/>
+        <location filename="../../src/MainWindow.cpp" line="960"/>
+        <location filename="../../src/MainWindow.cpp" line="975"/>
+        <location filename="../../src/MainWindow.cpp" line="989"/>
+        <location filename="../../src/MainWindow.cpp" line="1003"/>
+        <location filename="../../src/MainWindow.cpp" line="1017"/>
         <source>set</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="938"/>
+        <location filename="../../src/MainWindow.cpp" line="960"/>
         <source>BaudRate</source>
         <translation>波特率</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="938"/>
-        <location filename="../../src/MainWindow.cpp" line="953"/>
-        <location filename="../../src/MainWindow.cpp" line="967"/>
-        <location filename="../../src/MainWindow.cpp" line="981"/>
-        <location filename="../../src/MainWindow.cpp" line="995"/>
+        <location filename="../../src/MainWindow.cpp" line="960"/>
+        <location filename="../../src/MainWindow.cpp" line="975"/>
+        <location filename="../../src/MainWindow.cpp" line="989"/>
+        <location filename="../../src/MainWindow.cpp" line="1003"/>
+        <location filename="../../src/MainWindow.cpp" line="1017"/>
         <source>fail</source>
         <translation>失败</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="953"/>
+        <location filename="../../src/MainWindow.cpp" line="975"/>
         <source>DataBits</source>
         <translation>数据位</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="981"/>
+        <location filename="../../src/MainWindow.cpp" line="1003"/>
         <source>StopBits</source>
         <translation>停止位</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="995"/>
+        <location filename="../../src/MainWindow.cpp" line="1017"/>
         <source>FlowControl</source>
         <translation>流控</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="1040"/>
+        <location filename="../../src/MainWindow.cpp" line="1062"/>
         <source>Open Failed!</source>
         <translation>打开失败！</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="1041"/>
+        <location filename="../../src/MainWindow.cpp" line="1063"/>
         <source>,</source>
         <translation>，</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="1047"/>
+        <location filename="../../src/MainWindow.cpp" line="1069"/>
         <source>Busy</source>
         <translation>忙</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="1051"/>
+        <location filename="../../src/MainWindow.cpp" line="1073"/>
         <source>Null</source>
         <translation>空</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="1055"/>
+        <location filename="../../src/MainWindow.cpp" line="1077"/>
         <source>Unknow Reason</source>
         <translation>未知原因</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="1062"/>
+        <location filename="../../src/MainWindow.cpp" line="1084"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="436"/>
-        <location filename="../../src/MainWindow.cpp" line="1073"/>
+        <location filename="../../src/MainWindow.cpp" line="458"/>
+        <location filename="../../src/MainWindow.cpp" line="1095"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="1108"/>
+        <location filename="../../src/MainWindow.cpp" line="1130"/>
         <source>Save Output To File</source>
         <translation>保存输出到文件</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="1110"/>
+        <location filename="../../src/MainWindow.cpp" line="1132"/>
         <source>Text files (*.txt)</source>
         <translation>文本文件 (*.txt)</translation>
     </message>

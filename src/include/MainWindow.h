@@ -31,6 +31,7 @@
 #include <QSettings>
 #include <CommandSettings.h>
 #include <QDir>
+#include <QShortcut>
 
 #ifdef Q_OS_WIN32
 #include <QtWinExtras>
@@ -121,7 +122,9 @@ private:
 
     bool tabBarClicked;
     bool restoreSettings;
-    QHotkey *shortcut;
+    QHotkey *showHideShortcut;
+    QShortcut *clearOutputShortcut;
+    QShortcut *scrollToEndShortcut;
     QTranslator *translator;
 
     QComboBox *portSelect;
