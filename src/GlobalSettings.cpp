@@ -3,7 +3,8 @@
 GlobalSettings::GlobalSettings(QObject *parent)
     : QObject(parent),
       settings(nullptr),
-      track(false)
+      track(false),
+      needReStart(false)
 {
     QFile portableFile(QCoreApplication::applicationDirPath() + "/" + QString(COCOM_PORTABLE_FILE_NAME));
 
@@ -37,6 +38,12 @@ bool GlobalSettings::setValue(QString name, QVariant value)
         {
             group = i.group;
             ret = true;
+
+            if (i.needReStart)
+            {
+                needReStart = true;
+            }
+
             break;
         }
     }
@@ -106,6 +113,7 @@ bool GlobalSettings::setUndoableValue(QString name, QVariant value)
 void GlobalSettings::startTrackChange()
 {
     track = true;
+    needReStart = false;
 }
 
 void GlobalSettings::applyTrackChange()
@@ -123,12 +131,14 @@ void GlobalSettings::undoChange()
 {
     trackingSettings.clear();
     track = false;
+    needReStart = false;
 }
 
 void GlobalSettings::restoreDefault()
 {
     settings->clear();
     track = false;
+    needReStart = false;
 }
 
 void GlobalSettings::exportToFile()
@@ -137,4 +147,9 @@ void GlobalSettings::exportToFile()
 
 void GlobalSettings::importFromFile()
 {
+}
+
+bool GlobalSettings::checkNeedReStart()
+{
+    return needReStart;
 }

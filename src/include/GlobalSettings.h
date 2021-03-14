@@ -21,6 +21,7 @@ public:
     void restoreDefault();
     void exportToFile();
     void importFromFile();
+    bool checkNeedReStart();
 
 private:
     typedef struct
@@ -28,19 +29,21 @@ private:
         QString group;
         QString name;
         QVariant defaultValue;
+        bool needReStart;
     } SettingEntry;
 
     const SettingEntry settingsEntry[20] = {
-        {"MainWindow", "keepWindowSize", QVariant(true)},
-        {"MainWindow", "keepWindowPos", QVariant(false)},
-        {"MainWindow", "size", QVariant(QSize(1000, 800))},
-        {"MainWindow", "pos", QVariant(QPoint(400, 300))},
-        {"General", "language", QVariant(0)},
-        {"General", "windosStyle", QVariant(0)},
-        {"General", "darkMode", QVariant(false)},
-        {"HotKey", "showAndHideKey", QVariant(QString("Ctrl+Alt+Z"))},
-        {"HotKey", "clearOutputKey", QVariant(0)},
-        {"HotKey", "scrollToEndKey", QVariant(0)},
+        {"MainWindow", "keepWindowSize", QVariant(true), false},
+        {"MainWindow", "keepWindowPos", QVariant(false), false},
+        {"MainWindow", "size", QVariant(QSize(1000, 800)), false},
+        {"MainWindow", "pos", QVariant(QPoint(400, 300)), false},
+        {"Interface", "language", QVariant(""), true},
+        {"Interface", "windosStyle", QVariant(""), false},
+        {"Interface", "darkMode", QVariant(false), false},
+        {"Interface", "sendNotice", QVariant(true), false},
+        {"HotKey", "showAndHideKey", QVariant(QString("Ctrl+Alt+Z")), false},
+        {"HotKey", "clearOutputKey", QVariant(0), false},
+        {"HotKey", "scrollToEndKey", QVariant(0), false},
     };
 
     typedef struct
@@ -51,6 +54,7 @@ private:
 
     QSettings *settings;
     bool track;
+    bool needReStart;
     QList<SettingValue> trackingSettings;
 
 signals:

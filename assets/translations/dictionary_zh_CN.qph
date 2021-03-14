@@ -376,4 +376,16 @@
     <source>Failed to unregister %1. Error: %2</source>
     <target>取消注册 %q 失败。错误：%2</target>
 </phrase>
+<phrase>
+    <source>Send Notice</source>
+    <target>发送通知</target>
+</phrase>
+<phrase>
+    <source>Restart Application is Needed!</source>
+    <target>需要重启应用！</target>
+</phrase>
+<phrase>
+    <source>Some settings need restart to take effect, restart application?</source>
+    <target>一些设置需要重启才能生效，重启应用？</target>
+</phrase>
 </QPH>

@@ -51,6 +51,20 @@ void ConfigDialog::setupUI()
 
 void ConfigDialog::refreshUI()
 {
+    /* language combobox */
+    ui->languageComboBox->clear();
+    int langIndex = 0;
+    QString lang = settings->getValue("language").toString();
+    for (int index = 0; index < (int)(sizeof(langs) / sizeof(langs[0])); index++)
+    {
+        ui->languageComboBox->addItem(langs[index]);
+        if (lang == langs[index])
+        {
+            langIndex = index;
+        }
+    }
+    ui->languageComboBox->setCurrentIndex(langIndex);
+
     /* styleComboBox */
     ui->styleComboBox->clear();
     int styleIndex = 0;
@@ -94,6 +108,15 @@ void ConfigDialog::refreshUI()
     else
     {
         ui->keepWindowsPosCheckBox->setCheckState(Qt::Unchecked);
+    }
+
+    if (settings->getValue("sendNotice").toBool())
+    {
+        ui->noticeCheckBox->setCheckState(Qt::Checked);
+    }
+    else
+    {
+        ui->noticeCheckBox->setCheckState(Qt::Unchecked);
     }
 }
 
@@ -194,6 +217,18 @@ void ConfigDialog::on_keepWindowsPosCheckBox_stateChanged(int state)
     }
 }
 
+void ConfigDialog::on_noticeCheckBox_stateChanged(int state)
+{
+    if (Qt::Checked == state)
+    {
+        settings->setUndoableValue("sendNotice", QVariant(true));
+    }
+    else
+    {
+        settings->setUndoableValue("sendNotice", QVariant(false));
+    }
+}
+
 void ConfigDialog::on_restoreButton_clicked()
 {
     emit onRestore();
@@ -202,6 +237,18 @@ void ConfigDialog::on_restoreButton_clicked()
 void ConfigDialog::on_okButton_clicked()
 {
     settings->applyTrackChange();
+
+    if (settings->checkNeedReStart() &&
+        QMessageBox::Yes == QMessageBox::question(
+                                this,
+                                tr("Restart Application is Needed!"),
+                                tr("Some settings need restart to take effect, restart application?"),
+                                QMessageBox::Yes | QMessageBox::No,
+                                QMessageBox::Yes))
+    {
+        emit onRestart();
+    }
+
     close();
 }
 

@@ -95,6 +95,7 @@ private slots:
     void multiCommandTabWidget_currentChanged(int index);
     void globalSetting_onSaved();
     void restoreDefaultSettings();
+    void onRestart();
 
     /* find toolbar */
     void findEdit_textChanged(const QString &text);
@@ -121,6 +122,7 @@ private:
     bool tabBarClicked;
     bool restoreSettings;
     QHotkey *shortcut;
+    QTranslator *translator;
 
     QComboBox *portSelect;
     QToolBar *findToolBar;
@@ -171,6 +173,7 @@ private:
     void setDarkStyle(bool dark);
     void refreshDPI();
     void loadFont();
+    void loadLanguage();
     void setToolBar();
     void setStatusBar();
     void updatePortSelectText();
@@ -194,6 +197,4 @@ private:
     void resizeEvent(QResizeEvent *event);
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
-
-    void onRestart();
 };

@@ -35,6 +35,23 @@
              </property>
             </widget>
            </item>
+           <item row="0" column="2">
+            <widget class="QComboBox" name="languageComboBox"/>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_3">
+             <property name="text">
+              <string>Dark Mode</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="2">
+            <widget class="QCheckBox" name="keepWindowsPosCheckBox">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
            <item row="0" column="1">
             <spacer name="horizontalSpacer_7">
              <property name="orientation">
@@ -48,8 +65,19 @@
              </property>
             </spacer>
            </item>
-           <item row="0" column="2">
-            <widget class="QComboBox" name="languageComboBox"/>
+           <item row="4" column="2">
+            <widget class="QCheckBox" name="keepWindowsSizeCheckBox">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>Keep Window Postion</string>
+             </property>
+            </widget>
            </item>
            <item row="1" column="2">
             <widget class="QComboBox" name="styleComboBox">
@@ -61,43 +89,8 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_3">
-             <property name="text">
-              <string>Dark Mode</string>
-             </property>
-            </widget>
-           </item>
            <item row="2" column="2">
             <widget class="QCheckBox" name="darkModeCheckBox">
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="label_2">
-             <property name="text">
-              <string>Keep Window Size</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="2">
-            <widget class="QCheckBox" name="keepWindowsSizeCheckBox">
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="0">
-            <widget class="QLabel" name="label">
-             <property name="text">
-              <string>Keep Window Postion</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="2">
-            <widget class="QCheckBox" name="keepWindowsPosCheckBox">
              <property name="text">
               <string/>
              </property>
@@ -107,6 +100,27 @@
             <widget class="QLabel" name="label_5">
              <property name="text">
               <string>Window Style</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="label_2">
+             <property name="text">
+              <string>Keep Window Size</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_6">
+             <property name="text">
+              <string>Send Notice</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2">
+            <widget class="QCheckBox" name="noticeCheckBox">
+             <property name="text">
+              <string/>
              </property>
             </widget>
            </item>

@@ -3,6 +3,11 @@
 
 #include "Common.h"
 
+extern const QString langs[2] = {
+    "zh_CN",
+    "en",
+};
+
 const int restartExitCode = 777;
 
 const ComboBoxConfig<int> configBaudRate[] = {

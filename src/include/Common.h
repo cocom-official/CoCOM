@@ -66,6 +66,8 @@ struct ComboBoxConfig
     QString str;
 };
 
+extern const QString langs[2];
+
 extern const int restartExitCode;
 
 extern const ComboBoxConfig<int> configBaudRate[5];

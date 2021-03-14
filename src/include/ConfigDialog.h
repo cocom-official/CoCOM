@@ -32,6 +32,7 @@ private slots:
     void on_darkModeCheckBox_stateChanged(int state);
     void on_keepWindowsSizeCheckBox_stateChanged(int state);
     void on_keepWindowsPosCheckBox_stateChanged(int state);
+    void on_noticeCheckBox_stateChanged(int state);
     void on_restoreButton_clicked();
 
     void on_okButton_clicked();
@@ -54,4 +55,5 @@ private:
 
 signals:
     void onRestore();
+    void onRestart();
 };

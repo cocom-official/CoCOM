@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
       tabBarClicked(false),
       restoreSettings(false),
       shortcut(new QHotkey(this)),
+      translator(new QTranslator(this)),
       portSelect(new QComboBox(this)),
       findToolBar(new QToolBar()),
       findEdit(new QLineEdit(this)),
@@ -44,6 +45,8 @@ MainWindow::MainWindow(QWidget *parent)
     QCoreApplication::setOrganizationName(QString(COCOM_VENDER));
     QCoreApplication::setOrganizationDomain(QString(COCOM_HOMEPAGE));
 
+    loadLanguage();
+
     setupUI();
 
     setupSerialPort();
@@ -66,7 +69,6 @@ void MainWindow::setupUI()
 
     trayIcon->setIcon(QIcon(":assets/logos/CoCOM.svg"));
     trayIcon->setToolTip(QString(COCOM_APPLICATIONNAME));
-    trayIcon->show();
 
     setWindowTitle(QString(COCOM_APPLICATIONNAME) + " -- " + tr("Serial Port Utility"));
 
@@ -107,6 +109,15 @@ void MainWindow::setLayout(double rate)
 
 void MainWindow::readSettings()
 {
+    if (globalSettings->getValue("sendNotice").toBool())
+    {
+        trayIcon->show();
+    }
+    else
+    {
+        trayIcon->hide();
+    }
+
     if (globalSettings->getValue("keepWindowSize").toBool())
     {
         resize(globalSettings->getValue("size").toSize());
@@ -274,7 +285,7 @@ void MainWindow::setDarkStyle(bool dark)
         darkPalette.setColor(QPalette::Disabled, QPalette::HighlightedText, QColor(127, 127, 127));
         qApp->setPalette(darkPalette);
 
-        isDark= true;
+        isDark = true;
     }
     else
     {
@@ -283,7 +294,7 @@ void MainWindow::setDarkStyle(bool dark)
         QPalette defaultPalette;
         qApp->setPalette(defaultPalette);
 
-        isDark= false;
+        isDark = false;
     }
 }
 
@@ -351,6 +362,21 @@ void MainWindow::loadFont()
     statusInfoLabel->setFont(font);
 
     findResultLabel->setFont(font);
+}
+
+void MainWindow::loadLanguage()
+{
+    QString lang = globalSettings->getValue("language").toString();
+    if (!lang.isEmpty())
+    {
+        translator->load(":/translations/CoCOM_" + lang);
+        qApp->installTranslator(translator);
+    }
+    else
+    {
+        translator->load(":/translations/CoCOM_" + QLocale::system().name());
+        qApp->installTranslator(translator);
+    }
 }
 
 void MainWindow::setToolBar()
@@ -1108,6 +1134,7 @@ void MainWindow::on_configAction_triggered(bool checked)
     {
         configDialog = new ConfigDialog(globalSettings, this);
         connect(configDialog, &ConfigDialog::onRestore, this, &MainWindow::restoreDefaultSettings);
+        connect(configDialog, &ConfigDialog::onRestart, this, &MainWindow::onRestart);
     }
 
     configDialog->show();
