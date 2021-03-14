@@ -367,16 +367,33 @@ void MainWindow::loadFont()
 void MainWindow::loadLanguage()
 {
     QString lang = globalSettings->getValue("language").toString();
-    if (!lang.isEmpty())
+
+    if (lang.isEmpty())
     {
-        translator->load(":/translations/CoCOM_" + lang);
-        qApp->installTranslator(translator);
+        QString local = QLocale::system().name();
+        bool hasLocal = false;
+
+        for (auto &&i : langs)
+        {
+            if(i == local)
+            {
+                hasLocal = true;
+                break;
+            }
+        }
+
+        if (hasLocal)
+        {
+            lang = local;
+        }
+        else
+        {
+            lang = "en";
+        }
     }
-    else
-    {
-        translator->load(":/translations/CoCOM_" + QLocale::system().name());
-        qApp->installTranslator(translator);
-    }
+
+    translator->load(":/translations/CoCOM_" + lang);
+    qApp->installTranslator(translator);
 }
 
 void MainWindow::setToolBar()
