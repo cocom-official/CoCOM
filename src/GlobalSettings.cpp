@@ -10,15 +10,21 @@ GlobalSettings::GlobalSettings(QObject *parent)
 
     if (portableFile.open(QIODevice::ReadOnly))
     {
-        qDebug() << "CoCOM Portable Mode";
-        settings = new QSettings(QCoreApplication::applicationDirPath() + "/CoCOM.ini", QSettings::IniFormat, this);
+        settings = new QSettings(QCoreApplication::applicationDirPath() +
+                                     QString("/") +
+                                     QString(COCOM_APPLICATIONNAME) +
+                                     QString(INI_NAME_SUFFIX) +
+                                     QString(".ini"),
+                                 QSettings::IniFormat, this);
     }
     else
     {
         settings = new QSettings(QSettings::IniFormat,
                                  QSettings::UserScope,
                                  QString(COCOM_VENDER),
-                                 QString(COCOM_APPLICATIONNAME), this);
+                                 QString(COCOM_APPLICATIONNAME) +
+                                     QString(INI_NAME_SUFFIX),
+                                 this);
     }
 }
 

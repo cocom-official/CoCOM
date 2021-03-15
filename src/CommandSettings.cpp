@@ -8,14 +8,23 @@ CommandSettings::CommandSettings(QObject *parent)
 
     if (portableFile.open(QIODevice::ReadOnly))
     {
-        settings = new QSettings(QCoreApplication::applicationDirPath() + "/CoCOM_Commands.ini", QSettings::IniFormat, this);
+        settings = new QSettings(QCoreApplication::applicationDirPath() +
+                                     QString("/") +
+                                     QString(COCOM_APPLICATIONNAME) +
+                                     QString("_Commands") +
+                                     QString(INI_NAME_SUFFIX) +
+                                     QString(".ini"),
+                                 QSettings::IniFormat, this);
     }
     else
     {
         settings = new QSettings(QSettings::IniFormat,
                                  QSettings::UserScope,
                                  QString(COCOM_VENDER),
-                                 QString(COCOM_APPLICATIONNAME) + QString("_Commands"), this);
+                                 QString(COCOM_APPLICATIONNAME) +
+                                     QString("_Commands") +
+                                     QString(INI_NAME_SUFFIX),
+                                 this);
     }
 
     settings->beginGroup("Info");

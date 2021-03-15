@@ -17,6 +17,12 @@
 #define COCOM_PORTABLE_FILE_NAME ""
 #endif
 
+#ifdef DEBUG
+#define INI_NAME_SUFFIX "_Debug"
+#else
+#define INI_NAME_SUFFIX ""
+#endif
+
 #define DEFAULT_ENCODING "Local"
 
 #ifdef _WIN32

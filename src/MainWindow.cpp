@@ -152,12 +152,21 @@ void MainWindow::readSettings()
             sendToastMessage(tr("Show/Hide") + QString((" HotKey ")) + showHideShortcut->shortcut().toString() + QString(" ") + tr("is Registered Failed!"), WarningLevel);
         }
     }
+    else
+    {
+        showHideShortcut->resetShortcut();
+    }
 
     shortcutKey = globalSettings->getValue("clearOutputKey").toString();
     if (globalSettings->getValue("clearOutputEnable").toBool() &&
         !shortcutKey.isEmpty())
     {
         clearOutputShortcut->setKey(QKeySequence::fromString(shortcutKey));
+        clearOutputShortcut->setEnabled(true);
+    }
+    else
+    {
+        clearOutputShortcut->setEnabled(false);
     }
 
     shortcutKey = globalSettings->getValue("scrollToEndKey").toString();
@@ -165,6 +174,11 @@ void MainWindow::readSettings()
         !shortcutKey.isEmpty())
     {
         scrollToEndShortcut->setKey(QKeySequence::fromString(shortcutKey));
+        scrollToEndShortcut->setEnabled(true);
+    }
+    else
+    {
+        scrollToEndShortcut->setEnabled(false);
     }
 
     QString style = globalSettings->getValue("windosStyle").toString();
@@ -278,10 +292,6 @@ void MainWindow::setDarkStyle(bool dark)
             defaultStyleSheet = styleSheet();
         }
 
-        QFile file(":/themes/darkstyle/darkstyle.qss");
-        file.open(QFile::ReadOnly | QFile::Text);
-        qApp->setStyleSheet(file.readAll());
-
         QPalette darkPalette;
         darkPalette.setColor(QPalette::Window, QColor(53, 53, 53));
         darkPalette.setColor(QPalette::WindowText, Qt::white);
@@ -305,14 +315,18 @@ void MainWindow::setDarkStyle(bool dark)
         darkPalette.setColor(QPalette::Disabled, QPalette::HighlightedText, QColor(127, 127, 127));
         qApp->setPalette(darkPalette);
 
+        QFile file(":/themes/darkstyle/darkstyle.qss");
+        file.open(QFile::ReadOnly | QFile::Text);
+        qApp->setStyleSheet(file.readAll());
+
         isDark = true;
     }
     else
     {
-        qApp->setStyleSheet(defaultStyleSheet);
-
         QPalette defaultPalette;
         qApp->setPalette(defaultPalette);
+
+        qApp->setStyleSheet(defaultStyleSheet);
 
         isDark = false;
     }
