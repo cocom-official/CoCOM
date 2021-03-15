@@ -6,15 +6,12 @@ GlobalSettings::GlobalSettings(QObject *parent)
       track(false),
       needReStart(false)
 {
-    QFile portableFile(QCoreApplication::applicationDirPath() + "/" + QString(COCOM_PORTABLE_FILE_NAME));
+    QFile portableFile(QCoreApplication::applicationDirPath() + QString("/" COCOM_PORTABLE_FILE_NAME));
 
     if (portableFile.open(QIODevice::ReadOnly))
     {
         settings = new QSettings(QCoreApplication::applicationDirPath() +
-                                     QString("/") +
-                                     QString(COCOM_APPLICATIONNAME) +
-                                     QString(INI_NAME_SUFFIX) +
-                                     QString(".ini"),
+                                     QString("/" COCOM_APPLICATIONNAME INI_NAME_SUFFIX ".ini"),
                                  QSettings::IniFormat, this);
     }
     else
@@ -22,8 +19,7 @@ GlobalSettings::GlobalSettings(QObject *parent)
         settings = new QSettings(QSettings::IniFormat,
                                  QSettings::UserScope,
                                  QString(COCOM_VENDER),
-                                 QString(COCOM_APPLICATIONNAME) +
-                                     QString(INI_NAME_SUFFIX),
+                                 QString(COCOM_APPLICATIONNAME INI_NAME_SUFFIX),
                                  this);
     }
 }

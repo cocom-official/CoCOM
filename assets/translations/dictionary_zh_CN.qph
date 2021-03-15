@@ -400,4 +400,16 @@
     <source>Clear Output</source>
     <target>清空输出</target>
 </phrase>
+<phrase>
+    <source>Version:</source>
+    <target>版本号：</target>
+</phrase>
+<phrase>
+    <source>Commit:</source>
+    <target>提交：</target>
+</phrase>
+<phrase>
+    <source>Build Time:</source>
+    <target>构建时间：</target>
+</phrase>
 </QPH>

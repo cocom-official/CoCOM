@@ -32,14 +32,16 @@ void ConfigDialog::setupUI()
                                  QImage(":/assets/logos/CoCOM_128.png"))
                                  .scaled(ui->iconLabel->size(), Qt::KeepAspectRatio));
 
-    ui->versionLabel->setText(tr("Version") + QString(": v") + QString(COCOM_VERSION_STRING_WITH_SUFFIX));
-    ui->commitLabel->setText(tr("Commit") + QString(": ") + QString(COCOM_SHORT_COMMIT_ID));
-    ui->buildTimeLabel->setText(tr("Build Time") + QString(": ") + QString(__DATE__ " " __TIME__));
-    ui->qtVersionLabel->setText(QString("Qt: ") + QString(QT_VERSION_STR));
-    ui->luaVersionLabel->setText(QString("Lua: ") + QString(LUA_VERSION_MAJOR) + "." + QString(LUA_VERSION_MINOR) + "." + QString(LUA_VERSION_RELEASE));
+    ui->versionLabel->setText(QString("v" COCOM_VERSION_STRING));
+    ui->commitLabel->setText(QString(COCOM_SHORT_COMMIT_ID));
+    ui->buildTimeLabel->setText(QString(__DATE__));
+    ui->qtVersionLabel->setText(QString(QT_VERSION_STR));
+    ui->luaVersionLabel->setText(QString(LUA_VERSION_MAJOR "." LUA_VERSION_MINOR "." LUA_VERSION_RELEASE));
 
     refreshDPI();
 
+    aboutLabelsSignaler->installOn(ui->versionLabel);
+    aboutLabelsSignaler->installOn(ui->buildTimeLabel);
     aboutLabelsSignaler->installOn(ui->commitLabel);
     aboutLabelsSignaler->installOn(ui->qtVersionLabel);
     aboutLabelsSignaler->installOn(ui->luaVersionLabel);
@@ -416,17 +418,49 @@ void ConfigDialog::aboutLabels_mouseButtonEvent(QWidget *obj, QMouseEvent *event
 
         if (count % 2 == 0)
         {
-            ui->commitLabel->setText(tr("Commit") + QString(": ") + QString(COCOM_SHORT_COMMIT_ID));
+            ui->commitLabel->setText(QString(COCOM_SHORT_COMMIT_ID));
         }
         else
         {
-            ui->commitLabel->setText(tr("Commit") + QString(": ") + QString(COCOM_LONG_COMMIT_ID));
+            ui->commitLabel->setText(QString(COCOM_LONG_COMMIT_ID));
+        }
+    }
+    else if (label == ui->versionLabel)
+    {
+        static int count = 0;
+        count++;
+
+        if (count % 2 == 0)
+        {
+            ui->versionLabel->setText(QString(COCOM_VERSION_STRING));
+        }
+        else
+        {
+            ui->versionLabel->setText(QString(COCOM_VERSION_STRING_WITH_SUFFIX));
+        }
+    }
+    else if (label == ui->buildTimeLabel)
+    {
+        static int count = 0;
+        count++;
+
+        if (count % 2 == 0)
+        {
+            ui->buildTimeLabel->setText(QString(__DATE__));
+        }
+        else
+        {
+            ui->buildTimeLabel->setText(QString(__DATE__ " " __TIME__));
         }
     }
 }
 
 void ConfigDialog::showEvent(QShowEvent *event)
 {
+    QFile file(README_FILE_PATH);
+    file.open(QFile::ReadOnly | QFile::Text);
+    ui->textBrowser->setMarkdown(file.readAll());
+
     refreshUI();
     settings->startTrackChange();
 
@@ -435,6 +469,8 @@ void ConfigDialog::showEvent(QShowEvent *event)
 
 void ConfigDialog::closeEvent(QCloseEvent *event)
 {
+    ui->textBrowser->clear();
+
     settings->undoChange();
 
     event->accept();

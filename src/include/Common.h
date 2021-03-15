@@ -11,16 +11,20 @@
 #define COCOM_APPLICATIONNAME ""
 #define COCOM_VENDER ""
 #define COCOM_HOMEPAGE ""
+#define COCOM_VERSION_STRING ""
 #define COCOM_VERSION_STRING_WITH_SUFFIX ""
 #define COCOM_SHORT_COMMIT_ID ""
 #define COCOM_LONG_COMMIT_ID ""
 #define COCOM_PORTABLE_FILE_NAME ""
+#define COCOM_SOURCE_DIR ""
 #endif
 
 #ifdef DEBUG
 #define INI_NAME_SUFFIX "_Debug"
+#define README_FILE_PATH QString(COCOM_SOURCE_DIR) + QString("/README.md")
 #else
 #define INI_NAME_SUFFIX ""
+#define README_FILE_PATH QCoreApplication::applicationDirPath() + QString("/README.md")
 #endif
 
 #define DEFAULT_ENCODING "Local"

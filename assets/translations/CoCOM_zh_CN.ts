@@ -32,48 +32,18 @@
         <translation>恢复默认设置</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="323"/>
+        <location filename="../../ui/configDialog.ui" line="325"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;CoCOM&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="360"/>
-        <source>Version: vx.x.x.x</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../ui/configDialog.ui" line="393"/>
-        <source>Commit: x.x.x.x</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../ui/configDialog.ui" line="426"/>
-        <source>Build Time: x.x.x.x</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../ui/configDialog.ui" line="446"/>
-        <source>Qt:x.x.x.x</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../ui/configDialog.ui" line="479"/>
-        <source>Lua:x.x.x.x</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../ui/configDialog.ui" line="541"/>
+        <location filename="../../ui/configDialog.ui" line="608"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/cocom-official/CoCOM&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Home Page&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/cocom-official/CoCOM&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;主页&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="560"/>
+        <location filename="../../ui/configDialog.ui" line="646"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/zt-luo&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;GitHub&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../ui/configDialog.ui" line="514"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;CoCOM is a Serial Port Utility for Embedded Software Engineer.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
     </message>
     <message>
@@ -142,17 +112,55 @@
         <translation>高级</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="579"/>
+        <location filename="../../ui/configDialog.ui" line="354"/>
+        <source>Version:</source>
+        <translation>版本号：</translation>
+    </message>
+    <message>
+        <location filename="../../ui/configDialog.ui" line="367"/>
+        <source>vx.x.x.x</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../ui/configDialog.ui" line="400"/>
+        <source>Commit:</source>
+        <translation>提交：</translation>
+    </message>
+    <message>
+        <location filename="../../ui/configDialog.ui" line="413"/>
+        <location filename="../../ui/configDialog.ui" line="459"/>
+        <location filename="../../ui/configDialog.ui" line="505"/>
+        <location filename="../../ui/configDialog.ui" line="551"/>
+        <source>x.x.x.x</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../ui/configDialog.ui" line="446"/>
+        <source>Build Time:</source>
+        <translation>构建时间：</translation>
+    </message>
+    <message>
+        <location filename="../../ui/configDialog.ui" line="492"/>
+        <source>Qt:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../ui/configDialog.ui" line="538"/>
+        <source>Lua:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../ui/configDialog.ui" line="627"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://blog.ztluo.dev/&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Blog&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://blog.ztluo.dev/&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;博客&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="638"/>
+        <location filename="../../ui/configDialog.ui" line="698"/>
         <source>OK</source>
         <translation>确认</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="645"/>
+        <location filename="../../ui/configDialog.ui" line="705"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -166,29 +174,24 @@
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../../src/ConfigDialog.cpp" line="35"/>
         <source>Version</source>
-        <translation>版本</translation>
+        <translation type="vanished">版本</translation>
     </message>
     <message>
-        <location filename="../../src/ConfigDialog.cpp" line="36"/>
-        <location filename="../../src/ConfigDialog.cpp" line="419"/>
-        <location filename="../../src/ConfigDialog.cpp" line="423"/>
         <source>Commit</source>
-        <translation>提交</translation>
+        <translation type="vanished">提交</translation>
     </message>
     <message>
-        <location filename="../../src/ConfigDialog.cpp" line="37"/>
         <source>Build Time</source>
-        <translation>构建时间</translation>
+        <translation type="vanished">构建时间</translation>
     </message>
     <message>
-        <location filename="../../src/ConfigDialog.cpp" line="356"/>
+        <location filename="../../src/ConfigDialog.cpp" line="358"/>
         <source>Restart Application is Needed!</source>
         <translation>需要重启应用！</translation>
     </message>
     <message>
-        <location filename="../../src/ConfigDialog.cpp" line="357"/>
+        <location filename="../../src/ConfigDialog.cpp" line="359"/>
         <source>Some settings need restart to take effect, restart application?</source>
         <translation>一些设置需要重启才能生效，重启应用？</translation>
     </message>
