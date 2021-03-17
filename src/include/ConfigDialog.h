@@ -10,8 +10,7 @@
 
 #include "GlobalSettings.h"
 #include "Common.h"
-#include "lua.hpp"
-#include "fflua.h"
+#include "CoLua.h"
 
 namespace Ui
 {

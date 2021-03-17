@@ -41,6 +41,7 @@
     <!-- logos -->
     <file>../assets/logos/CoCOM.svg</file>
     <file>../assets/logos/CoCOM_128.png</file>
+    <file>../assets/logos/lua.png</file>
     <!-- fonts -->
     <file>../assets/fonts/CascadiaCodePL.ttf</file>
   </qresource>

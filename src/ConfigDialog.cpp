@@ -383,29 +383,17 @@ void ConfigDialog::aboutLabels_mouseButtonEvent(QWidget *obj, QMouseEvent *event
 
     if (label == ui->luaVersionLabel)
     {
-        int old = dup(1);
+        QMessageBox *luaMsgBox = new QMessageBox(this);
+        luaMsgBox->setWindowTitle("Hello Lua");
+        luaMsgBox->setIconPixmap(QPixmap(":/assets/logos/lua.png").scaled(64, 64, Qt::KeepAspectRatio));
+        connect(luaMsgBox, &QMessageBox::buttonClicked,
+                [luaMsgBox](QAbstractButton *button) { Q_UNUSED(button); luaMsgBox->setParent(nullptr); luaMsgBox->deleteLater(); });
 
-        QTemporaryFile dup2_file;
-        dup2_file.open();
-
-        ff::fflua_t lua;
-        try
-        {
-            if (-1 == dup2(dup2_file.handle(), fileno(stdout)))
-            {
-                qDebug() << "dup2 fail";
-            }
-            lua.load_file("scripts/hello_lua.lua");
-            fflush(stdout);
-            dup2(old, 1);
-        }
-        catch (exception &e)
-        {
-            qDebug() << "exception:" << e.what();
-        }
-
-        dup2_file.seek(0);
-        ((MainWindow *)parent())->setStatusInfo(QString(dup2_file.readAll()));
+        CoLua lua;
+        lua.setObjectName("Hello Lua");
+        connect(&lua, &CoLua::consoleOut,
+                [luaMsgBox](QString out) { luaMsgBox->setText(out); luaMsgBox->show(); });
+        lua.loadFile("scripts/hello_lua.lua");
     }
     else if (label == ui->qtVersionLabel)
     {

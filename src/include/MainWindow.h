@@ -58,8 +58,9 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+public slots:
     void setStatusInfo(QString text);
-    void findResultChanged(int cur, int all);
 
 private slots:
     void on_inputTabWidget_currentChanged(int index);
@@ -115,6 +116,7 @@ private slots:
     void portSelectComboBox_currentIndexChanged(int index);
     void serial_readyRead(int count, QByteArray *bytes);
     void serial_bytesSend(int count);
+    void findResultChanged(int cur, int all);
 
 private:
     Ui::MainWindow *ui;
