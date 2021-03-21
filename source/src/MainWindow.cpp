@@ -56,7 +56,7 @@ MainWindow::MainWindow(QWidget *parent)
     readSettings();
 
     /* ShortKey */
-    connect(showHideShortcut, &QHotkey::activated,this, &MainWindow::showHotkey_activated);
+    connect(showHideShortcut, &QHotkey::activated, this, &MainWindow::showHotkey_activated);
     connect(clearOutputShortcut, &QShortcut::activated, this, [this]() { this->on_clearAction_triggered(true); });
     connect(scrollToEndShortcut, &QShortcut::activated, this, [this]() { this->on_goDownAction_triggered(true); });
 
@@ -1175,6 +1175,14 @@ void MainWindow::on_pinAction_toggled(bool checked)
     }
 
     show();
+}
+
+void MainWindow::on_plotAction_triggered(bool checked)
+{
+    qDebug() << "on_plotAction_triggered";
+
+    PlotWindow *plot = new PlotWindow(this);
+    plot->show();
 }
 
 void MainWindow::on_configAction_triggered(bool checked)

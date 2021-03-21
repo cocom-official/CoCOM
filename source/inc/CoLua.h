@@ -16,9 +16,9 @@ public:
     void __console(string out);
     void __log(string out, int level = 0);
 
-    /* da lua */
+    /* do lua */
     int loadFile(QString filePath);
-    int runString(QString run);
+    void runString(QString run);
 
 private:
     ff::fflua_t fflua;

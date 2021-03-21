@@ -89,7 +89,8 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt5 COMPONENTS Core Gui Widgets SerialPort
+### 1. find package ###
+find_package(Qt5 COMPONENTS Core Gui Widgets SerialPort Charts
              LinguistTools REQUIRED)
 
 # add_compile_definitions(QT_DISABLE_DEPRECATED_BEFORE=0x050F00)
@@ -100,11 +101,13 @@ else()
     message(FATAL_ERROR  "Couldn't find Qt")
 endif()
 
+### 2. add package to link libraries ###
 link_libraries(
     Qt5::Core
     Qt5::Gui
     Qt5::Widgets
     Qt5::SerialPort
+    Qt5::Charts
     )
 
 if (WIN32)
@@ -115,18 +118,25 @@ endif()
 qt5_wrap_ui(ui_list
     "ui/mainWindow.ui"
     "ui/configDialog.ui"
+    "ui/plotWindow.ui"
     )
 
 qt5_wrap_cpp(moc_list
-    "src/include/Common.h"
-    "src/include/CoLua.h"
-    "src/include/GlobalSettings.h"
-    "src/include/CommandSettings.h"
-    "src/include/CommandsTab.h"
-    "src/include/MainWindow.h"
-    "src/include/Serial.h"
-    "src/include/TextBrowser.h"
-    "src/include/ConfigDialog.h"
+    "source/inc/Common.h"
+    "source/inc/CoLua.h"
+    "source/inc/GlobalSettings.h"
+    "source/inc/CommandSettings.h"
+    "source/inc/CommandsTab.h"
+    "source/inc/MainWindow.h"
+    "source/inc/Serial.h"
+    "source/inc/TextBrowser.h"
+    "source/inc/ConfigDialog.h"
+    "source/inc/PlotWindow.h"
+
+    "source/inc/Chart/Callout.h"
+    "source/inc/Chart/Chart.h"
+    "source/inc/Chart/LineSeries.h"
+    "source/inc/Chart/ChartView.h"
     )
 
 qt5_add_resources(qrc_list
@@ -145,16 +155,22 @@ set(ts_raw_list
     )
 
 set(src_list
-    "src/main.cpp"
-    "src/Common.cpp"
-    "src/CoLua.cpp"
-    "src/GlobalSettings.cpp"
-    "src/CommandSettings.cpp"
-    "src/CommandsTab.cpp"
-    "src/MainWindow.cpp"
-    "src/Serial.cpp"
-    "src/TextBrowser.cpp"
-    "src/ConfigDialog.cpp"
+    "source/src/main.cpp"
+    "source/src/Common.cpp"
+    "source/src/CoLua.cpp"
+    "source/src/GlobalSettings.cpp"
+    "source/src/CommandSettings.cpp"
+    "source/src/CommandsTab.cpp"
+    "source/src/MainWindow.cpp"
+    "source/src/Serial.cpp"
+    "source/src/TextBrowser.cpp"
+    "source/src/ConfigDialog.cpp"
+    "source/src/PlotWindow.cpp"
+
+    "source/src/Chart/Callout.cpp"
+    "source/src/Chart/Chart.cpp"
+    "source/src/Chart/LineSeries.cpp"
+    "source/src/Chart/ChartView.cpp"
     )
 
 
@@ -234,7 +250,8 @@ target_link_libraries(
 
 target_include_directories(
     ${PROJECT_NAME} PRIVATE
-    "src/include/"
+    "source/inc/"
+    "source/inc/chart"
     )
 
 if (CMAKE_BUILD_TYPE STREQUAL Release) # Release

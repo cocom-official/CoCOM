@@ -61,10 +61,10 @@ void CoLua::__log(string out, int level)
 
 int CoLua::loadFile(QString filePath)
 {
-    fflua.load_file(filePath.toStdString());
+    return fflua.load_file(filePath.toStdString());
 }
 
-int CoLua::runString(QString run)
+void CoLua::runString(QString run)
 {
     fflua.run_string(run.toStdString());
 }

@@ -226,6 +226,7 @@
    <addaction name="separator"/>
    <addaction name="pinAction"/>
    <addaction name="saveToFileAction"/>
+   <addaction name="plotAction"/>
    <addaction name="toolsAction"/>
    <addaction name="configAction"/>
   </widget>
@@ -333,6 +334,15 @@
    </property>
    <property name="toolTip">
     <string>go down</string>
+   </property>
+  </action>
+  <action name="plotAction">
+   <property name="icon">
+    <iconset resource="../assets/assets.qrc">
+     <normaloff>:/assets/icons/chart-line.svg</normaloff>:/assets/icons/chart-line.svg</iconset>
+   </property>
+   <property name="text">
+    <string>plot</string>
    </property>
   </action>
  </widget>
