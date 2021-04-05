@@ -7,7 +7,7 @@ PlotConfigDialog::PlotConfigDialog(SerialData *data, QWidget *parent)
       serialData(data)
 {
     ui->setupUi(this);
-    setWindowModality(Qt::WindowModal);
+    // setWindowModality(Qt::WindowModal);
 
     ui->tabWidget->clear();
     ui->tabWidget->addTab(new QLabel(), QString());
