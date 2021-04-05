@@ -1,75 +1,20 @@
 #include "PlotWindow.h"
 #include "ui_plotWindow.h"
 
-PlotWindow::PlotWindow(QWidget *parent)
+PlotWindow::PlotWindow(SerialData *data, QWidget *parent)
     : QMainWindow(parent),
-      ui(new Ui::PlotWindow)
+      ui(new Ui::PlotWindow),
+      configDialog(new PlotConfigDialog(data, this)),
+      serialData(data),
+      columuCount(2)
 {
     ui->setupUi(this);
 
-    // newChart("", "");
-    // appendData(0, 0, QPointF(1, 2));
-    // appendData(0, 0, QPointF(2, 2));
-    // appendData(0, 0, QPointF(3, 8));
-    // appendData(0, 0, QPointF(4, 6));
-    // appendData(0, 0, QPointF(5, 10));
-    // appendData(0, 0, QPointF(6, 12));
-    // appendData(0, 0, QPointF(7, 12));
-    // appendData(0, 0, QPointF(8, 12));
-    // appendData(0, 0, QPointF(9, 12));
-    // appendData(0, 0, QPointF(10, 12));
-    // appendData(0, 0, QPointF(11, 12));
-    // appendData(0, 0, QPointF(12, 12));
-
-    // newLine(0, "Line1");
-    // appendData(0, 1, QPointF(1, 3));
-    // appendData(0, 1, QPointF(2, 4));
-    // appendData(0, 1, QPointF(3, 7));
-    // appendData(0, 1, QPointF(4, 3));
-    // appendData(0, 1, QPointF(5, 8));
-    // appendData(0, 1, QPointF(6, 7));
-
-    // connect(&timer, &QTimer::timeout, [this]() {
-    //     static int x = 7;
-    //     static int y = 8;
-    //     appendData(0, 1, QPointF(x++, y++));
-    // });
-    // timer.setInterval(1000);
-    // timer.start();
-
-    // newChart("", "");
-    // newChart("Chart3", "Line");
-    // newChart("Chart4", "Line");
-
-    // appendData(1, 0, QPointF(1, 3));
-    // appendData(1, 0, QPointF(2, 4));
-    // appendData(1, 0, QPointF(3, 7));
-    // appendData(1, 0, QPointF(4, 3));
-    // appendData(1, 0, QPointF(5, 8));
-    // appendData(1, 0, QPointF(6, 7));
-
-    // appendData(2, 0, QPointF(1, 3));
-    // appendData(2, 0, QPointF(2, 4));
-    // appendData(2, 0, QPointF(3, 7));
-    // appendData(2, 0, QPointF(4, 3));
-    // appendData(2, 0, QPointF(5, 8));
-    // appendData(2, 0, QPointF(6, 7));
-
-    // appendData(3, 0, QPointF(1, 3));
-    // appendData(3, 0, QPointF(2, 4));
-    // appendData(3, 0, QPointF(3, 7));
-    // appendData(3, 0, QPointF(4, 3));
-    // appendData(3, 0, QPointF(5, 8));
-    // appendData(3, 0, QPointF(6, 7));
-    // newLine(3, "Line1");
-    // appendData(3, 1, QPointF(1, 6));
-    // appendData(3, 1, QPointF(2, 6));
-    // appendData(3, 1, QPointF(3, 7));
-    // appendData(3, 1, QPointF(4, 32));
-    // appendData(3, 1, QPointF(5, 7));
-    // appendData(3, 1, QPointF(6, 9));
-
-    // newChart("Chart5", "Line");
+    connect(serialData, &SerialData::regExpNewData,
+            this, &PlotWindow::dataAppend);
+    connect(configDialog, &PlotConfigDialog::acceptClicked,
+            this, &PlotWindow::configDialogAccepted);
+    configDialog->open();
 
     rubberBandSelect(QChartView::RectangleRubberBand);
 }
@@ -91,21 +36,19 @@ int PlotWindow::newChart(QString title, QString lineName)
 
     ChartView *view = new ChartView(chart, this);
     view->setRubberBand(getRubberBand());
-    qobject_cast<QGridLayout *>(ui->centralwidget->layout())->addWidget(view, viewlist.count() / 2, viewlist.count() % 2);
+
+    QGridLayout *layout = qobject_cast<QGridLayout *>(ui->centralwidget->layout());
+    layout->addWidget(view, viewlist.count() / columuCount, viewlist.count() % columuCount);
+    layout->setRowStretch(viewlist.count() / columuCount, 1);
+    layout->setColumnStretch(viewlist.count() % columuCount, 1);
+
     viewlist << view;
 
     newLine(chartIndex, lineName);
 
     chart->createDefaultAxes();
 
-    if (viewlist.count() == 2)
-    {
-        resize(size().width() * 2, size().height());
-    }
-    else if (viewlist.count() == 3)
-    {
-        resize(size().width(), size().height() * 2);
-    }
+    rubberBandSelect(rubberBand);
 
     return chartIndex;
 }
@@ -113,6 +56,8 @@ int PlotWindow::newChart(QString title, QString lineName)
 int PlotWindow::newLine(int chart, QString name)
 {
     LineSeries *line = new LineSeries();
+
+    Q_ASSERT(chart < viewlist.count());
 
     if (name.isEmpty())
     {
@@ -134,6 +79,8 @@ void PlotWindow::appendData(int chart, int line, QPointF data)
 
 void PlotWindow::rubberBandSelect(QChartView::RubberBand band)
 {
+    rubberBand = band;
+
     for (auto &&i : viewlist)
     {
         i->setRubberBand(band);
@@ -192,6 +139,54 @@ QChartView::RubberBand PlotWindow::getRubberBand()
     }
 }
 
+void PlotWindow::loadPlotConfig()
+{
+    clearAll();
+    for (int chartIndex = 0; chartIndex < config.count(); chartIndex++)
+    {
+        newChart(serialData->getRegExpTitle(config[chartIndex].series),
+                 serialData->getRegExpNames(config[chartIndex].series)[config[chartIndex].ysIndex[0]]);
+
+        if (config[chartIndex].ysIndex.count() > 1)
+        {
+            for (int lineIndex = 1; lineIndex < config[chartIndex].ysIndex.count(); lineIndex++)
+            {
+                newLine(chartIndex,
+                        serialData->getRegExpNames(config[chartIndex].series)[config[chartIndex].ysIndex[lineIndex]]);
+            }
+        }
+
+        for (auto &&i : serialData->getRegExpValues(config[chartIndex].series))
+        {
+            for (int lineValueIndex = 0; lineValueIndex < config[chartIndex].ysIndex.count(); lineValueIndex++)
+            {
+                appendData(chartIndex,
+                           lineValueIndex,
+                           QPointF(i[config[chartIndex].xIndex],
+                                   i[config[chartIndex].ysIndex[lineValueIndex]]));
+            }
+        }
+    }
+}
+
+void PlotWindow::clearAll()
+{
+    QGridLayout *layout = qobject_cast<QGridLayout *>(ui->centralwidget->layout());
+    int index = 0;
+    for (auto &&i : viewlist)
+    {
+        Chart *m_chart = i->chart();
+        m_chart->removeAllSeries();
+        i->setParent(nullptr);
+        delete i;
+
+        layout->setRowStretch(index / columuCount, 0);
+        layout->setColumnStretch(index % columuCount, 0);
+        index++;
+    }
+    viewlist.clear();
+}
+
 void PlotWindow::on_rectangleRubberAction_toggled(bool checked)
 {
     ui->rectangleRubberAction->blockSignals(true);
@@ -241,5 +236,41 @@ void PlotWindow::on_zoomResetAction_triggered(bool checked)
     for (auto &&i : viewlist)
     {
         i->chart()->zoomReset();
+    }
+}
+
+void PlotWindow::on_configAction_triggered(bool checked)
+{
+    Q_UNUSED(checked);
+
+    configDialog->open();
+}
+
+void PlotWindow::configDialogAccepted()
+{
+    QList<PlotConfig> m_config = configDialog->getConfig();
+    if (config != m_config)
+    {
+        config = m_config;
+        loadPlotConfig();
+    }
+}
+
+void PlotWindow::dataAppend(int exp, QList<qreal> data)
+{
+    for (int chartIndex = 0; chartIndex < config.count(); chartIndex++)
+    {
+        if (config[chartIndex].series != exp)
+        {
+            continue;
+        }
+
+        for (int lineValueIndex = 0; lineValueIndex < config[chartIndex].ysIndex.count(); lineValueIndex++)
+        {
+            appendData(chartIndex,
+                       lineValueIndex,
+                       QPointF(data[config[chartIndex].xIndex],
+                               data[config[chartIndex].ysIndex[lineValueIndex]]));
+        }
     }
 }

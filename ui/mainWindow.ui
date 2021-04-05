@@ -226,8 +226,9 @@
    <addaction name="separator"/>
    <addaction name="pinAction"/>
    <addaction name="saveToFileAction"/>
+   <addaction name="separator"/>
    <addaction name="plotAction"/>
-   <addaction name="toolsAction"/>
+   <addaction name="appsAction"/>
    <addaction name="configAction"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -255,31 +256,10 @@
     <string>open</string>
    </property>
   </action>
-  <action name="pauseAction">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="icon">
-    <iconset resource="../assets/assets.qrc">
-     <normaloff>:/assets/icons/pause.svg</normaloff>:/assets/icons/pause.svg</iconset>
-   </property>
-   <property name="text">
-    <string>pause</string>
-   </property>
-  </action>
-  <action name="stopAction">
-   <property name="icon">
-    <iconset resource="../assets/assets.qrc">
-     <normaloff>:/assets/icons/stop.svg</normaloff>:/assets/icons/stop.svg</iconset>
-   </property>
-   <property name="text">
-    <string>stop</string>
-   </property>
-  </action>
   <action name="clearAction">
    <property name="icon">
     <iconset resource="../assets/assets.qrc">
-     <normaloff>:/assets/icons/sync.svg</normaloff>:/assets/icons/sync.svg</iconset>
+     <normaloff>:/assets/icons/broom.svg</normaloff>:/assets/icons/broom.svg</iconset>
    </property>
    <property name="text">
     <string>clear</string>
@@ -288,19 +268,10 @@
   <action name="configAction">
    <property name="icon">
     <iconset resource="../assets/assets.qrc">
-     <normaloff>:/assets/icons/sliders.svg</normaloff>:/assets/icons/sliders.svg</iconset>
+     <normaloff>:/assets/icons/settings.svg</normaloff>:/assets/icons/settings.svg</iconset>
    </property>
    <property name="text">
     <string>setting</string>
-   </property>
-  </action>
-  <action name="toolsAction">
-   <property name="icon">
-    <iconset resource="../assets/assets.qrc">
-     <normaloff>:/assets/icons/wrench.svg</normaloff>:/assets/icons/wrench.svg</iconset>
-   </property>
-   <property name="text">
-    <string>tools</string>
    </property>
   </action>
   <action name="saveToFileAction">
@@ -310,18 +281,6 @@
    </property>
    <property name="text">
     <string>file</string>
-   </property>
-  </action>
-  <action name="sidebarAction">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="icon">
-    <iconset resource="../assets/assets.qrc">
-     <normaloff>:/assets/icons/side-bar.svg</normaloff>:/assets/icons/side-bar.svg</iconset>
-   </property>
-   <property name="text">
-    <string>sidebar</string>
    </property>
   </action>
   <action name="goDownAction">
@@ -343,6 +302,15 @@
    </property>
    <property name="text">
     <string>plot</string>
+   </property>
+  </action>
+  <action name="appsAction">
+   <property name="icon">
+    <iconset resource="../assets/assets.qrc">
+     <normaloff>:/assets/icons/apps.svg</normaloff>:/assets/icons/apps.svg</iconset>
+   </property>
+   <property name="text">
+    <string>apps</string>
    </property>
   </action>
  </widget>

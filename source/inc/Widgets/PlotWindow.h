@@ -6,6 +6,8 @@
 #include "Chart.h"
 #include "ChartView.h"
 #include "LineSeries.h"
+#include "SerialData.h"
+#include "PlotConfigDialog.h"
 
 namespace Ui
 {
@@ -17,7 +19,7 @@ class PlotWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit PlotWindow(QWidget *parent = nullptr);
+    explicit PlotWindow(SerialData *data, QWidget *parent = nullptr);
     ~PlotWindow();
 
 public slots:
@@ -27,17 +29,25 @@ public slots:
 
 private:
     Ui::PlotWindow *ui;
+    PlotConfigDialog *configDialog;
     QList<ChartView *> viewlist;
-    QList<LineSeries *> linelist;
-
-    QTimer timer;
+    SerialData *serialData;
+    QList<PlotConfig> config;
+    int columuCount;
+    QChartView::RubberBand rubberBand;
 
     void rubberBandSelect(QChartView::RubberBand band);
     QChartView::RubberBand getRubberBand();
+    void loadPlotConfig();
+    void clearAll();
 
 private slots:
     void on_rectangleRubberAction_toggled(bool checked);
     void on_horizontalRubberAction_toggled(bool checked);
     void on_verticalRubberAction_toggled(bool checked);
     void on_zoomResetAction_triggered(bool checked);
+    void on_configAction_triggered(bool checked);
+
+    void configDialogAccepted();
+    void dataAppend(int exp, QList<qreal> data);
 };

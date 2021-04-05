@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>500</height>
+    <width>800</width>
+    <height>700</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -58,6 +58,7 @@
    <addaction name="verticalRubberAction"/>
    <addaction name="zoomResetAction"/>
    <addaction name="separator"/>
+   <addaction name="configAction"/>
   </widget>
   <action name="saveAction">
    <property name="icon">
@@ -111,6 +112,15 @@
    </property>
    <property name="text">
     <string>zoomReset</string>
+   </property>
+  </action>
+  <action name="configAction">
+   <property name="icon">
+    <iconset resource="../assets/assets.qrc">
+     <normaloff>:/assets/icons/settings.svg</normaloff>:/assets/icons/settings.svg</iconset>
+   </property>
+   <property name="text">
+    <string>config</string>
    </property>
   </action>
  </widget>

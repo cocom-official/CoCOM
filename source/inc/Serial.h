@@ -47,6 +47,7 @@ public:
     bool config(PortConfig config);
     PortConfig getConfig();
     QString getPortStr(int index);
+    QString getPortInfo(int index);
     void enumPorts();
     /**/
     bool setBaudRate(int32_t baudRate);
@@ -64,6 +65,6 @@ private slots:
     void currenPort_readyRead();
 
 signals:
-    void readyRead(int count, QByteArray *bytes);
+    void readyRead(QByteArray *bytes);
     void bytesSend(int count);
 };

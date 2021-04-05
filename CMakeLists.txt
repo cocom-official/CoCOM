@@ -118,7 +118,10 @@ endif()
 qt5_wrap_ui(ui_list
     "ui/mainWindow.ui"
     "ui/configDialog.ui"
+    "ui/appsDialog.ui"
     "ui/plotWindow.ui"
+    "ui/plotConfigDialog.ui"
+    "ui/plotConfigTabWIdget.ui"
     )
 
 qt5_wrap_cpp(moc_list
@@ -126,12 +129,17 @@ qt5_wrap_cpp(moc_list
     "source/inc/CoLua.h"
     "source/inc/GlobalSettings.h"
     "source/inc/CommandSettings.h"
-    "source/inc/CommandsTab.h"
-    "source/inc/MainWindow.h"
     "source/inc/Serial.h"
-    "source/inc/TextBrowser.h"
-    "source/inc/ConfigDialog.h"
-    "source/inc/PlotWindow.h"
+    "source/inc/SerialData.h"
+
+    "source/inc/Widgets/MainWindow.h"
+    "source/inc/Widgets/TextBrowser.h"
+    "source/inc/Widgets/CommandsTab.h"
+    "source/inc/Widgets/ConfigDialog.h"
+    "source/inc/Widgets/AppsDialog.h"
+    "source/inc/Widgets/PlotWindow.h"
+    "source/inc/Widgets/PlotConfigDialog.h"
+    "source/inc/Widgets/PlotConfigTabWIdget.h"
 
     "source/inc/Chart/Callout.h"
     "source/inc/Chart/Chart.h"
@@ -160,12 +168,17 @@ set(src_list
     "source/src/CoLua.cpp"
     "source/src/GlobalSettings.cpp"
     "source/src/CommandSettings.cpp"
-    "source/src/CommandsTab.cpp"
-    "source/src/MainWindow.cpp"
     "source/src/Serial.cpp"
-    "source/src/TextBrowser.cpp"
-    "source/src/ConfigDialog.cpp"
-    "source/src/PlotWindow.cpp"
+    "source/src/SerialData.cpp"
+
+    "source/src/Widgets/MainWindow.cpp"
+    "source/src/Widgets/TextBrowser.cpp"
+    "source/src/Widgets/CommandsTab.cpp"
+    "source/src/Widgets/ConfigDialog.cpp"
+    "source/src/Widgets/AppsDialog.cpp"
+    "source/src/Widgets/PlotWindow.cpp"
+    "source/src/Widgets/PlotConfigDialog.cpp"
+    "source/src/Widgets/PlotConfigTabWIdget.cpp"
 
     "source/src/Chart/Callout.cpp"
     "source/src/Chart/Chart.cpp"
@@ -252,6 +265,7 @@ target_include_directories(
     ${PROJECT_NAME} PRIVATE
     "source/inc/"
     "source/inc/chart"
+    "source/inc/Widgets"
     )
 
 if (CMAKE_BUILD_TYPE STREQUAL Release) # Release

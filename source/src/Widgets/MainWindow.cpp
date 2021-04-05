@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
       clearOutputShortcut(new QShortcut(this)),
       scrollToEndShortcut(new QShortcut(this)),
       translator(new QTranslator(this)),
-      portSelect(new QComboBox(this)),
+      deviceSelect(new QComboBox(this)),
       findToolBar(new QToolBar()),
       findEdit(new QLineEdit(this)),
       findResultLabel(new QLabel(this)),
@@ -36,7 +36,9 @@ MainWindow::MainWindow(QWidget *parent)
       encodingBox(new QComboBox(this)),
       trayIcon(new QSystemTrayIcon(this)),
       configDialog(nullptr),
+      appsDialog(nullptr),
       serial(new Serial(this)),
+      serialData(new SerialData(this)),
       globalSettings(new GlobalSettings(this)),
       commandSettings(new CommandSettings(this)),
       timer(new QTimer(this)),
@@ -87,7 +89,7 @@ void MainWindow::setupUI()
 
     loadFont();
 
-    connect(portSelect, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+    connect(deviceSelect, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
             this, &MainWindow::portSelectComboBox_currentIndexChanged);
 
     connect(periodicSendTimer, &QTimer::timeout, this, &MainWindow::periodicSend);
@@ -432,9 +434,9 @@ void MainWindow::loadLanguage()
 
 void MainWindow::setToolBar()
 {
-    portSelect->setMinimumContentsLength(30);
-    portSelect->setSizeAdjustPolicy(QComboBox::SizeAdjustPolicy::AdjustToMinimumContentsLengthWithIcon);
-    ui->configToolBar->addWidget(portSelect);
+    deviceSelect->setMinimumContentsLength(30);
+    deviceSelect->setSizeAdjustPolicy(QComboBox::SizeAdjustPolicy::AdjustToMinimumContentsLengthWithIcon);
+    ui->configToolBar->addWidget(deviceSelect);
 
     /* find toolbar */
     findNextButton->setIcon(QIcon(":/assets/icons/arrow-down.svg"));
@@ -596,13 +598,13 @@ void MainWindow::setStatusBar()
 
 void MainWindow::updatePortSelectText()
 {
-    for (int i = 0; i < portSelect->count(); i++)
+    for (int i = 0; i < deviceSelect->count(); i++)
     {
         QString portStr = serial->getPortStr(i);
-        portSelect->setItemText(i, portStr);
-        portSelect->setItemData(i, portStr.mid(2), Qt::ToolTipRole);
+        deviceSelect->setItemText(i, portStr);
+        deviceSelect->setItemData(i, portStr.mid(2), Qt::ToolTipRole);
     }
-    portSelect->setToolTip(serial->getPortStr(0).mid(2));
+    deviceSelect->setToolTip(serial->getPortStr(0).mid(2));
 
     if (ui->openAction->isChecked() && serial->isOpen(serial->currentIndex()) != true)
     {
@@ -610,11 +612,11 @@ void MainWindow::updatePortSelectText()
     }
 }
 
-void MainWindow::updatePortsConfigComboBox()
+void MainWindow::updateDevicesConfigComboBox()
 {
     PortConfig config = serial->getConfig();
 
-    portSelect->blockSignals(true);
+    deviceSelect->blockSignals(true);
     baudrateComboBox->blockSignals(true);
     dataBitsComboBox->blockSignals(true);
     parityComboBox->blockSignals(true);
@@ -641,7 +643,7 @@ void MainWindow::updatePortsConfigComboBox()
     parityComboBox->blockSignals(false);
     stopBitsComboBox->blockSignals(false);
     flowComboBox->blockSignals(false);
-    portSelect->blockSignals(false);
+    deviceSelect->blockSignals(false);
 }
 
 CommandsTab *MainWindow::addMultiCommandTab()
@@ -706,7 +708,7 @@ void MainWindow::sendToastMessage(QString msg, int level, int index)
 
 void MainWindow::enumPorts()
 {
-    QAbstractItemView *view = portSelect->view();
+    QAbstractItemView *view = deviceSelect->view();
     if (view != nullptr && view->isVisible())
     {
         return;
@@ -714,21 +716,21 @@ void MainWindow::enumPorts()
 
     serial->enumPorts();
 
-    portSelect->blockSignals(true);
+    deviceSelect->blockSignals(true);
 
-    while (portSelect->count() != 0)
+    while (deviceSelect->count() != 0)
     {
-        portSelect->removeItem(portSelect->count() - 1);
+        deviceSelect->removeItem(deviceSelect->count() - 1);
     }
 
     for (int i = 0; i < serial->count(); i++)
     {
-        portSelect->addItem(serial->getPortStr(i));
+        deviceSelect->addItem(serial->getPortStr(i));
     }
 
-    portSelect->blockSignals(false);
+    deviceSelect->blockSignals(false);
 
-    portSelect->setCurrentIndex(serial->currentIndex());
+    deviceSelect->setCurrentIndex(serial->currentIndex());
 }
 
 void MainWindow::updatePortConfig()
@@ -1179,10 +1181,22 @@ void MainWindow::on_pinAction_toggled(bool checked)
 
 void MainWindow::on_plotAction_triggered(bool checked)
 {
-    qDebug() << "on_plotAction_triggered";
+    Q_UNUSED(checked);
 
-    PlotWindow *plot = new PlotWindow(this);
+    PlotWindow *plot = new PlotWindow(serialData ,this);
     plot->show();
+}
+
+void MainWindow::on_appsAction_triggered(bool checked)
+{
+    Q_UNUSED(checked);
+
+    if (appsDialog == nullptr)
+    {
+        appsDialog = new AppsDialog(serialData ,this);
+        connect(serialData, &SerialData::newTextLine, appsDialog, &AppsDialog::newLineAdded);
+    }
+    appsDialog->show();
 }
 
 void MainWindow::on_configAction_triggered(bool checked)
@@ -1305,7 +1319,7 @@ void MainWindow::portSelectComboBox_currentIndexChanged(int index)
 {
     serial->setCurrentPort(index);
     updatePortSelectText();
-    updatePortsConfigComboBox();
+    updateDevicesConfigComboBox();
 }
 
 void MainWindow::statusLabel_mouseButtonEvent(QWidget *obj, QMouseEvent *event)
@@ -1419,10 +1433,11 @@ void MainWindow::showHotkey_activated()
     }
 }
 
-void MainWindow::serial_readyRead(int count, QByteArray *bytes)
+void MainWindow::serial_readyRead(QByteArray *bytes)
 {
-    addRxCount(count);
+    addRxCount(bytes->count());
     textBrowser->insertData(bytes);
+    serialData->appendBytes(bytes);
 }
 
 void MainWindow::serial_bytesSend(int count)

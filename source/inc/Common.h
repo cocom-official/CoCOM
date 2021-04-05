@@ -21,10 +21,12 @@
 
 #ifdef DEBUG
 #define INI_NAME_SUFFIX "_Debug"
-#define README_FILE_PATH QString(COCOM_SOURCE_DIR) + QString("/README.md")
+#define README_FILE_PATH QString(COCOM_SOURCE_DIR "/README.md")
+#define LUA_SCRIPTS_PATH QString(COCOM_SOURCE_DIR "/scripts")
 #else
 #define INI_NAME_SUFFIX ""
-#define README_FILE_PATH QCoreApplication::applicationDirPath() + QString("/README.md")
+#define README_FILE_PATH QString(QCoreApplication::applicationDirPath() + QString("/README.md"))
+#define LUA_SCRIPTS_PATH QString(QCoreApplication::applicationDirPath() + QString("/scripts"))
 #endif
 
 #define DEFAULT_ENCODING "Local"

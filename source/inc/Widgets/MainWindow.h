@@ -46,6 +46,8 @@
 #include "GlobalSettings.h"
 #include "CommandSettings.h"
 #include "PlotWindow.h"
+#include "SerialData.h"
+#include "AppsDialog.h"
 
 #include "ChartView.h"
 #include "Chart.h"
@@ -89,6 +91,7 @@ private slots:
     void on_saveToFileAction_triggered(bool checked);
     void on_pinAction_toggled(bool checked);
     void on_plotAction_triggered(bool checked);
+    void on_appsAction_triggered(bool checked);
     void on_configAction_triggered(bool checked);
 
     void on_textSendButton_pressed();
@@ -120,7 +123,7 @@ private slots:
     void sendText(QString text);
 
     void portSelectComboBox_currentIndexChanged(int index);
-    void serial_readyRead(int count, QByteArray *bytes);
+    void serial_readyRead(QByteArray *bytes);
     void serial_bytesSend(int count);
     void findResultChanged(int cur, int all);
 
@@ -135,7 +138,7 @@ private:
     QShortcut *scrollToEndShortcut;
     QTranslator *translator;
 
-    QComboBox *portSelect;
+    QComboBox *deviceSelect;
     QToolBar *findToolBar;
     QLineEdit *findEdit;
     QLabel *findResultLabel;
@@ -166,8 +169,10 @@ private:
     QSystemTrayIcon *trayIcon;
 
     ConfigDialog *configDialog;
+    AppsDialog *appsDialog;
 
     Serial *serial;
+    SerialData *serialData;
     TextBrowser *textBrowser;
     GlobalSettings *globalSettings;
     CommandSettings *commandSettings;
@@ -188,7 +193,7 @@ private:
     void setToolBar();
     void setStatusBar();
     void updatePortSelectText();
-    void updatePortsConfigComboBox();
+    void updateDevicesConfigComboBox();
     void moveFindToolBar(bool force = false, QPoint moveOffset = QPoint(0, 0));
     void sendToastMessage(QString msg, int level = InfoLevel, int index = 0);
     CommandsTab *addMultiCommandTab();

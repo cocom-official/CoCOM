@@ -69,8 +69,7 @@ int Serial::currentIndex()
 
 int Serial::open()
 {
-    if (currentPort.port == nullptr || currentPort.info == nullptr
-        || currentPort.info->isNull())
+    if (currentPort.port == nullptr || currentPort.info == nullptr || currentPort.info->isNull())
     {
         return E_Null;
     }
@@ -280,21 +279,26 @@ PortConfig Serial::getConfig()
 
 QString Serial::getPortStr(int index)
 {
+    if (index >= ports.count())
+    {
+        return QString("x");
+    }
+
     Serial::Port_t port = ports[index];
 
     if (port.port == nullptr || port.info == nullptr)
     {
-        return "x";
+        return QString("x");
     }
 
     auto statusStr = [=]() {
         if (port.port->isOpen())
         {
-            return "●";
+            return QString("●");
         }
         else
         {
-            return "○";
+            return QString("○");
         }
     };
 
@@ -306,6 +310,46 @@ QString Serial::getPortStr(int index)
         port.info->description());
 
     return portStr;
+}
+
+QString Serial::getPortInfo(int index)
+{
+    if (index >= ports.count())
+    {
+        return QString();
+    }
+
+    Serial::Port_t port = ports[index];
+
+    if (port.port == nullptr || port.info == nullptr)
+    {
+        return QString();
+    }
+
+    QString info = QString("SerialPort");
+    bool hasIdentifier = false;
+
+    if (port.info->hasVendorIdentifier())
+    {
+        hasIdentifier = true;
+        info += "-";
+        info +=  QString::number(port.info->vendorIdentifier(), 16).toUpper();
+    }
+
+    if (port.info->productIdentifier())
+    {
+        hasIdentifier = true;
+        info += "-";
+        info +=  QString::number(port.info->productIdentifier(), 16).toUpper();
+    }
+
+    if (!hasIdentifier)
+    {
+        info += "-";
+        info += port.info->portName();
+    }
+
+    return info;
 }
 
 void Serial::enumPorts()
@@ -403,8 +447,7 @@ bool Serial::setFlowControl(int32_t flowControl)
 
 void Serial::currenPort_readyRead()
 {
-    int rxCount = currentPort.port->bytesAvailable();
-    QByteArray bytes = currentPort.port->read(rxCount);
+    QByteArray bytes = currentPort.port->read(currentPort.port->bytesAvailable());
 
-    emit readyRead(rxCount, &bytes);
+    emit readyRead(&bytes);
 }

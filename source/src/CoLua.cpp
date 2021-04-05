@@ -19,6 +19,7 @@ CoLua::CoLua(QObject *parent)
 {
     setObjectName("CoLua");
 
+    fflua.add_package_path(LUA_SCRIPTS_PATH.toStdString());
     fflua.setModFuncFlag(true);
     fflua.reg(lua_reg);
     fflua.set_global_variable("coLua", this);
