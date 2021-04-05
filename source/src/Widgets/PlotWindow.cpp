@@ -14,7 +14,7 @@ PlotWindow::PlotWindow(SerialData *data, QWidget *parent)
             this, &PlotWindow::dataAppend);
     connect(configDialog, &PlotConfigDialog::acceptClicked,
             this, &PlotWindow::configDialogAccepted);
-    configDialog->open();
+    // configDialog->open();
 
     rubberBandSelect(QChartView::RectangleRubberBand);
 }
