@@ -52,10 +52,12 @@ private:
     Ui::PlotConfigDialog *ui;
     SerialData *serialData;
     QList<ConfigTabWidget> tabsWidgetConfig;
+    QMutex tabWidgetMutex;
 
     bool tabBarClicked;
 
     void addNewTab();
+    void removeTab(int index);
 
     void showEvent(QShowEvent *event);
 

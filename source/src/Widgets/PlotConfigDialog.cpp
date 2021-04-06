@@ -7,7 +7,7 @@ PlotConfigDialog::PlotConfigDialog(SerialData *data, QWidget *parent)
       serialData(data)
 {
     ui->setupUi(this);
-    // setWindowModality(Qt::WindowModal);
+    setWindowModality(Qt::WindowModal);
 
     ui->tabWidget->clear();
     ui->tabWidget->addTab(new QLabel(), QString());
@@ -24,6 +24,7 @@ PlotConfigDialog::~PlotConfigDialog()
 QList<PlotConfig> PlotConfigDialog::getConfig()
 {
     QList<PlotConfig> configs;
+    tabWidgetMutex.lock();
     for (auto &&i : tabsWidgetConfig)
     {
         PlotConfig config;
@@ -46,6 +47,7 @@ QList<PlotConfig> PlotConfigDialog::getConfig()
         }
         configs << config;
     }
+    tabWidgetMutex.unlock();
 
     return configs;
 }
@@ -81,8 +83,50 @@ void PlotConfigDialog::on_tabWidget_tabBarDoubleClicked(int index)
         return;
     }
 
-    ui->tabWidget->removeTab(index);
+    removeTab(index);
+    tabWidgetMutex.lock();
     tabsWidgetConfig.removeAt(index);
+    tabWidgetMutex.unlock();
+}
+
+void PlotConfigDialog::on_buttonBox_accepted()
+{
+    tabWidgetMutex.lock();
+    for (auto &&i : tabsWidgetConfig)
+    {
+        i.indexes = i.widget->getResultIndexes();
+    }
+    tabWidgetMutex.unlock();
+    emit acceptClicked();
+}
+
+void PlotConfigDialog::addNewTab()
+{
+    int tabCount = ui->tabWidget->count();
+    PlotConfigTabWIdget *tab = new PlotConfigTabWIdget(this);
+    ConfigTabWidget config;
+    config.widget = tab;
+    tab->setDataSource(serialData);
+    ui->tabWidget->insertTab(tabCount - 1, tab, tr("Plot") + " " + QString::number(tabCount - 1));
+    ui->tabWidget->setCurrentIndex(tabCount - 1);
+
+    ui->tabWidget->tabBar()->setTabToolTip(
+        tabCount - 1,
+        tr("Plot") + " " + QString::number(tabCount - 1) + ", " + tr("Double Click to Close"));
+
+    tabWidgetMutex.lock();
+    tabsWidgetConfig << config;
+    tabWidgetMutex.unlock();
+}
+
+void PlotConfigDialog::removeTab(int index)
+{
+    if (ui->tabWidget->count() == index + 1)
+    {
+        return;
+    }
+
+    ui->tabWidget->removeTab(index);
 
     for (int i = index; i < ui->tabWidget->count() - 1; i++)
     {
@@ -94,47 +138,28 @@ void PlotConfigDialog::on_tabWidget_tabBarDoubleClicked(int index)
     ui->tabWidget->setCurrentIndex(index - 1);
 }
 
-void PlotConfigDialog::on_buttonBox_accepted()
-{
-    for (auto &&i : tabsWidgetConfig)
-    {
-        i.indexes = i.widget->getResultIndexes();
-    }
-    emit acceptClicked();
-}
-
-void PlotConfigDialog::addNewTab()
-{
-    int tabCount = ui->tabWidget->count();
-    PlotConfigTabWIdget *tab = new PlotConfigTabWIdget(this);
-    ConfigTabWidget config;
-    config.widget = tab;
-    tabsWidgetConfig << config;
-    tab->setDataSource(serialData);
-    ui->tabWidget->insertTab(tabCount - 1, tab, tr("Plot") + " " + QString::number(tabCount - 1));
-    ui->tabWidget->setCurrentIndex(tabCount - 1);
-
-    ui->tabWidget->tabBar()->setTabToolTip(
-        tabCount - 1,
-        tr("Plot") + " " + QString::number(tabCount - 1) + ", " + tr("Double Click to Close"));
-}
-
 void PlotConfigDialog::showEvent(QShowEvent *event)
 {
     Q_UNUSED(event);
+    QList<int> removeList;
 
-    int i = 0;
-
-rerun:
-    for (; i < tabsWidgetConfig.count(); i++)
+    tabWidgetMutex.lock();
+    for (int i = 0; i < tabsWidgetConfig.count(); i++)
     {
-        if (tabsWidgetConfig.count() > 1 && !tabsWidgetConfig[i].widget->checkValid())
+        if (i > 0 && !tabsWidgetConfig[i].widget->checkValid())
         {
-            on_tabWidget_tabBarDoubleClicked(i);
-            goto rerun;
+            removeTab(i - removeList.count());
+            removeList << i;
         }
 
         tabsWidgetConfig[i].widget->updateDataSource();
         tabsWidgetConfig[i].widget->restoreResultIndexes(tabsWidgetConfig[i].indexes);
     }
+
+    while (!removeList.isEmpty())
+    {
+        tabsWidgetConfig.removeAt(removeList.last());
+        removeList.removeLast();
+    }
+    tabWidgetMutex.unlock();
 }

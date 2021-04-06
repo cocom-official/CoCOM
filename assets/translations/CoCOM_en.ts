@@ -722,21 +722,21 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/PlotConfigDialog.cpp" line="14"/>
+        <location filename="../../source/src/Widgets/PlotConfigDialog.cpp" line="15"/>
         <source>Click &apos;+&apos; to add a new tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/PlotConfigDialog.cpp" line="88"/>
-        <location filename="../../source/src/Widgets/PlotConfigDialog.cpp" line="90"/>
-        <location filename="../../source/src/Widgets/PlotConfigDialog.cpp" line="113"/>
-        <location filename="../../source/src/Widgets/PlotConfigDialog.cpp" line="118"/>
+        <location filename="../../source/src/Widgets/PlotConfigDialog.cpp" line="105"/>
+        <location filename="../../source/src/Widgets/PlotConfigDialog.cpp" line="110"/>
+        <location filename="../../source/src/Widgets/PlotConfigDialog.cpp" line="119"/>
+        <location filename="../../source/src/Widgets/PlotConfigDialog.cpp" line="121"/>
         <source>Plot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/PlotConfigDialog.cpp" line="90"/>
-        <location filename="../../source/src/Widgets/PlotConfigDialog.cpp" line="118"/>
+        <location filename="../../source/src/Widgets/PlotConfigDialog.cpp" line="110"/>
+        <location filename="../../source/src/Widgets/PlotConfigDialog.cpp" line="121"/>
         <source>Double Click to Close</source>
         <translation type="unfinished"></translation>
     </message>
