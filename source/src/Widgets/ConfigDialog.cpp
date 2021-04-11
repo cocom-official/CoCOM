@@ -1,11 +1,3 @@
-#ifdef _WIN32
-#include <io.h>
-#else
-#include <unistd.h>
-#endif
-#include <stdio.h>
-#include "MainWindow.h"
-
 #include "ConfigDialog.h"
 #include "ui_configDialog.h"
 

@@ -278,10 +278,6 @@
 </phrase>
 <phrase>
     <source>Last Match</source>
-    <target>上一个匹配项</target>
-</phrase>
-<phrase>
-    <source>Last Match</source>
     <target>最后一个匹配项</target>
 </phrase>
 <phrase>
@@ -411,5 +407,113 @@
 <phrase>
     <source>Build Time:</source>
     <target>构建时间：</target>
+</phrase>
+<phrase>
+    <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/zt-luo&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;GitHub&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+    <target>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/zt-luo&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;GitHub&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</target>
+</phrase>
+<phrase>
+    <source>Apps Dialog</source>
+    <target>应用</target>
+</phrase>
+<phrase>
+    <source>Highlight Hint</source>
+    <target>高亮设置</target>
+</phrase>
+<phrase>
+    <source>Data</source>
+    <target>数据</target>
+</phrase>
+<phrase>
+    <source>Ok</source>
+    <target>确认</target>
+</phrase>
+<phrase>
+    <source>Remove</source>
+    <target>移除</target>
+</phrase>
+<phrase>
+    <source>Lua</source>
+    <target>Lua</target>
+</phrase>
+<phrase>
+    <source>Protocol</source>
+    <target>协议</target>
+</phrase>
+<phrase>
+    <source>Title</source>
+    <target>标题</target>
+</phrase>
+<phrase>
+    <source>RegExp</source>
+    <target>正则表达式</target>
+</phrase>
+<phrase>
+    <source>Values Name</source>
+    <target>值名称</target>
+</phrase>
+<phrase>
+    <source>Item Count</source>
+    <target>条目数量</target>
+</phrase>
+<phrase>
+    <source>go down</source>
+    <target>转到底部</target>
+</phrase>
+<phrase>
+    <source>plot</source>
+    <target>画图</target>
+</phrase>
+<phrase>
+    <source>apps</source>
+    <target>应用</target>
+</phrase>
+<phrase>
+    <source>Lua Console</source>
+    <target>Lua解释器</target>
+</phrase>
+<phrase>
+    <source>is Registered Success!</source>
+    <target>注册成功!</target>
+</phrase>
+<phrase>
+    <source>Previous Match</source>
+    <target>上一个匹配项</target>
+</phrase>
+<phrase>
+    <source>Plot Configuration Dialog</source>
+    <target>画图设置</target>
+</phrase>
+<phrase>
+    <source>Data Serie</source>
+    <target>数据集</target>
+</phrase>
+<phrase>
+    <source>Axis</source>
+    <target>轴</target>
+</phrase>
+<phrase>
+    <source>No Select</source>
+    <target>未选择</target>
+</phrase>
+<phrase>
+    <source>rectangleRubber</source>
+    <target>矩形选择</target>
+</phrase>
+<phrase>
+    <source>verticalRubber</source>
+    <target>垂直选择</target>
+</phrase>
+<phrase>
+    <source>horizontalRubber</source>
+    <target>水平选择</target>
+</phrase>
+<phrase>
+    <source>zoomReset</source>
+    <target>重置缩放</target>
+</phrase>
+<phrase>
+    <source>config</source>
+    <target>设置</target>
 </phrase>
 </QPH>

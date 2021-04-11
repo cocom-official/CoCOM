@@ -83,7 +83,7 @@ void AppsDialog::showRow(int row)
 
 void AppsDialog::setRegsRow(int row, int id, QString title, QString regexp, QString valuesName, int count)
 {
-    auto setItem = [=](int colum, QString text) {
+    auto setItem = [=, this](int colum, QString text) {
         if (ui->regsTable->item(row, colum) != nullptr)
         {
             ui->regsTable->item(row, colum)->setText(text);

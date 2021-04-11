@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.5)
 
 project(CoCOM LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
   FIND_PACKAGE(Git)
@@ -86,9 +88,6 @@ message(" ")
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
 ### 1. find package ###
 find_package(Qt5 COMPONENTS Core Gui Widgets SerialPort Charts
              LinguistTools REQUIRED)
@@ -122,11 +121,11 @@ qt5_wrap_ui(ui_list
     "ui/plotWindow.ui"
     "ui/plotConfigDialog.ui"
     "ui/plotConfigTabWIdget.ui"
+    "ui/luaConsoleWindow.ui"
     )
 
 qt5_wrap_cpp(moc_list
     "source/inc/Common.h"
-    "source/inc/CoLua.h"
     "source/inc/GlobalSettings.h"
     "source/inc/CommandSettings.h"
     "source/inc/Serial.h"
@@ -140,6 +139,10 @@ qt5_wrap_cpp(moc_list
     "source/inc/Widgets/PlotWindow.h"
     "source/inc/Widgets/PlotConfigDialog.h"
     "source/inc/Widgets/PlotConfigTabWIdget.h"
+    "source/inc/Widgets/Console.h"
+    "source/inc/Widgets/LuaConsoleWindow.h"
+
+    "source/inc/Lua/CoLua.h"
 
     "source/inc/Chart/Callout.h"
     "source/inc/Chart/Chart.h"
@@ -165,7 +168,6 @@ set(ts_raw_list
 set(src_list
     "source/src/main.cpp"
     "source/src/Common.cpp"
-    "source/src/CoLua.cpp"
     "source/src/GlobalSettings.cpp"
     "source/src/CommandSettings.cpp"
     "source/src/Serial.cpp"
@@ -179,6 +181,10 @@ set(src_list
     "source/src/Widgets/PlotWindow.cpp"
     "source/src/Widgets/PlotConfigDialog.cpp"
     "source/src/Widgets/PlotConfigTabWIdget.cpp"
+    "source/src/Widgets/Console.cpp"
+    "source/src/Widgets/LuaConsoleWindow.cpp"
+
+    "source/src/Lua/CoLua.cpp"
 
     "source/src/Chart/Callout.cpp"
     "source/src/Chart/Chart.cpp"
@@ -265,6 +271,7 @@ target_include_directories(
     ${PROJECT_NAME} PRIVATE
     "source/inc/"
     "source/inc/chart"
+    "source/inc/Lua"
     "source/inc/Widgets"
     )
 

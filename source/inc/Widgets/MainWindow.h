@@ -48,6 +48,7 @@
 #include "PlotWindow.h"
 #include "SerialData.h"
 #include "AppsDialog.h"
+#include "LuaConsoleWindow.h"
 
 #include "ChartView.h"
 #include "Chart.h"
@@ -87,10 +88,12 @@ private slots:
     void on_openAction_toggled(bool checked);
     void on_clearAction_triggered(bool checked);
     void on_goDownAction_triggered(bool checked);
-    //
+    /**/
     void on_saveToFileAction_triggered(bool checked);
     void on_pinAction_toggled(bool checked);
+    /**/
     void on_plotAction_triggered(bool checked);
+    void on_luaConsoleAction_triggered(bool checked);
     void on_appsAction_triggered(bool checked);
     void on_configAction_triggered(bool checked);
 
@@ -170,6 +173,7 @@ private:
 
     ConfigDialog *configDialog;
     AppsDialog *appsDialog;
+    LuaConsoleWindow *luaWindow;
 
     Serial *serial;
     SerialData *serialData;

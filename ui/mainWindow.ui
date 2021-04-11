@@ -228,6 +228,7 @@
    <addaction name="saveToFileAction"/>
    <addaction name="separator"/>
    <addaction name="plotAction"/>
+   <addaction name="luaConsoleAction"/>
    <addaction name="appsAction"/>
    <addaction name="configAction"/>
   </widget>
@@ -311,6 +312,15 @@
    </property>
    <property name="text">
     <string>apps</string>
+   </property>
+  </action>
+  <action name="luaConsoleAction">
+   <property name="icon">
+    <iconset resource="../assets/assets.qrc">
+     <normaloff>:/assets/logos/lua.png</normaloff>:/assets/logos/lua.png</iconset>
+   </property>
+   <property name="text">
+    <string>Lua Console</string>
    </property>
   </action>
  </widget>

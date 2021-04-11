@@ -37,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent)
       trayIcon(new QSystemTrayIcon(this)),
       configDialog(nullptr),
       appsDialog(nullptr),
+      luaWindow(nullptr),
       serial(new Serial(this)),
       serialData(new SerialData(this)),
       globalSettings(new GlobalSettings(this)),
@@ -1183,8 +1184,20 @@ void MainWindow::on_plotAction_triggered(bool checked)
 {
     Q_UNUSED(checked);
 
-    PlotWindow *plot = new PlotWindow(serialData ,this);
+    PlotWindow *plot = new PlotWindow(serialData, this);
     plot->show();
+}
+
+void MainWindow::on_luaConsoleAction_triggered(bool checked)
+{
+    Q_UNUSED(checked);
+
+    if (luaWindow == nullptr)
+    {
+        luaWindow = new LuaConsoleWindow(this);
+    }
+
+    luaWindow->show();
 }
 
 void MainWindow::on_appsAction_triggered(bool checked)
@@ -1193,7 +1206,7 @@ void MainWindow::on_appsAction_triggered(bool checked)
 
     if (appsDialog == nullptr)
     {
-        appsDialog = new AppsDialog(serialData ,this);
+        appsDialog = new AppsDialog(serialData, this);
         connect(serialData, &SerialData::newTextLine, appsDialog, &AppsDialog::newLineAdded);
     }
     appsDialog->show();
