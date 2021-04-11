@@ -317,7 +317,7 @@
   <action name="luaConsoleAction">
    <property name="icon">
     <iconset resource="../assets/assets.qrc">
-     <normaloff>:/assets/logos/lua.png</normaloff>:/assets/logos/lua.png</iconset>
+     <normaloff>:/assets/logos/lua_black.png</normaloff>:/assets/logos/lua_black.png</iconset>
    </property>
    <property name="text">
     <string>Lua Console</string>

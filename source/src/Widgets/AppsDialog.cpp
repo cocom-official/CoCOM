@@ -281,3 +281,13 @@ void AppsDialog::on_removeButton_pressed()
         showRegsTable();
     }
 }
+
+void AppsDialog::on_okDialogButton_pressed()
+{
+    close();
+}
+
+void AppsDialog::on_cancelDialogButton_pressed()
+{
+    close();
+}

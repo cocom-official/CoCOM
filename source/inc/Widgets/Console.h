@@ -1,5 +1,7 @@
 #pragma once
 
+#include <QMenu>
+#include <QEvent>
 #include <QString>
 #include <QStringList>
 #include <QPlainTextEdit>

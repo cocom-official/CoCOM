@@ -6,6 +6,7 @@ LuaConsoleWindow::LuaConsoleWindow(QWidget *parent)
       ui(new Ui::LuaConsoleWindow)
 {
     ui->setupUi(this);
+    setWindowIcon(QIcon(":/assets/logos/lua.png"));
     console = new Console(QString(LUA_COPYRIGHT), this);
     console->setEnabled(true);
     setCentralWidget(console);

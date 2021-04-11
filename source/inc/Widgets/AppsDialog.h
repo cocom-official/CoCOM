@@ -26,6 +26,8 @@ private slots:
     void on_regsTable_itemSelectionChanged();
     void on_okButton_pressed();
     void on_removeButton_pressed();
+    void on_okDialogButton_pressed();
+    void on_cancelDialogButton_pressed();
 
 private:
     SerialData *serialData;

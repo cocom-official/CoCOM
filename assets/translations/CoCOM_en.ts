@@ -9,33 +9,39 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/appsDialog.ui" line="39"/>
+        <location filename="../../ui/appsDialog.ui" line="24"/>
         <source>Highlight Hint</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/appsDialog.ui" line="44"/>
+        <location filename="../../ui/appsDialog.ui" line="29"/>
         <source>Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/appsDialog.ui" line="92"/>
+        <location filename="../../ui/appsDialog.ui" line="77"/>
+        <location filename="../../ui/appsDialog.ui" line="138"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/appsDialog.ui" line="99"/>
+        <location filename="../../ui/appsDialog.ui" line="84"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/appsDialog.ui" line="123"/>
+        <location filename="../../ui/appsDialog.ui" line="108"/>
         <source>Lua</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/appsDialog.ui" line="128"/>
+        <location filename="../../ui/appsDialog.ui" line="113"/>
         <source>Protocol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/appsDialog.ui" line="145"/>
+        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
