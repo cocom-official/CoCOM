@@ -121,7 +121,7 @@ void Console::incompleteNewLine()
 
 bool Console::isLastLine()
 {
-    return (blockCount() == textCursor().blockNumber()) ? true : false;
+    return (blockCount() == textCursor().blockNumber() + 1) ? true : false;
 }
 
 QMenu *Console::createContexMenu()

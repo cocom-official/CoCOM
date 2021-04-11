@@ -1,13 +1,15 @@
 #include "LuaConsoleWindow.h"
 #include "ui_luaConsoleWindow.h"
 
+#define LUA_CONSOLE_COPYRIGHT (QString(LUA_COPYRIGHT) + QString(" [Extended by CoCOM]\nType `cocom_help()` for more information."))
+
 LuaConsoleWindow::LuaConsoleWindow(QWidget *parent)
     : QMainWindow(parent),
       ui(new Ui::LuaConsoleWindow)
 {
     ui->setupUi(this);
     setWindowIcon(QIcon(":/assets/logos/lua.png"));
-    console = new Console(QString(LUA_COPYRIGHT) + QString(" [Extended by CoCOM]\nType `cocom_help()` for more information."), this);
+    console = new Console(LUA_CONSOLE_COPYRIGHT, this);
     console->setEnabled(true);
     setCentralWidget(console);
     loadFont();
@@ -27,7 +29,7 @@ LuaConsoleWindow::~LuaConsoleWindow()
 void LuaConsoleWindow::resetLuaInstance()
 {
     lua.resetInstance();
-    console->putOut(QString(LUA_COPYRIGHT) + QString(" [Extended by CoCOM]\nType `cocom_help()` for more information."));
+    console->putOut(LUA_CONSOLE_COPYRIGHT);
 }
 
 void LuaConsoleWindow::loadFont()
