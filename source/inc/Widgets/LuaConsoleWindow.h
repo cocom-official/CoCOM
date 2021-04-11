@@ -20,6 +20,9 @@ public:
     explicit LuaConsoleWindow(QWidget *parent = nullptr);
     ~LuaConsoleWindow();
 
+public:
+    void resetLuaInstance();
+
 private:
     Ui::LuaConsoleWindow *ui;
     Console *console;

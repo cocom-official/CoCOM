@@ -7,7 +7,7 @@ LuaConsoleWindow::LuaConsoleWindow(QWidget *parent)
 {
     ui->setupUi(this);
     setWindowIcon(QIcon(":/assets/logos/lua.png"));
-    console = new Console(QString(LUA_COPYRIGHT), this);
+    console = new Console(QString(LUA_COPYRIGHT) + QString(" [Extended by CoCOM]\nType `cocom_help()` for more information."), this);
     console->setEnabled(true);
     setCentralWidget(console);
     loadFont();
@@ -16,11 +16,18 @@ LuaConsoleWindow::LuaConsoleWindow(QWidget *parent)
     connect(&lua, &CoLua::replNewComplateLine, console, &Console::completeNewLine);
     connect(&lua, &CoLua::replNewIncomplateLine, console, &Console::incompleteNewLine);
     connect(console, &Console::newLineInput, this, &LuaConsoleWindow::doREPL);
+    connect(console, &Console::reset, this, &LuaConsoleWindow::resetLuaInstance);
 }
 
 LuaConsoleWindow::~LuaConsoleWindow()
 {
     delete ui;
+}
+
+void LuaConsoleWindow::resetLuaInstance()
+{
+    lua.resetInstance();
+    console->putOut(QString(LUA_COPYRIGHT) + QString(" [Extended by CoCOM]\nType `cocom_help()` for more information."));
 }
 
 void LuaConsoleWindow::loadFont()

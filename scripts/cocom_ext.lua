@@ -36,7 +36,7 @@ end
 
 ---- cocom_help
 function cocom_help()
-    print("cocom_help to show this info");
-    print("console/printf is a C-style print function");
-    print("log_level/log_info/log_warning/log_critical to show log");
+    print("Use cocom_help to show this info");
+    print("Use console/printf as a C-style print function");
+    print("Use log_level/log_info/log_warning/log_critical to show log");
 end

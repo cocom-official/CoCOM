@@ -15,13 +15,7 @@ CoLua::CoLua(QObject *parent)
     : QObject(parent)
 {
     setObjectName("CoLua");
-
-    fflua.add_package_path(LUA_SCRIPTS_PATH.toStdString());
-    fflua.setModFuncFlag(true);
-    fflua.reg(lua_reg);
-    fflua.set_global_variable("coLua", this);
-
-    loadFile(LUA_SCRIPTS_PATH + QString("/cocom_ext.lua"));
+    initInstance();
 }
 
 int CoLua::__print(string out)
@@ -113,4 +107,20 @@ void CoLua::REPL(QString run)
     {
         emit replNewIncomplateLine();
     }
+}
+
+void CoLua::initInstance()
+{
+    fflua.add_package_path(LUA_SCRIPTS_PATH.toStdString());
+    fflua.setModFuncFlag(true);
+    fflua.reg(lua_reg);
+    fflua.set_global_variable("coLua", this);
+
+    loadFile(LUA_SCRIPTS_PATH + QString("/cocom_ext.lua"));
+}
+
+void CoLua::resetInstance()
+{
+    fflua.reset();
+    initInstance();
 }

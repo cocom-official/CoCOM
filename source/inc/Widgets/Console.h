@@ -40,8 +40,11 @@ private:
     void newLine();
     void newBlockLine();
     int getCurrentLine();
+    QMenu *createContexMenu();
+    bool isLastLine();
 
 signals:
     void newInput(const QString &input);
     void newLineInput(const QString &input);
+    void reset();
 };

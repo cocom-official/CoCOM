@@ -119,8 +119,82 @@ void Console::incompleteNewLine()
     newBlockLine();
 }
 
+bool Console::isLastLine()
+{
+    return (blockCount() == textCursor().blockNumber()) ? true : false;
+}
+
+QMenu *Console::createContexMenu()
+{
+    QMenu *menu = new QMenu();
+    menu->addAction(
+        tr("Copy"), [this](void) { copy(); }, QKeySequence("Ctrl+C"));
+    menu->addAction(
+        tr("Paste"), [this](void) { paste(); }, QKeySequence("Ctrl+V"));
+    menu->addSeparator();
+    menu->addAction(
+        tr("Clear"), [this](void) {setPlainText("");newLine(); }, QKeySequence("Ctrl+U"));
+    menu->addAction(
+        tr("Reset"), [this](void) {setPlainText("");emit reset();newLine(); }, QKeySequence("Ctrl+K"));
+
+    return menu;
+}
+
 void Console::keyPressEvent(QKeyEvent *e)
 {
+    /* shortkey */
+    if (e->modifiers() != Qt::NoModifier)
+    {
+        if (e->modifiers() == Qt::ControlModifier)
+        {
+            switch (e->key())
+            {
+            case Qt::Key_Left:
+            case Qt::Key_Right:
+            case Qt::Key_Up:
+            case Qt::Key_Down:
+            case Qt::Key_C:
+            case Qt::Key_V:
+                QPlainTextEdit::keyPressEvent(e);
+                break;
+            case Qt::Key_Backspace:
+                if (textCursor().columnNumber() > PS1.length() + 1 &&
+                    toPlainText().split('\n').last().trimmed().length() > PS1.length())
+                {
+                    QPlainTextEdit::keyPressEvent(e);
+                }
+                break;
+            case Qt::Key_U:
+                setPlainText("");
+                newLine();
+                break;
+            case Qt::Key_K:
+                setPlainText("");
+                emit reset();
+                newLine();
+                break;
+            default:
+                return;
+            }
+            return;
+        }
+        else if (e->modifiers() == Qt::ShiftModifier)
+        {
+            switch (e->key())
+            {
+            default:
+                QPlainTextEdit::keyPressEvent(e);
+                return;
+            }
+        }
+        else if (e->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier))
+        {
+            QPlainTextEdit::keyPressEvent(e);
+            return;
+        }
+        return;
+    }
+
     QStringList lines;
     if (e->key() == Qt::Key_Return || e->key() == Qt::Key_Enter)
     {
@@ -131,6 +205,10 @@ void Console::keyPressEvent(QKeyEvent *e)
     {
     case Qt::Key_Return:
     case Qt::Key_Enter:
+        if (!isLastLine())
+        {
+            moveCursor(QTextCursor::End);
+        }
         moveCursor(QTextCursor::EndOfLine);
         QPlainTextEdit::keyPressEvent(e);
         if (selfNewLineJudge)
@@ -158,10 +236,15 @@ void Console::keyPressEvent(QKeyEvent *e)
         break;
     case Qt::Key_Up:
     case Qt::Key_Down:
+        moveCursor(QTextCursor::End);
         break;
     default:
         if (localEchoEnabled)
         {
+            if (!isLastLine())
+            {
+                moveCursor(QTextCursor::End);
+            }
             QPlainTextEdit::keyPressEvent(e);
         }
         emit newInput(e->text());
@@ -171,17 +254,19 @@ void Console::keyPressEvent(QKeyEvent *e)
 void Console::mousePressEvent(QMouseEvent *e)
 {
     Q_UNUSED(e);
-    e->accept();
+    QPlainTextEdit::mousePressEvent(e);
 }
 
 void Console::mouseDoubleClickEvent(QMouseEvent *e)
 {
     Q_UNUSED(e);
-    e->accept();
+    QPlainTextEdit::mouseDoubleClickEvent(e);
 }
 
 void Console::contextMenuEvent(QContextMenuEvent *e)
 {
     Q_UNUSED(e);
-    e->accept();
+    QMenu *menu = createContexMenu();
+    menu->exec(e->globalPos());
+    delete menu;
 }

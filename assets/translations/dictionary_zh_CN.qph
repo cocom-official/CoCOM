@@ -516,4 +516,24 @@
     <source>config</source>
     <target>设置</target>
 </phrase>
+<phrase>
+    <source>Copy</source>
+    <target>复制</target>
+</phrase>
+<phrase>
+    <source>Paste</source>
+    <target>粘贴</target>
+</phrase>
+<phrase>
+    <source>Clear</source>
+    <target>清空</target>
+</phrase>
+<phrase>
+    <source>Reset</source>
+    <target>重置</target>
+</phrase>
+<phrase>
+    <source>Lua Console -- CoCOM</source>
+    <target>Lua 控制台 -- CoCOM</target>
+</phrase>
 </QPH>

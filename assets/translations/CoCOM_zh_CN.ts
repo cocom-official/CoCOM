@@ -42,7 +42,7 @@
     <message>
         <location filename="../../ui/appsDialog.ui" line="145"/>
         <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../../source/src/Widgets/AppsDialog.cpp" line="14"/>
@@ -241,6 +241,29 @@
     </message>
 </context>
 <context>
+    <name>Console</name>
+    <message>
+        <location filename="../../source/src/Widgets/Console.cpp" line="131"/>
+        <source>Copy</source>
+        <translation>复制</translation>
+    </message>
+    <message>
+        <location filename="../../source/src/Widgets/Console.cpp" line="133"/>
+        <source>Paste</source>
+        <translation>粘贴</translation>
+    </message>
+    <message>
+        <location filename="../../source/src/Widgets/Console.cpp" line="136"/>
+        <source>Clear</source>
+        <translation>清空</translation>
+    </message>
+    <message>
+        <location filename="../../source/src/Widgets/Console.cpp" line="138"/>
+        <source>Reset</source>
+        <translation>重置</translation>
+    </message>
+</context>
+<context>
     <name>HotTestWidget</name>
     <message>
         <location filename="../../libs/QHotkey/HotkeyTest/hottestwidget.ui" line="14"/>
@@ -404,8 +427,8 @@
     <name>LuaConsoleWindow</name>
     <message>
         <location filename="../../ui/luaConsoleWindow.ui" line="14"/>
-        <source>Lua Interpreter -- CoCOM</source>
-        <translation></translation>
+        <source>Lua Console -- CoCOM</source>
+        <translation>Lua 控制台 -- CoCOM</translation>
     </message>
 </context>
 <context>

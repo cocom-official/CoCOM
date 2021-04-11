@@ -22,8 +22,12 @@ public:
     void runString(QString run);
     void REPL(QString run);
 
+public slots:
+    void resetInstance();
+
 private:
     ff::fflua_t fflua;
+    void initInstance();
 
 signals:
     void consoleOut(QString out);

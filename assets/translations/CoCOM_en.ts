@@ -241,6 +241,29 @@
     </message>
 </context>
 <context>
+    <name>Console</name>
+    <message>
+        <location filename="../../source/src/Widgets/Console.cpp" line="131"/>
+        <source>Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../source/src/Widgets/Console.cpp" line="133"/>
+        <source>Paste</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../source/src/Widgets/Console.cpp" line="136"/>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../source/src/Widgets/Console.cpp" line="138"/>
+        <source>Reset</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>HotTestWidget</name>
     <message>
         <location filename="../../libs/QHotkey/HotkeyTest/hottestwidget.ui" line="14"/>
@@ -404,7 +427,7 @@
     <name>LuaConsoleWindow</name>
     <message>
         <location filename="../../ui/luaConsoleWindow.ui" line="14"/>
-        <source>Lua Interpreter -- CoCOM</source>
+        <source>Lua Console -- CoCOM</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
