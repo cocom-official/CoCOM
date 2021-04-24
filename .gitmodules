@@ -7,3 +7,6 @@
 [submodule "libs/fflua"]
 	path = libs/fflua
 	url = https://github.com/cocom-official/fflua.git
+[submodule "libs/usb/QtUsb"]
+	path = libs/usb/QtUsb
+	url = https://github.com/fpoussin/QtUsb.git

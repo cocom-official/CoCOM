@@ -1,7 +1,7 @@
 #include "LuaConsoleWindow.h"
 #include "ui_luaConsoleWindow.h"
 
-#define LUA_CONSOLE_COPYRIGHT (QString(LUA_COPYRIGHT) + QString(" [Extended by CoCOM]\nType `cocom_help()` for more information."))
+#define LUA_CONSOLE_COPYRIGHT (QString(LUA_COPYRIGHT) + QString(" [Extended by CoCOM]"))
 
 LuaConsoleWindow::LuaConsoleWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -14,11 +14,13 @@ LuaConsoleWindow::LuaConsoleWindow(QWidget *parent)
     setCentralWidget(console);
     loadFont();
 
-    connect(&lua, &CoLua::replOut, console, &Console::putOut);
+    connect(&lua, &CoLua::stdOut, console, &Console::putOut);
     connect(&lua, &CoLua::replNewComplateLine, console, &Console::completeNewLine);
     connect(&lua, &CoLua::replNewIncomplateLine, console, &Console::incompleteNewLine);
     connect(console, &Console::newLineInput, this, &LuaConsoleWindow::doREPL);
     connect(console, &Console::reset, this, &LuaConsoleWindow::resetLuaInstance);
+    lua.runStringSync("help()");
+    console->completeNewLine();
 }
 
 LuaConsoleWindow::~LuaConsoleWindow()
@@ -28,8 +30,10 @@ LuaConsoleWindow::~LuaConsoleWindow()
 
 void LuaConsoleWindow::resetLuaInstance()
 {
+    console->setLocalEchoEnabled(false);
     lua.resetInstance();
     console->putOut(LUA_CONSOLE_COPYRIGHT);
+    console->setLocalEchoEnabled(true);
 }
 
 void LuaConsoleWindow::loadFont()
@@ -61,5 +65,5 @@ void LuaConsoleWindow::loadFont()
 
 void LuaConsoleWindow::doREPL(const QString &input)
 {
-    lua.REPL(input);
+    lua.replAsync(input);
 }

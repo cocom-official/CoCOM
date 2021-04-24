@@ -30,6 +30,8 @@ CoCOM is a Serial Port Utility for Embedded Software Engineer.
   - [x] initial support plot data
   - [ ] full support plot data
 - [ ] lua embed
+  - [x] lua console
+  - [x] lua with CoCOM base extension
   - [ ] new data received callback
   - [ ] new text line received callback
   - [ ] send data through lua scripts
@@ -38,6 +40,12 @@ CoCOM is a Serial Port Utility for Embedded Software Engineer.
     - [ ] protocol encode
   - [ ] send && receive file
   - [ ] upgrade MCU firmware
+- [ ] USB bulk support
+  - [ ] protocol support
+  - [ ] upgrade MCU firmware
+- [ ] ADB support
+  - [ ] ADB log support
+  - [ ] ADB shell support
 - [ ] small but useful feature
   - [x] window pin
   - [x] global shortcuts

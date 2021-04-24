@@ -870,7 +870,7 @@
 <context>
     <name>SerialData</name>
     <message>
-        <location filename="../../source/src/SerialData.cpp" line="108"/>
+        <location filename="../../source/src/Media/SerialData.cpp" line="108"/>
         <source>RegExp</source>
         <translation type="unfinished"></translation>
     </message>

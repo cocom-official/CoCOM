@@ -385,7 +385,7 @@ void ConfigDialog::aboutLabels_mouseButtonEvent(QWidget *obj, QMouseEvent *event
         lua.setObjectName("Hello Lua");
         connect(&lua, &CoLua::consoleOut,
                 [luaMsgBox](QString out) { luaMsgBox->setText(out); luaMsgBox->show(); });
-        lua.loadFile(LUA_SCRIPTS_PATH + QString("/hello_lua.lua"));
+        lua.loadFileSync(LUA_SCRIPTS_PATH + QString("/hello.lua"));
     }
     else if (label == ui->qtVersionLabel)
     {

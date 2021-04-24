@@ -5,7 +5,6 @@
 
 Console::Console(QWidget *parent)
     : QPlainTextEdit(parent),
-      localEchoEnabled(true),
       selfNewLineJudge(false)
 {
     setPS1("->");
@@ -16,12 +15,11 @@ Console::Console(QWidget *parent)
     p.setColor(QPalette::Base, Qt::black);
     p.setColor(QPalette::Text, Qt::white);
     setPalette(p);
-    newLine();
 }
 
 Console::Console(const QString &copyright, QWidget *parent)
     : QPlainTextEdit(parent),
-      localEchoEnabled(true)
+      selfNewLineJudge(false)
 {
     setPS1("->");
     setPS2(">");
@@ -40,7 +38,6 @@ Console::Console(const QString &copyright, QWidget *parent)
     {
         insertPlainText(copyright);
     }
-    newLine();
 }
 
 void Console::setPS1(const QString &ps1)
@@ -78,11 +75,13 @@ void Console::setBlockEnd(const QString &end)
 
 void Console::newLine()
 {
+    moveCursor(QTextCursor::End);
     insertPlainText(PS1 + " ");
 }
 
 void Console::newBlockLine()
 {
+    moveCursor(QTextCursor::End);
     while (PS2.length() < PS1.length())
     {
         PS2.insert(0, ' ');
@@ -112,11 +111,13 @@ void Console::setSelfNewLineJudge(bool set)
 void Console::completeNewLine()
 {
     newLine();
+    localEchoEnabled = true;
 }
 
 void Console::incompleteNewLine()
 {
     newBlockLine();
+    localEchoEnabled = true;
 }
 
 bool Console::isLastLine()
@@ -195,6 +196,11 @@ void Console::keyPressEvent(QKeyEvent *e)
         return;
     }
 
+    if (!localEchoEnabled)
+    {
+        return;
+    }
+
     QStringList lines;
     if (e->key() == Qt::Key_Return || e->key() == Qt::Key_Enter)
     {
@@ -222,6 +228,7 @@ void Console::keyPressEvent(QKeyEvent *e)
                 newLine();
             }
         }
+        localEchoEnabled = false;
         emit newLineInput(lines.last().right(lines.last().length() - 2).trimmed());
         break;
     case Qt::Key_Backspace:
@@ -239,14 +246,11 @@ void Console::keyPressEvent(QKeyEvent *e)
         moveCursor(QTextCursor::End);
         break;
     default:
-        if (localEchoEnabled)
+        if (!isLastLine())
         {
-            if (!isLastLine())
-            {
-                moveCursor(QTextCursor::End);
-            }
-            QPlainTextEdit::keyPressEvent(e);
+            moveCursor(QTextCursor::End);
         }
+        QPlainTextEdit::keyPressEvent(e);
         emit newInput(e->text());
     }
 }

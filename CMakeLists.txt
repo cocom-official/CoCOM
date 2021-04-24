@@ -126,10 +126,12 @@ qt5_wrap_ui(ui_list
 
 qt5_wrap_cpp(moc_list
     "source/inc/Common.h"
-    "source/inc/GlobalSettings.h"
-    "source/inc/CommandSettings.h"
-    "source/inc/Serial.h"
-    "source/inc/SerialData.h"
+
+    "source/inc/Settings/GlobalSettings.h"
+    "source/inc/Settings/CommandSettings.h"
+
+    "source/inc/Media/Serial.h"
+    "source/inc/Media/SerialData.h"
 
     "source/inc/Widgets/MainWindow.h"
     "source/inc/Widgets/TextBrowser.h"
@@ -143,6 +145,7 @@ qt5_wrap_cpp(moc_list
     "source/inc/Widgets/LuaConsoleWindow.h"
 
     "source/inc/Lua/CoLua.h"
+    "source/inc/Lua/CoLuaWorker.h"
 
     "source/inc/Chart/Callout.h"
     "source/inc/Chart/Chart.h"
@@ -168,10 +171,12 @@ set(ts_raw_list
 set(src_list
     "source/src/main.cpp"
     "source/src/Common.cpp"
-    "source/src/GlobalSettings.cpp"
-    "source/src/CommandSettings.cpp"
-    "source/src/Serial.cpp"
-    "source/src/SerialData.cpp"
+
+    "source/src/Settings/GlobalSettings.cpp"
+    "source/src/Settings/CommandSettings.cpp"
+
+    "source/src/Media/Serial.cpp"
+    "source/src/Media/SerialData.cpp"
 
     "source/src/Widgets/MainWindow.cpp"
     "source/src/Widgets/TextBrowser.cpp"
@@ -270,9 +275,11 @@ target_link_libraries(
 target_include_directories(
     ${PROJECT_NAME} PRIVATE
     "source/inc/"
-    "source/inc/chart"
+    "source/inc/Chart"
     "source/inc/Lua"
     "source/inc/Widgets"
+    "source/inc/Media"
+    "source/inc/Settings"
     )
 
 if (CMAKE_BUILD_TYPE STREQUAL Release) # Release
