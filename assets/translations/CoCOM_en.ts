@@ -243,22 +243,22 @@
 <context>
     <name>Console</name>
     <message>
-        <location filename="../../source/src/Widgets/Console.cpp" line="131"/>
+        <location filename="../../source/src/Widgets/Console.cpp" line="132"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/Console.cpp" line="133"/>
+        <location filename="../../source/src/Widgets/Console.cpp" line="134"/>
         <source>Paste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/Console.cpp" line="136"/>
+        <location filename="../../source/src/Widgets/Console.cpp" line="137"/>
         <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/Console.cpp" line="138"/>
+        <location filename="../../source/src/Widgets/Console.cpp" line="139"/>
         <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
@@ -752,6 +752,14 @@
     </message>
 </context>
 <context>
+    <name>MediaData</name>
+    <message>
+        <location filename="../../source/src/Media/MediaData.cpp" line="108"/>
+        <source>RegExp</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PlotConfigDialog</name>
     <message>
         <location filename="../../ui/plotConfigDialog.ui" line="14"/>
@@ -864,14 +872,6 @@
     <message>
         <location filename="../../libs/QHotkey/QHotkey/qhotkey.cpp" line="297"/>
         <source>Failed to unregister %1. Error: %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SerialData</name>
-    <message>
-        <location filename="../../source/src/Media/SerialData.cpp" line="108"/>
-        <source>RegExp</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

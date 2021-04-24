@@ -4,7 +4,7 @@
 PlotConfigTabWIdget::PlotConfigTabWIdget(QWidget *parent)
     : QWidget(parent),
       ui(new Ui::PlotConfigTabWIdget),
-      serialData(nullptr)
+      mediaData(nullptr)
 {
     ui->setupUi(this);
 }
@@ -94,39 +94,39 @@ bool PlotConfigTabWIdget::checkValid()
     }
 }
 
-void PlotConfigTabWIdget::setDataSource(SerialData *data)
+void PlotConfigTabWIdget::setDataSource(MediaData *data)
 {
     if (data == nullptr)
     {
         return;
     }
-    serialData = data;
+    mediaData = data;
 
-    for (auto &&i : serialData->getRegExpList())
+    for (auto &&i : mediaData->getRegExpList())
     {
-        ui->seriesComboBox->addItem(serialData->getRegExpTitle(i));
+        ui->seriesComboBox->addItem(mediaData->getRegExpTitle(i));
         ui->seriesComboBox->setItemData(ui->seriesComboBox->count() - 1, QVariant(i));
     }
 }
 
 void PlotConfigTabWIdget::updateDataSource()
 {
-    if (serialData == nullptr)
+    if (mediaData == nullptr)
     {
         return;
     }
 
     ui->seriesComboBox->clear();
-    for (auto &&i : serialData->getRegExpList())
+    for (auto &&i : mediaData->getRegExpList())
     {
-        ui->seriesComboBox->addItem(serialData->getRegExpTitle(i));
+        ui->seriesComboBox->addItem(mediaData->getRegExpTitle(i));
         ui->seriesComboBox->setItemData(ui->seriesComboBox->count() - 1, QVariant(i));
     }
 }
 
 void PlotConfigTabWIdget::on_seriesComboBox_currentIndexChanged(int index)
 {
-    QStringList regNames = serialData->getRegExpNames(ui->seriesComboBox->itemData(index).toInt());
+    QStringList regNames = mediaData->getRegExpNames(ui->seriesComboBox->itemData(index).toInt());
     setAxisRow(regNames);
 }
 

@@ -1,16 +1,16 @@
 #include "PlotWindow.h"
 #include "ui_plotWindow.h"
 
-PlotWindow::PlotWindow(SerialData *data, QWidget *parent)
+PlotWindow::PlotWindow(MediaData *data, QWidget *parent)
     : QMainWindow(parent),
       ui(new Ui::PlotWindow),
       configDialog(new PlotConfigDialog(data, this)),
-      serialData(data),
+      mediaData(data),
       columuCount(2)
 {
     ui->setupUi(this);
 
-    connect(serialData, &SerialData::regExpNewData,
+    connect(mediaData, &MediaData::regExpNewData,
             this, &PlotWindow::dataAppend);
     connect(configDialog, &PlotConfigDialog::acceptClicked,
             this, &PlotWindow::configDialogAccepted);
@@ -144,19 +144,19 @@ void PlotWindow::loadPlotConfig()
     clearAll();
     for (int chartIndex = 0; chartIndex < config.count(); chartIndex++)
     {
-        newChart(serialData->getRegExpTitle(config[chartIndex].series),
-                 serialData->getRegExpNames(config[chartIndex].series)[config[chartIndex].ysIndex[0]]);
+        newChart(mediaData->getRegExpTitle(config[chartIndex].series),
+                 mediaData->getRegExpNames(config[chartIndex].series)[config[chartIndex].ysIndex[0]]);
 
         if (config[chartIndex].ysIndex.count() > 1)
         {
             for (int lineIndex = 1; lineIndex < config[chartIndex].ysIndex.count(); lineIndex++)
             {
                 newLine(chartIndex,
-                        serialData->getRegExpNames(config[chartIndex].series)[config[chartIndex].ysIndex[lineIndex]]);
+                        mediaData->getRegExpNames(config[chartIndex].series)[config[chartIndex].ysIndex[lineIndex]]);
             }
         }
 
-        for (auto &&i : serialData->getRegExpValues(config[chartIndex].series))
+        for (auto &&i : mediaData->getRegExpValues(config[chartIndex].series))
         {
             for (int lineValueIndex = 0; lineValueIndex < config[chartIndex].ysIndex.count(); lineValueIndex++)
             {

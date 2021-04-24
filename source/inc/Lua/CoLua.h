@@ -4,7 +4,7 @@
 
 #include "Common.h"
 #include "fflua.h"
-#include "SerialData.h"
+#include "MediaData.h"
 
 #define COCOM_LUA_BASE_EXTENSION "base.lua"
 
@@ -16,7 +16,7 @@ public:
     explicit CoLua(QObject *parent = nullptr);
     ~CoLua();
 
-    void setSerialData(SerialData *data);
+    void setMedialData(MediaData *data);
 
     /* register to lua environment */
     int lua_print(string out);
@@ -40,7 +40,7 @@ private:
     typedef void (*WorkerSlot)(QString);
 
     ff::fflua_t fflua;
-    SerialData *serialData;
+    MediaData *mediaData;
     QThread workerThread;
 
     void initInstance();

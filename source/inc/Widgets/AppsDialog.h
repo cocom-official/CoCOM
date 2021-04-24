@@ -4,7 +4,7 @@
 #include <QDialog>
 #include <QRegularExpression>
 
-#include "SerialData.h"
+#include "MediaData.h"
 
 namespace Ui {
 class AppsDialog;
@@ -15,7 +15,7 @@ class AppsDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit AppsDialog(SerialData *data, QWidget *parent = nullptr);
+    explicit AppsDialog(MediaData *data, QWidget *parent = nullptr);
     ~AppsDialog();
 
 public slots:
@@ -30,7 +30,7 @@ private slots:
     void on_cancelDialogButton_pressed();
 
 private:
-    SerialData *serialData;
+    MediaData *mediaData;
     Ui::AppsDialog *ui;
 
     QRegularExpression preViewRegExp;

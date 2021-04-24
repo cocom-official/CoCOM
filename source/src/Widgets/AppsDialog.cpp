@@ -1,9 +1,9 @@
 #include "AppsDialog.h"
 #include "ui_appsDialog.h"
 
-AppsDialog::AppsDialog(SerialData *data, QWidget *parent)
+AppsDialog::AppsDialog(MediaData *data, QWidget *parent)
     : QDialog(parent),
-      serialData(data),
+      mediaData(data),
       ui(new Ui::AppsDialog)
 {
     ui->setupUi(this);
@@ -75,10 +75,10 @@ void AppsDialog::showRow(int row)
 {
     int id = ui->regsTable->item(row, 0)->text().toInt();
 
-    ui->regExpTitleEdit->setText(serialData->getRegExpTitle(id));
-    ui->regExpEdit->setText(serialData->getRegExpPattern(id));
+    ui->regExpTitleEdit->setText(mediaData->getRegExpTitle(id));
+    ui->regExpEdit->setText(mediaData->getRegExpPattern(id));
 
-    setDataTable(serialData->getRegExpNames(id), serialData->getRegExpValues(id));
+    setDataTable(mediaData->getRegExpNames(id), mediaData->getRegExpValues(id));
 }
 
 void AppsDialog::setRegsRow(int row, int id, QString title, QString regexp, QString valuesName, int count)
@@ -158,7 +158,7 @@ void AppsDialog::setDataTable(QStringList valuesName, QList<QList<qreal>> values
 
 void AppsDialog::showRegsTable()
 {
-    QList<int> regs = serialData->getRegExpList();
+    QList<int> regs = mediaData->getRegExpList();
 
     while (ui->regsTable->rowCount() > regs.count())
     {
@@ -172,11 +172,11 @@ void AppsDialog::showRegsTable()
     int index = 0;
     for (auto &&i : regs)
     {
-        if (!serialData->isRegExpEnable(i))
+        if (!mediaData->isRegExpEnable(i))
         {
             continue;
         }
-        setRegsRow(index++, i, serialData->getRegExpTitle(i), serialData->getRegExpPattern(i), serialData->getRegExpNames(i).join(","), serialData->getRegExpValues(i).count());
+        setRegsRow(index++, i, mediaData->getRegExpTitle(i), mediaData->getRegExpPattern(i), mediaData->getRegExpNames(i).join(","), mediaData->getRegExpValues(i).count());
     }
 }
 
@@ -260,13 +260,13 @@ void AppsDialog::on_okButton_pressed()
     if (row >= 0)
     {
         int id = ui->regsTable->item(row, 0)->text().toInt();
-        serialData->setRegExpTitle(id, ui->regExpTitleEdit->text());
-        serialData->setRegExp(id, ui->regExpEdit->document()->toPlainText());
+        mediaData->setRegExpTitle(id, ui->regExpTitleEdit->text());
+        mediaData->setRegExp(id, ui->regExpEdit->document()->toPlainText());
         showRegsTable();
     }
     else
     {
-        serialData->addRegExp(ui->regExpEdit->document()->toPlainText(), ui->regExpTitleEdit->text());
+        mediaData->addRegExp(ui->regExpEdit->document()->toPlainText(), ui->regExpTitleEdit->text());
         showRegsTable();
     }
 }
@@ -277,7 +277,7 @@ void AppsDialog::on_removeButton_pressed()
     if (row >= 0)
     {
         int id = ui->regsTable->item(row, 0)->text().toInt();
-        serialData->removeRegExp(id);
+        mediaData->removeRegExp(id);
         showRegsTable();
     }
 }

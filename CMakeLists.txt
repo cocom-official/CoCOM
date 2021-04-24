@@ -131,7 +131,7 @@ qt5_wrap_cpp(moc_list
     "source/inc/Settings/CommandSettings.h"
 
     "source/inc/Media/Serial.h"
-    "source/inc/Media/SerialData.h"
+    "source/inc/Media/MediaData.h"
 
     "source/inc/Widgets/MainWindow.h"
     "source/inc/Widgets/TextBrowser.h"
@@ -176,7 +176,7 @@ set(src_list
     "source/src/Settings/CommandSettings.cpp"
 
     "source/src/Media/Serial.cpp"
-    "source/src/Media/SerialData.cpp"
+    "source/src/Media/MediaData.cpp"
 
     "source/src/Widgets/MainWindow.cpp"
     "source/src/Widgets/TextBrowser.cpp"

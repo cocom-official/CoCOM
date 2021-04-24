@@ -1,12 +1,12 @@
-#include "SerialData.h"
+#include "MediaData.h"
 
-SerialData::SerialData(QObject *parent)
+MediaData::MediaData(QObject *parent)
     : QObject(parent),
       encoding("Local")
 {
 }
 
-void SerialData::appendBytes(QByteArray *bytes)
+void MediaData::appendBytes(QByteArray *bytes)
 {
     QMutex mutex;
     serialData += *bytes;
@@ -60,7 +60,7 @@ void SerialData::appendBytes(QByteArray *bytes)
     mutex.unlock();
 }
 
-void SerialData::findNewLine(QString line)
+void MediaData::findNewLine(QString line)
 {
     emit newTextLine(line);
 
@@ -87,19 +87,19 @@ void SerialData::findNewLine(QString line)
     clearMutex.unlock();
 }
 
-void SerialData::setEncoding(QString lEncoding)
+void MediaData::setEncoding(QString lEncoding)
 {
     encoding = lEncoding;
 }
 
-void SerialData::clear()
+void MediaData::clear()
 {
     clearMutex.lock();
     regs.clear();
     clearMutex.unlock();
 }
 
-int SerialData::addRegExp(QString pattern, QString title)
+int MediaData::addRegExp(QString pattern, QString title)
 {
     int ret = regs.count();
 
@@ -133,7 +133,7 @@ int SerialData::addRegExp(QString pattern, QString title)
     return ret;
 }
 
-int SerialData::setRegExp(int exp, QString pattern)
+int MediaData::setRegExp(int exp, QString pattern)
 {
     if (exp >= regs.count())
     {
@@ -164,7 +164,7 @@ int SerialData::setRegExp(int exp, QString pattern)
     return exp;
 }
 
-bool SerialData::isRegExpEnable(int exp)
+bool MediaData::isRegExpEnable(int exp)
 {
     if (exp >= regs.count())
     {
@@ -174,7 +174,7 @@ bool SerialData::isRegExpEnable(int exp)
     return regs[exp].enable;
 }
 
-QString SerialData::getRegExpPattern(int exp)
+QString MediaData::getRegExpPattern(int exp)
 {
     if (exp >= regs.count())
     {
@@ -184,7 +184,7 @@ QString SerialData::getRegExpPattern(int exp)
     return regs[exp].regExp.pattern();
 }
 
-QString SerialData::getRegExpTitle(int exp)
+QString MediaData::getRegExpTitle(int exp)
 {
     if (exp >= regs.count())
     {
@@ -194,7 +194,7 @@ QString SerialData::getRegExpTitle(int exp)
     return regs[exp].title;
 }
 
-void SerialData::setRegExpTitle(int exp, QString title)
+void MediaData::setRegExpTitle(int exp, QString title)
 {
     if (exp >= regs.count())
     {
@@ -204,7 +204,7 @@ void SerialData::setRegExpTitle(int exp, QString title)
     regs[exp].title = title;
 }
 
-QStringList SerialData::getRegExpNames(int exp)
+QStringList MediaData::getRegExpNames(int exp)
 {
     if (exp >= regs.count())
     {
@@ -214,7 +214,7 @@ QStringList SerialData::getRegExpNames(int exp)
     return regs[exp].names;
 }
 
-QList<QList<qreal>> SerialData::getRegExpValues(int exp)
+QList<QList<qreal>> MediaData::getRegExpValues(int exp)
 {
     if (exp >= regs.count())
     {
@@ -224,7 +224,7 @@ QList<QList<qreal>> SerialData::getRegExpValues(int exp)
     return regs[exp].values;
 }
 
-QList<int> SerialData::getRegExpList()
+QList<int> MediaData::getRegExpList()
 {
     QList<int> ret;
     clearMutex.lock();
@@ -242,7 +242,7 @@ QList<int> SerialData::getRegExpList()
     return ret;
 }
 
-void SerialData::removeRegExp(int exp)
+void MediaData::removeRegExp(int exp)
 {
     if (exp >= regs.count())
     {

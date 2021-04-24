@@ -39,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent)
       appsDialog(nullptr),
       luaWindow(nullptr),
       serial(new Serial(this)),
-      serialData(new SerialData(this)),
+      mediaData(new MediaData(this)),
       globalSettings(new GlobalSettings(this)),
       commandSettings(new CommandSettings(this)),
       timer(new QTimer(this)),
@@ -1184,7 +1184,7 @@ void MainWindow::on_plotAction_triggered(bool checked)
 {
     Q_UNUSED(checked);
 
-    PlotWindow *plot = new PlotWindow(serialData, this);
+    PlotWindow *plot = new PlotWindow(mediaData, this);
     plot->show();
 }
 
@@ -1206,8 +1206,8 @@ void MainWindow::on_appsAction_triggered(bool checked)
 
     if (appsDialog == nullptr)
     {
-        appsDialog = new AppsDialog(serialData, this);
-        connect(serialData, &SerialData::newTextLine, appsDialog, &AppsDialog::newLineAdded);
+        appsDialog = new AppsDialog(mediaData, this);
+        connect(mediaData, &MediaData::newTextLine, appsDialog, &AppsDialog::newLineAdded);
     }
     appsDialog->show();
 }
@@ -1450,7 +1450,7 @@ void MainWindow::serial_readyRead(QByteArray *bytes)
 {
     addRxCount(bytes->count());
     textBrowser->insertData(bytes);
-    serialData->appendBytes(bytes);
+    mediaData->appendBytes(bytes);
 }
 
 void MainWindow::serial_bytesSend(int count)

@@ -100,9 +100,9 @@ CoLua::~CoLua()
     workerThread.wait();
 }
 
-void CoLua::setSerialData(SerialData *data)
+void CoLua::setMedialData(MediaData *data)
 {
-    serialData = data;
+    mediaData = data;
 }
 
 int CoLua::loadFileSync(QString filePath)

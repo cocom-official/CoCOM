@@ -46,7 +46,7 @@
 #include "GlobalSettings.h"
 #include "CommandSettings.h"
 #include "PlotWindow.h"
-#include "SerialData.h"
+#include "MediaData.h"
 #include "AppsDialog.h"
 #include "LuaConsoleWindow.h"
 
@@ -176,7 +176,7 @@ private:
     LuaConsoleWindow *luaWindow;
 
     Serial *serial;
-    SerialData *serialData;
+    MediaData *mediaData;
     TextBrowser *textBrowser;
     GlobalSettings *globalSettings;
     CommandSettings *commandSettings;

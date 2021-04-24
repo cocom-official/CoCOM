@@ -6,7 +6,7 @@
 #include "Chart.h"
 #include "ChartView.h"
 #include "LineSeries.h"
-#include "SerialData.h"
+#include "MediaData.h"
 #include "PlotConfigDialog.h"
 
 namespace Ui
@@ -19,7 +19,7 @@ class PlotWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit PlotWindow(SerialData *data, QWidget *parent = nullptr);
+    explicit PlotWindow(MediaData *data, QWidget *parent = nullptr);
     ~PlotWindow();
 
 public slots:
@@ -31,7 +31,7 @@ private:
     Ui::PlotWindow *ui;
     PlotConfigDialog *configDialog;
     QList<ChartView *> viewlist;
-    SerialData *serialData;
+    MediaData *mediaData;
     QList<PlotConfig> config;
     int columuCount;
     QChartView::RubberBand rubberBand;
