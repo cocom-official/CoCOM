@@ -261,7 +261,6 @@ target_compile_options(
 #     ${GLIB_LDFLAGS}
 #     )
 
-set(QHOTKEY_INSTALL OFF)
 add_subdirectory("libs/QHotkey/")
 set(NO_FFLUA_TEST "y")
 add_subdirectory("libs/fflua/")
@@ -293,32 +292,36 @@ if (CMAKE_BUILD_TYPE STREQUAL Release) # Release
     set(CPACK_PACKAGE_VERSION_PATCH ${CPACK_PACKAGE_VERSION_PATCH})
     set(CPACK_PACKAGE_INSTALL_DIRECTORY ${PROJECT_NAME})
     set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_SOURCE_DIR}/LICENSE.txt)
-    install(FILES ${CMAKE_SOURCE_DIR}/LICENSE.txt DESTINATION /)
-    install(FILES ${CMAKE_SOURCE_DIR}/README.md DESTINATION /)
 
     if (CPACK_GENERATOR STREQUAL 7Z)
-        install(FILES ${CMAKE_SOURCE_DIR}/assets/${CoCOM_PORTABLE_FILE_NAME} DESTINATION /)
+    install(FILES ${CMAKE_SOURCE_DIR}/assets/${CoCOM_PORTABLE_FILE_NAME} DESTINATION /)
     endif()
 
     set(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/assets/logos\\\\CoCOM.bmp")
     set(CPACK_PACKAGE_EXECUTABLES ${PROJECT_NAME} ${PROJECT_NAME})
     set(CPACK_CREATE_DESKTOP_LINKS ${PROJECT_NAME})
 
+    set(scripts_path "${CMAKE_SOURCE_DIR}/scripts")
+    set(docs_path "${CMAKE_SOURCE_DIR}/docs")
 
     if (WIN32) # WIN32
         set(pack_dir CoCOM)
-        set(scripts_path ${CMAKE_SOURCE_DIR}/scripts)
         add_custom_command(
             TARGET ${PROJECT_NAME} POST_BUILD
             COMMAND bash -c "echo post build"
             COMMAND bash -c "mkdir -p ${pack_dir}"
+            COMMAND bash -c "mkdir -p ${pack_dir}/scripts"
+            COMMAND bash -c "mkdir -p ${pack_dir}/docs"
             COMMAND bash -c "cp CoCOM.exe ${pack_dir}"
-            COMMAND bash -c "cp -r ${scripts_path} ${pack_dir}/scripts"
             COMMAND python3 "${CMAKE_SOURCE_DIR}/tools/mingw-bundledlls/mingw-bundledlls" --copy "${CMAKE_BINARY_DIR}/${pack_dir}/CoCOM.exe"
             COMMAND bash -c "windeployqt ${CMAKE_BINARY_DIR}/${pack_dir}/CoCOM.exe --no-translations"
         )
 
         install(DIRECTORY "${CMAKE_BINARY_DIR}/${pack_dir}/" DESTINATION /)
+        install(DIRECTORY "${scripts_path}" DESTINATION /)
+        install(DIRECTORY "${docs_path}" DESTINATION /)
+        install(FILES "${CMAKE_SOURCE_DIR}/LICENSE.txt" DESTINATION /)
+        install(FILES "${CMAKE_SOURCE_DIR}/README.md" DESTINATION /)
 
         set(CPACK_WIX_UPGRADE_GUID "58DD5230-1D15-41A7-BAA5-1D1E4DCBBF04")
         set(CPACK_WIX_MODIFY_PATH ON)

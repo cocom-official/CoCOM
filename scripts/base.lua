@@ -56,4 +56,5 @@ function help()
     print("Use help to show this info");
     print("Use console/printf as a C-style print function");
     print("Use log_level/log_info/log_warning/log_critical to show log");
+    print("Use sleep/msleep/delay/mdelay to sleep or delay");
 end
