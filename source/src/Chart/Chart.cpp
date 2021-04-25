@@ -38,7 +38,7 @@ void Chart::addSeries(LineSeries *series)
     else
         m_bounds = m_bounds.united(series->bounds());
 
-    connect(series, &LineSeries::boundsChanged, this, lineBoundsChanges);
+    connect(series, &LineSeries::boundsChanged, this, &Chart::lineBoundsChanges);
 
     emit boundsChanged(m_bounds);
 }

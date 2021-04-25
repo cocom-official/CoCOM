@@ -27,7 +27,6 @@
 **
 ****************************************************************************/
 
-#include "chartView.h"
 #include <QtGui/QResizeEvent>
 #include <QtWidgets/QGraphicsScene>
 #include <QChart>
@@ -37,6 +36,7 @@
 #include <QtWidgets/QGraphicsTextItem>
 #include <QtGui/QMouseEvent>
 
+#include "ChartView.h"
 #include "Callout.h"
 #include "Chart.h"
 #include "LineSeries.h"
