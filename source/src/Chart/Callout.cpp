@@ -37,7 +37,7 @@
 #include <QtGui/QPainter>
 #include <QtWidgets/QGraphicsSceneMouseEvent>
 
-#include "callout.h"
+#include "Callout.h"
 
 Callout::Callout(QChart *chart) : QGraphicsItem(chart),
                                   m_seriesName(""),

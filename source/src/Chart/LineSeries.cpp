@@ -1,7 +1,7 @@
-#include "lineSeries.h"
-
 #include <QGuiApplication>
 #include <QDebug>
+
+#include "LineSeries.h"
 
 LineSeries::LineSeries() : QLineSeries(),
                            m_xMin(std::numeric_limits<qreal>::max()),

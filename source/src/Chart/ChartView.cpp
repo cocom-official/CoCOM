@@ -35,10 +35,11 @@
 #include <QSplineSeries>
 #include <QLegendMarker>
 #include <QtWidgets/QGraphicsTextItem>
-#include "callout.h"
-#include "chart.h"
-#include "lineSeries.h"
 #include <QtGui/QMouseEvent>
+
+#include "Callout.h"
+#include "Chart.h"
+#include "LineSeries.h"
 
 ChartView::ChartView(Chart *chart, QWidget *parent)
     : QChartView(chart, parent),

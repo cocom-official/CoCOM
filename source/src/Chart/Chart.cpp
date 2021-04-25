@@ -1,5 +1,5 @@
-#include "chart.h"
-#include "lineSeries.h"
+#include "Chart.h"
+#include "LineSeries.h"
 
 Chart::Chart()
     : QChart(),
