@@ -130,8 +130,8 @@ qt5_wrap_cpp(moc_list
     "source/inc/Settings/GlobalSettings.h"
     "source/inc/Settings/CommandSettings.h"
 
-    "source/inc/Media/Serial.h"
-    "source/inc/Media/MediaData.h"
+    "source/inc/IODevice/Serial.h"
+    "source/inc/IODevice/IODeviceData.h"
 
     "source/inc/Widgets/MainWindow.h"
     "source/inc/Widgets/TextBrowser.h"
@@ -175,8 +175,8 @@ set(src_list
     "source/src/Settings/GlobalSettings.cpp"
     "source/src/Settings/CommandSettings.cpp"
 
-    "source/src/Media/Serial.cpp"
-    "source/src/Media/MediaData.cpp"
+    "source/src/IODevice/Serial.cpp"
+    "source/src/IODevice/IODeviceData.cpp"
 
     "source/src/Widgets/MainWindow.cpp"
     "source/src/Widgets/TextBrowser.cpp"
@@ -277,7 +277,7 @@ target_include_directories(
     "source/inc/Chart"
     "source/inc/Lua"
     "source/inc/Widgets"
-    "source/inc/Media"
+    "source/inc/IODevice"
     "source/inc/Settings"
     )
 

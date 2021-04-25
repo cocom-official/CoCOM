@@ -5,7 +5,7 @@
 #include <QComboBox>
 #include <QHBoxLayout>
 
-#include "MediaData.h"
+#include "IODeviceData.h"
 
 namespace Ui
 {
@@ -26,7 +26,7 @@ public:
     bool checkValid();
 
 public slots:
-    void setDataSource(MediaData *Data);
+    void setDataSource(IODeviceData *Data);
     void updateDataSource();
 
 private slots:
@@ -44,7 +44,7 @@ private:
 
     Ui::PlotConfigTabWIdget *ui;
     QList<YAxisRow> rows;
-    MediaData *mediaData;
+    IODeviceData *ioDeviceData;
     QList<int> indexes;
 
     void addYAxisRow();

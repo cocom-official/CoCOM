@@ -2,7 +2,7 @@
 
 #include <QDialog>
 
-#include "MediaData.h"
+#include "IODeviceData.h"
 #include "PlotConfigTabWIdget.h"
 
 namespace Ui
@@ -32,7 +32,7 @@ class PlotConfigDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit PlotConfigDialog(MediaData *data, QWidget *parent = nullptr);
+    explicit PlotConfigDialog(IODeviceData *data, QWidget *parent = nullptr);
     ~PlotConfigDialog();
     QList<PlotConfig> getConfig();
 
@@ -50,7 +50,7 @@ private:
     } ConfigTabWidget;
 
     Ui::PlotConfigDialog *ui;
-    MediaData *mediaData;
+    IODeviceData *ioDeviceData;
     QList<ConfigTabWidget> tabsWidgetConfig;
     QMutex tabWidgetMutex;
 

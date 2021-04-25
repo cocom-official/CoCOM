@@ -1,10 +1,10 @@
 #include "PlotConfigDialog.h"
 #include "ui_plotConfigDialog.h"
 
-PlotConfigDialog::PlotConfigDialog(MediaData *data, QWidget *parent)
+PlotConfigDialog::PlotConfigDialog(IODeviceData *data, QWidget *parent)
     : QDialog(parent),
       ui(new Ui::PlotConfigDialog),
-      mediaData(data)
+      ioDeviceData(data)
 {
     ui->setupUi(this);
     setWindowModality(Qt::WindowModal);
@@ -106,7 +106,7 @@ void PlotConfigDialog::addNewTab()
     PlotConfigTabWIdget *tab = new PlotConfigTabWIdget(this);
     ConfigTabWidget config;
     config.widget = tab;
-    tab->setDataSource(mediaData);
+    tab->setDataSource(ioDeviceData);
     ui->tabWidget->insertTab(tabCount - 1, tab, tr("Plot") + " " + QString::number(tabCount - 1));
     ui->tabWidget->setCurrentIndex(tabCount - 1);
 

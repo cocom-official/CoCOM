@@ -7,12 +7,12 @@
 
 #include "Common.h"
 
-class MediaData
+class IODeviceData
     : public QObject
 {
     Q_OBJECT
 public:
-    explicit MediaData(QObject *parent = nullptr);
+    explicit IODeviceData(QObject *parent = nullptr);
     void setEncoding(QString lEncoding);
     void clear();
 

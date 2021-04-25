@@ -1,12 +1,12 @@
-#include "MediaData.h"
+#include "IODeviceData.h"
 
-MediaData::MediaData(QObject *parent)
+IODeviceData::IODeviceData(QObject *parent)
     : QObject(parent),
       encoding("Local")
 {
 }
 
-void MediaData::appendBytes(QByteArray *bytes)
+void IODeviceData::appendBytes(QByteArray *bytes)
 {
     QMutex mutex;
     serialData += *bytes;
@@ -60,7 +60,7 @@ void MediaData::appendBytes(QByteArray *bytes)
     mutex.unlock();
 }
 
-void MediaData::findNewLine(QString line)
+void IODeviceData::findNewLine(QString line)
 {
     emit newTextLine(line);
 
@@ -87,19 +87,19 @@ void MediaData::findNewLine(QString line)
     clearMutex.unlock();
 }
 
-void MediaData::setEncoding(QString lEncoding)
+void IODeviceData::setEncoding(QString lEncoding)
 {
     encoding = lEncoding;
 }
 
-void MediaData::clear()
+void IODeviceData::clear()
 {
     clearMutex.lock();
     regs.clear();
     clearMutex.unlock();
 }
 
-int MediaData::addRegExp(QString pattern, QString title)
+int IODeviceData::addRegExp(QString pattern, QString title)
 {
     int ret = regs.count();
 
@@ -133,7 +133,7 @@ int MediaData::addRegExp(QString pattern, QString title)
     return ret;
 }
 
-int MediaData::setRegExp(int exp, QString pattern)
+int IODeviceData::setRegExp(int exp, QString pattern)
 {
     if (exp >= regs.count())
     {
@@ -164,7 +164,7 @@ int MediaData::setRegExp(int exp, QString pattern)
     return exp;
 }
 
-bool MediaData::isRegExpEnable(int exp)
+bool IODeviceData::isRegExpEnable(int exp)
 {
     if (exp >= regs.count())
     {
@@ -174,7 +174,7 @@ bool MediaData::isRegExpEnable(int exp)
     return regs[exp].enable;
 }
 
-QString MediaData::getRegExpPattern(int exp)
+QString IODeviceData::getRegExpPattern(int exp)
 {
     if (exp >= regs.count())
     {
@@ -184,7 +184,7 @@ QString MediaData::getRegExpPattern(int exp)
     return regs[exp].regExp.pattern();
 }
 
-QString MediaData::getRegExpTitle(int exp)
+QString IODeviceData::getRegExpTitle(int exp)
 {
     if (exp >= regs.count())
     {
@@ -194,7 +194,7 @@ QString MediaData::getRegExpTitle(int exp)
     return regs[exp].title;
 }
 
-void MediaData::setRegExpTitle(int exp, QString title)
+void IODeviceData::setRegExpTitle(int exp, QString title)
 {
     if (exp >= regs.count())
     {
@@ -204,7 +204,7 @@ void MediaData::setRegExpTitle(int exp, QString title)
     regs[exp].title = title;
 }
 
-QStringList MediaData::getRegExpNames(int exp)
+QStringList IODeviceData::getRegExpNames(int exp)
 {
     if (exp >= regs.count())
     {
@@ -214,7 +214,7 @@ QStringList MediaData::getRegExpNames(int exp)
     return regs[exp].names;
 }
 
-QList<QList<qreal>> MediaData::getRegExpValues(int exp)
+QList<QList<qreal>> IODeviceData::getRegExpValues(int exp)
 {
     if (exp >= regs.count())
     {
@@ -224,7 +224,7 @@ QList<QList<qreal>> MediaData::getRegExpValues(int exp)
     return regs[exp].values;
 }
 
-QList<int> MediaData::getRegExpList()
+QList<int> IODeviceData::getRegExpList()
 {
     QList<int> ret;
     clearMutex.lock();
@@ -242,7 +242,7 @@ QList<int> MediaData::getRegExpList()
     return ret;
 }
 
-void MediaData::removeRegExp(int exp)
+void IODeviceData::removeRegExp(int exp)
 {
     if (exp >= regs.count())
     {
