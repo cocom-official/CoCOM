@@ -8,6 +8,7 @@
 #include <QTextCodec>
 #include <QSerialPort>
 #include <QSerialPortInfo>
+#include <QIODevice>
 
 #include "Common.h"
 
@@ -17,23 +18,24 @@ typedef enum
     TEXT_TYPE,
 } serialDataType;
 
-class Serial : public QObject
+class CoDevice : public QIODevice
 {
     Q_OBJECT
 
     typedef struct
     {
+        uint8_t type;
         QSerialPort *port;
         QSerialPortInfo *info;
         int32_t index;
-    }Port_t;
+    } Port_t;
 
     QList<Port_t> ports;
     Port_t currentPort;
 
 public:
-    explicit Serial(QObject *parent);
-    ~Serial();
+    explicit CoDevice();
+    ~CoDevice();
 
     int32_t count();
     void setCurrentPort(int32_t index);
@@ -41,30 +43,39 @@ public:
     int open();
     void close();
     bool isOpen(int32_t index);
-    void sendRawData(QByteArray *bytes);
-    void sendHexString(QString *bytes);
-    void sendTextString(QString *bytes, QString encoding, LineBreakType linebreak);
     bool config(PortConfig config);
     PortConfig getConfig();
-    QString getPortStr(int index);
-    QString getPortInfo(int index);
-    void enumPorts();
-    /**/
+    QString getDeviceStr(int index);
+    QString getDeviceInfo(int index);
+    void enumDevices();
+
+    /* serial port config */
     bool setBaudRate(int32_t baudRate);
     bool setDataBits(int32_t dataBits);
     bool setParity(int32_t parity);
     bool setStopBits(int32_t stopBits);
     bool setFlowControl(int32_t flowControl);
 
+public slots:
+    void sendRawData(QByteArray bytes);
+    void sendHexString(QString *bytes);
+    void sendTextString(QString *bytes, QString encoding, LineBreakType linebreak);
+
+protected:
+    qint64 readData(char *data, qint64 maxSize);
+    qint64 writeData(const char *data, qint64 maxSize);
+
 private:
-    QByteArray bytes;
     DataType sendDataType;
+    QByteArray deviceData;
+    QMutex deviceDataLock;
     QMutex mutex;
 
 private slots:
     void currenPort_readyRead();
 
 signals:
-    void readyRead(QByteArray *bytes);
+    void bytesReadyRead(QByteArray bytes);
     void bytesSend(int count);
+    void sendRawDataSignal(QByteArray bytes);
 };

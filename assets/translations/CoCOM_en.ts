@@ -424,6 +424,14 @@
     </message>
 </context>
 <context>
+    <name>IODeviceData</name>
+    <message>
+        <location filename="../../source/src/IODevice/IODeviceData.cpp" line="108"/>
+        <source>RegExp</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LuaConsoleWindow</name>
     <message>
         <location filename="../../ui/luaConsoleWindow.ui" line="14"/>
@@ -521,241 +529,233 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="83"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="84"/>
         <source>Serial Port Utility</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="102"/>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1353"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="103"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1396"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="151"/>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="155"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="152"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="156"/>
         <source>Show/Hide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="151"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="152"/>
         <source>is Registered Success!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="155"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="156"/>
         <source>is Registered Failed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="245"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="246"/>
         <source>Multi Command</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="249"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="250"/>
         <source>Click &apos;+&apos; to add a new tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="451"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="452"/>
         <source>Find ToolBar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="472"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="473"/>
         <source>Find</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="473"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="474"/>
         <source>Next Match</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="473"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="474"/>
         <source>Last Match</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="474"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="475"/>
         <source>Previous Match</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="474"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="475"/>
         <source>First Match</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="475"/>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1112"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="476"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1155"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="488"/>
         <location filename="../../source/src/Widgets/MainWindow.cpp" line="489"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="490"/>
         <source>Double Click to Clear Count!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="506"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="507"/>
         <source>Baudrate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="513"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="514"/>
         <source>Data Bits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="520"/>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1006"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="521"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1049"/>
         <source>Parity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="527"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="528"/>
         <source>Stop Bits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="534"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="535"/>
         <source>Flow Control</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="535"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="536"/>
         <source>Flow Control OFF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="536"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="537"/>
         <source>Hardware Flow Control</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="537"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="538"/>
         <source>Software Flow Control</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="542"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="543"/>
         <source>Rx Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="547"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="548"/>
         <source>Tx Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="553"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="554"/>
         <source>Line Break</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="559"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="560"/>
         <source>Encoding</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="659"/>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1295"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="660"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1338"/>
         <source>Tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="659"/>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1295"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="660"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1338"/>
         <source>Double Click to Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="977"/>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="992"/>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1006"/>
         <location filename="../../source/src/Widgets/MainWindow.cpp" line="1020"/>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1034"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1035"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1049"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1063"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1077"/>
         <source>set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="977"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1020"/>
         <source>BaudRate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="977"/>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="992"/>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1006"/>
         <location filename="../../source/src/Widgets/MainWindow.cpp" line="1020"/>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1034"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1035"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1049"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1063"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1077"/>
         <source>fail</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="992"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1035"/>
         <source>DataBits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1020"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1063"/>
         <source>StopBits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1034"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1077"/>
         <source>FlowControl</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1079"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1122"/>
         <source>Open Failed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1080"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1123"/>
         <source>,</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1086"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1129"/>
         <source>Busy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1090"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1133"/>
         <source>Null</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1094"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1137"/>
         <source>Unknow Reason</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1101"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1144"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1147"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1190"/>
         <source>Save Output To File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1149"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1192"/>
         <source>Text files (*.txt)</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>MediaData</name>
-    <message>
-        <location filename="../../source/src/Media/MediaData.cpp" line="108"/>
-        <source>RegExp</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

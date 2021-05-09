@@ -51,6 +51,40 @@ function mdelay(t)
     msleep(t);
 end
 
+---- raw data table and string convert function ----
+function raw2str(data)
+    return coLua:raw2str(data);
+end
+
+function str2raw(data)
+    return coLua:str2raw(data)
+end
+
+---- coDevice read/readall/write ----
+function dwrite(data)
+    return coLua:dwrite(data);
+end
+
+function dwrite_text(data)
+    return coLua:dwrite_text(data);
+end
+
+function dread(len)
+    return coLua:dread(len);
+end
+
+function dreadall()
+    return coLua:dreadall();
+end
+
+function dread_text(len)
+    return coLua:dread_text(len);
+end
+
+function dread_line(len)
+    return coLua:dread_line(len);
+end
+
 ---- help ----
 function help()
     print("Use help to show this info");

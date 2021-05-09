@@ -20,6 +20,7 @@ CoCOM is a Serial Port Utility for Embedded Software Engineer.
   - [ ] output filer
   - [ ] custom colorful hint
   - [x] Ctrl + F, find anything in output view
+  - [ ] virtual terminal sequences support
 - [x] high DPI support
   - [x] auto scaling according to dpi
   - [x] auto scaling when moves betweens different dpi screen
@@ -32,9 +33,9 @@ CoCOM is a Serial Port Utility for Embedded Software Engineer.
 - [ ] lua embed
   - [x] lua console
   - [x] lua with CoCOM base extension
+  - [x] read data/text/line through lua scripts
+  - [x] send data/text through lua scripts
   - [ ] new data received callback
-  - [ ] new text line received callback
-  - [ ] send data through lua scripts
   - [ ] protocol support
     - [ ] protocol decode
     - [ ] protocol encode

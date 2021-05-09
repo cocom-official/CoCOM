@@ -6,12 +6,12 @@ IODeviceData::IODeviceData(QObject *parent)
 {
 }
 
-void IODeviceData::appendBytes(QByteArray *bytes)
+void IODeviceData::appendBytes(QByteArray bytes)
 {
     QMutex mutex;
-    serialData += *bytes;
+    serialData += bytes;
     static QByteArray remain;
-    QByteArray inBytes = *bytes;
+    QByteArray inBytes = bytes;
     int rIndexPos = 0;
     int nIndexPos = 0;
 

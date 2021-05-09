@@ -57,6 +57,13 @@ enum DataType
     HexType,
 };
 
+enum DeviceType
+{
+    SerialDevice = 0,
+    USBDevice,
+    ADCDevices,
+};
+
 enum LineBreakType
 {
     LineBreakOFF = 0,

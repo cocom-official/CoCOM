@@ -40,7 +40,7 @@
 #include <QHotkey>
 
 #include "ConfigDialog.h"
-#include "Serial.h"
+#include "CoDevice.h"
 #include "TextBrowser.h"
 #include "CommandsTab.h"
 #include "GlobalSettings.h"
@@ -88,6 +88,7 @@ private slots:
     void on_openAction_toggled(bool checked);
     void on_clearAction_triggered(bool checked);
     void on_goDownAction_triggered(bool checked);
+    void on_goUpAction_triggered(bool checked);
     /**/
     void on_saveToFileAction_triggered(bool checked);
     void on_pinAction_toggled(bool checked);
@@ -126,7 +127,7 @@ private slots:
     void sendText(QString text);
 
     void portSelectComboBox_currentIndexChanged(int index);
-    void serial_readyRead(QByteArray *bytes);
+    void serial_readyRead(QByteArray bytes);
     void serial_bytesSend(int count);
     void findResultChanged(int cur, int all);
 
@@ -175,7 +176,7 @@ private:
     AppsDialog *appsDialog;
     LuaConsoleWindow *luaWindow;
 
-    Serial *serial;
+    CoDevice *coDevice;
     IODeviceData *ioDeviceData;
     TextBrowser *textBrowser;
     GlobalSettings *globalSettings;
@@ -203,10 +204,11 @@ private:
     CommandsTab *addMultiCommandTab();
 
     /* no UI */
+    void setAppProperties();
     void readSettings();
     void writeSettings();
-    void setupSerialPort();
-    void enumPorts();
+    void setupCoDevices();
+    void enumDevices();
     void updatePortConfig();
     void periodicSend();
     void addTxCount(int count);

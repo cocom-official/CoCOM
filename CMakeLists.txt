@@ -130,7 +130,7 @@ qt5_wrap_cpp(moc_list
     "source/inc/Settings/GlobalSettings.h"
     "source/inc/Settings/CommandSettings.h"
 
-    "source/inc/IODevice/Serial.h"
+    "source/inc/IODevice/CoDevice.h"
     "source/inc/IODevice/IODeviceData.h"
 
     "source/inc/Widgets/MainWindow.h"
@@ -175,7 +175,7 @@ set(src_list
     "source/src/Settings/GlobalSettings.cpp"
     "source/src/Settings/CommandSettings.cpp"
 
-    "source/src/IODevice/Serial.cpp"
+    "source/src/IODevice/CoDevice.cpp"
     "source/src/IODevice/IODeviceData.cpp"
 
     "source/src/Widgets/MainWindow.cpp"

@@ -1,18 +1,19 @@
-#include "Serial.h"
+#include "CoDevice.h"
 #include "Common.h"
 
-Serial::Serial(QObject *parent)
-    : QObject(parent),
-      sendDataType(TextType)
+CoDevice::CoDevice()
+    : sendDataType(TextType)
 {
     currentPort.index = -1;
     currentPort.info = nullptr;
     currentPort.port = nullptr;
 
-    enumPorts();
+    connect(this, &CoDevice::sendRawDataSignal, this, &CoDevice::sendRawData, Qt::QueuedConnection);
+
+    enumDevices();
 }
 
-Serial::~Serial()
+CoDevice::~CoDevice()
 {
     for (auto &&i : ports)
     {
@@ -26,19 +27,19 @@ Serial::~Serial()
     }
 }
 
-int32_t Serial::count()
+int32_t CoDevice::count()
 {
     return ports.count();
 }
 
-void Serial::setCurrentPort(int32_t index)
+void CoDevice::setCurrentPort(int32_t index)
 {
     if (currentPort.index == index || index < 0 || index > ports.count())
     {
         return;
     }
 
-    Serial::Port_t lastPort = currentPort;
+    CoDevice::Port_t lastPort = currentPort;
 
     mutex.lock();
 
@@ -62,12 +63,12 @@ void Serial::setCurrentPort(int32_t index)
     mutex.unlock();
 }
 
-int Serial::currentIndex()
+int CoDevice::currentIndex()
 {
     return currentPort.index;
 }
 
-int Serial::open()
+int CoDevice::open()
 {
     if (currentPort.port == nullptr || currentPort.info == nullptr || currentPort.info->isNull())
     {
@@ -79,24 +80,31 @@ int Serial::open()
         return E_Busy;
     }
 
-    bool ret = currentPort.port->open(QIODevice::OpenModeFlag::ReadWrite);
+    bool ret = currentPort.port->open(ReadWrite);
 
     if (ret)
     {
         connect(currentPort.port, &QSerialPort::readyRead,
-                this, &Serial::currenPort_readyRead, Qt::QueuedConnection);
+                this, &CoDevice::currenPort_readyRead, Qt::QueuedConnection);
     }
 
+    QIODevice::open(ReadWrite);
     return OK;
 }
 
-void Serial::close()
+void CoDevice::close()
 {
     disconnect(currentPort.port);
     currentPort.port->close();
+
+    deviceDataLock.lock();
+    deviceData.clear();
+    deviceDataLock.unlock();
+
+    QIODevice::close();
 }
 
-bool Serial::isOpen(int32_t index)
+bool CoDevice::isOpen(int32_t index)
 {
     if (index < 0 || index > ports.count())
     {
@@ -113,19 +121,19 @@ bool Serial::isOpen(int32_t index)
     return port.port->isOpen();
 }
 
-void Serial::sendRawData(QByteArray *bytes)
+void CoDevice::sendRawData(QByteArray bytes)
 {
-    currentPort.port->write(*bytes);
+    currentPort.port->write(bytes);
 }
 
-void Serial::sendHexString(QString *string)
+void CoDevice::sendHexString(QString *string)
 {
     QByteArray bytes = QByteArray().fromHex(string->toLatin1());
     emit bytesSend(bytes.size());
     currentPort.port->write(bytes);
 }
 
-void Serial::sendTextString(QString *string, QString encoding, LineBreakType linebreak)
+void CoDevice::sendTextString(QString *string, QString encoding, LineBreakType linebreak)
 {
     if (string->length() == 0)
     {
@@ -153,7 +161,7 @@ void Serial::sendTextString(QString *string, QString encoding, LineBreakType lin
     currentPort.port->write(bytes);
 }
 
-bool Serial::config(PortConfig config)
+bool CoDevice::config(PortConfig config)
 {
     bool ret = false;
 
@@ -215,7 +223,7 @@ bool Serial::config(PortConfig config)
     return true;
 }
 
-PortConfig Serial::getConfig()
+PortConfig CoDevice::getConfig()
 {
     if (!currentPort.port->isOpen())
     {
@@ -277,14 +285,14 @@ PortConfig Serial::getConfig()
     return config;
 }
 
-QString Serial::getPortStr(int index)
+QString CoDevice::getDeviceStr(int index)
 {
     if (index >= ports.count())
     {
         return QString("x");
     }
 
-    Serial::Port_t port = ports[index];
+    CoDevice::Port_t port = ports[index];
 
     if (port.port == nullptr || port.info == nullptr)
     {
@@ -312,14 +320,14 @@ QString Serial::getPortStr(int index)
     return portStr;
 }
 
-QString Serial::getPortInfo(int index)
+QString CoDevice::getDeviceInfo(int index)
 {
     if (index >= ports.count())
     {
         return QString();
     }
 
-    Serial::Port_t port = ports[index];
+    CoDevice::Port_t port = ports[index];
 
     if (port.port == nullptr || port.info == nullptr)
     {
@@ -333,14 +341,14 @@ QString Serial::getPortInfo(int index)
     {
         hasIdentifier = true;
         info += "-";
-        info +=  QString::number(port.info->vendorIdentifier(), 16).toUpper();
+        info += QString::number(port.info->vendorIdentifier(), 16).toUpper();
     }
 
     if (port.info->productIdentifier())
     {
         hasIdentifier = true;
         info += "-";
-        info +=  QString::number(port.info->productIdentifier(), 16).toUpper();
+        info += QString::number(port.info->productIdentifier(), 16).toUpper();
     }
 
     if (!hasIdentifier)
@@ -352,12 +360,12 @@ QString Serial::getPortInfo(int index)
     return info;
 }
 
-void Serial::enumPorts()
+void CoDevice::enumDevices()
 {
     int index = 0;
     int currentIndex = 0;
     bool portExit = false;
-    Serial::Port_t lPort;
+    CoDevice::Port_t lPort;
     QList<Port_t> newPorts;
 
     mutex.lock();
@@ -420,34 +428,71 @@ void Serial::enumPorts()
     mutex.unlock();
 }
 
-bool Serial::setBaudRate(int32_t baudRate)
+bool CoDevice::setBaudRate(int32_t baudRate)
 {
     return currentPort.port->setBaudRate(baudRate);
 }
 
-bool Serial::setDataBits(int32_t dataBits)
+bool CoDevice::setDataBits(int32_t dataBits)
 {
     return currentPort.port->setDataBits(configDataBits[dataBits].param);
 }
 
-bool Serial::setParity(int32_t parity)
+bool CoDevice::setParity(int32_t parity)
 {
     return currentPort.port->setParity(configParity[parity].param);
 }
 
-bool Serial::setStopBits(int32_t stopBits)
+bool CoDevice::setStopBits(int32_t stopBits)
 {
     return currentPort.port->setStopBits(configStopBits[stopBits].param);
 }
 
-bool Serial::setFlowControl(int32_t flowControl)
+bool CoDevice::setFlowControl(int32_t flowControl)
 {
     return currentPort.port->setFlowControl(configFlowControl[flowControl].param);
 }
 
-void Serial::currenPort_readyRead()
+qint64 CoDevice::readData(char *data, qint64 maxSize)
+{
+    deviceDataLock.lock();
+    qint64 size = deviceData.size();
+    if (maxSize >= size)
+    {
+        memcpy(data, deviceData.data(), size);
+        deviceData.clear();
+    }
+    else
+    {
+        memcpy(data, deviceData.data(), maxSize);
+        deviceData = QByteArray(deviceData.data() + maxSize, size - maxSize);
+        size = maxSize;
+    }
+    deviceDataLock.unlock();
+
+    return size;
+}
+
+qint64 CoDevice::writeData(const char *data, qint64 maxSize)
+{
+    qint64 size = 0;
+
+    if (currentPort.port != nullptr && currentPort.port->isOpen())
+    {
+        emit sendRawDataSignal(QByteArray(data, maxSize));
+        size = maxSize;
+    }
+
+    return size;
+}
+
+void CoDevice::currenPort_readyRead()
 {
     QByteArray bytes = currentPort.port->read(currentPort.port->bytesAvailable());
 
-    emit readyRead(&bytes);
+    deviceDataLock.lock();
+    deviceData.append(bytes);
+    deviceDataLock.unlock();
+
+    emit bytesReadyRead(bytes);
 }

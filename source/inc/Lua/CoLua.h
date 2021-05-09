@@ -5,6 +5,8 @@
 #include "Common.h"
 #include "fflua.h"
 #include "IODeviceData.h"
+#include "CoDevice.h"
+using namespace std;
 
 #define COCOM_LUA_BASE_EXTENSION "base.lua"
 
@@ -24,6 +26,14 @@ public:
     void lua_log(int level, string out);
     void lua_sleep(uint64_t time);
     void lua_msleep(uint64_t time);
+    string lua_raw2str(vector<uint8_t> data);
+    vector<uint8_t> lua_str2raw(string data);
+    int lua_dwrite(vector<uint8_t> data);
+    int lua_dwrite_text(string data);
+    vector<uint8_t> lua_dread(int len);
+    vector<uint8_t> lua_dreadall();
+    string lua_dread_text(int len);
+    string lua_dread_line(int len);
 
 public slots:
     /* do lua */
@@ -37,10 +47,9 @@ public slots:
     void resetInstance();
 
 private:
-    typedef void (*WorkerSlot)(QString);
-
     ff::fflua_t fflua;
     IODeviceData *ioDeviceData;
+    CoDevice *coDevice;
     QThread workerThread;
 
     void initInstance();

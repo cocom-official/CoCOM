@@ -210,17 +210,17 @@ void TextBrowser::setFindResultFormat(QTextCharFormat *format, int index)
     browser->setTextCursor(lCursor);
 }
 
-void TextBrowser::insertData(QByteArray *data)
+void TextBrowser::insertData(QByteArray data)
 {
     QString string;
 
     if (dataType == TextType)
     {
-        string = getEncodingCodecFromString(encoding)->toUnicode(*data);
+        string = getEncodingCodecFromString(encoding)->toUnicode(data);
     }
     else
     {
-        string = QString(data->toHex(hexSeparator).append(hexSeparator));
+        string = QString(data.toHex(hexSeparator).append(hexSeparator));
     }
 
     lock();

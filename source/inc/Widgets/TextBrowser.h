@@ -20,7 +20,7 @@ public:
 
     void setDataType(DataType type);
     void setEncoding(QString lEncoding);
-    void insertData(QByteArray *data);
+    void insertData(QByteArray data);
     void find(QString &text);
     void findFromCurrent(QString &text);
     void moveToNextFindResult();
@@ -40,7 +40,7 @@ private:
 
     typedef struct
     {
-        QList<HintKey*> key;
+        QList<HintKey *> key;
         QTextCharFormat *format;
     } HintFormat;
 

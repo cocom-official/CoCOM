@@ -11,7 +11,15 @@ static void lua_reg(lua_State *ls)
         .def(&CoLua::lua_console, "console")
         .def(&CoLua::lua_log, "log")
         .def(&CoLua::lua_sleep, "sleep")
-        .def(&CoLua::lua_msleep, "msleep");
+        .def(&CoLua::lua_msleep, "msleep")
+        .def(&CoLua::lua_raw2str, "raw2str")
+        .def(&CoLua::lua_str2raw, "str2raw")
+        .def(&CoLua::lua_dwrite, "dwrite")
+        .def(&CoLua::lua_dwrite_text, "dwrite_text")
+        .def(&CoLua::lua_dread, "dread")
+        .def(&CoLua::lua_dreadall, "dreadall")
+        .def(&CoLua::lua_dread_text, "dread_text")
+        .def(&CoLua::lua_dread_line, "dread_line");
 }
 
 int CoLua::lua_print(string out)
@@ -87,10 +95,111 @@ void CoLua::lua_msleep(uint64_t time)
     workerThread.msleep(time);
 }
 
+string CoLua::lua_raw2str(vector<uint8_t> data)
+{
+    QByteArray bytes;
+
+    for (auto &&i : data)
+    {
+        bytes.append(QChar(i).toLatin1());
+    }
+
+    return bytes.toStdString();
+}
+
+vector<uint8_t> CoLua::lua_str2raw(string data)
+{
+    vector<uint8_t> bytes;
+
+    for (auto &&i : data)
+    {
+        bytes.push_back(i);
+    }
+
+    return bytes;
+}
+
+int CoLua::lua_dwrite(vector<uint8_t> data)
+{
+    if (coDevice == nullptr)
+    {
+        return -1;
+    }
+
+    return coDevice->write((const char *)data.data(), data.size());
+}
+
+int CoLua::lua_dwrite_text(string data)
+{
+    if (coDevice == nullptr)
+    {
+        return -1;
+    }
+
+    return coDevice->write((const char *)data.c_str(), data.length());
+}
+
+vector<uint8_t> CoLua::lua_dread(int len)
+{
+    vector<uint8_t> data;
+    if (coDevice == nullptr)
+    {
+        return data;
+    }
+
+    QByteArray retData = coDevice->read(len);
+    for (auto &&i : retData)
+    {
+        data.push_back(i);
+    }
+
+    return data;
+}
+
+vector<uint8_t> CoLua::lua_dreadall()
+{
+    vector<uint8_t> data;
+    if (coDevice == nullptr)
+    {
+        return data;
+    }
+
+    QByteArray retData = coDevice->readAll();
+    for (auto &&i : retData)
+    {
+        data.push_back(i);
+    }
+
+    return data;
+}
+
+string CoLua::lua_dread_text(int len)
+{
+    if (coDevice == nullptr)
+    {
+        return string();
+    }
+
+    return coDevice->read(len).toStdString();
+}
+
+string CoLua::lua_dread_line(int len)
+{
+    if (coDevice == nullptr)
+    {
+        return string();
+    }
+
+    return coDevice->readLine(len).toStdString();
+}
+
 CoLua::CoLua(QObject *parent)
-    : QObject(parent)
+    : QObject(parent),
+      ioDeviceData(nullptr),
+      coDevice(nullptr)
 {
     setObjectName("CoLua");
+    coDevice = qApp->property("coDevice").value<CoDevice *>();
     initInstance();
 }
 

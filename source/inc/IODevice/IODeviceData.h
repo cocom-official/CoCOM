@@ -29,7 +29,7 @@ public:
     void removeRegExp(int exp);
 
 public slots:
-    void appendBytes(QByteArray *bytes);
+    void appendBytes(QByteArray bytes);
 
 private:
     typedef struct

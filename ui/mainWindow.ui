@@ -223,6 +223,7 @@
    <addaction name="openAction"/>
    <addaction name="clearAction"/>
    <addaction name="goDownAction"/>
+   <addaction name="goUpAction"/>
    <addaction name="separator"/>
    <addaction name="pinAction"/>
    <addaction name="saveToFileAction"/>
@@ -321,6 +322,18 @@
    </property>
    <property name="text">
     <string>Lua Console</string>
+   </property>
+  </action>
+  <action name="goUpAction">
+   <property name="icon">
+    <iconset resource="../assets/assets.qrc">
+     <normaloff>:/assets/icons/level-up.svg</normaloff>:/assets/icons/level-up.svg</iconset>
+   </property>
+   <property name="text">
+    <string>goUp</string>
+   </property>
+   <property name="toolTip">
+    <string>go Up</string>
    </property>
   </action>
  </widget>

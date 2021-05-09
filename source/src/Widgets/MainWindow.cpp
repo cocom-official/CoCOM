@@ -38,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
       configDialog(nullptr),
       appsDialog(nullptr),
       luaWindow(nullptr),
-      serial(new Serial(this)),
+      coDevice(new CoDevice()),
       ioDeviceData(new IODeviceData(this)),
       globalSettings(new GlobalSettings(this)),
       commandSettings(new CommandSettings(this)),
@@ -54,9 +54,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     setupUI();
 
-    setupSerialPort();
+    setupCoDevices();
 
     readSettings();
+
+    setAppProperties();
 
     /* ShortKey */
     connect(showHideShortcut, &QHotkey::activated, this, &MainWindow::showHotkey_activated);
@@ -69,6 +71,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     writeSettings();
+    delete coDevice;
     delete ui;
 }
 
@@ -200,6 +203,11 @@ void MainWindow::readSettings()
     }
 }
 
+void MainWindow::setAppProperties()
+{
+    qApp->setProperty("coDevice", QVariant::fromValue(coDevice));
+}
+
 void MainWindow::writeSettings()
 {
     if (restoreSettings)
@@ -230,12 +238,12 @@ void MainWindow::restoreDefaultSettings()
     onRestart();
 }
 
-void MainWindow::setupSerialPort()
+void MainWindow::setupCoDevices()
 {
-    connect(serial, &Serial::readyRead, this, &MainWindow::serial_readyRead);
-    connect(serial, &Serial::bytesSend, this, &MainWindow::serial_bytesSend);
-    enumPorts();
-    connect(timer, &QTimer::timeout, this, &MainWindow::enumPorts);
+    connect(coDevice, &CoDevice::bytesReadyRead, this, &MainWindow::serial_readyRead);
+    connect(coDevice, &CoDevice::bytesSend, this, &MainWindow::serial_bytesSend);
+    enumDevices();
+    connect(timer, &QTimer::timeout, this, &MainWindow::enumDevices);
     timer->start(1000);
 }
 
@@ -601,13 +609,13 @@ void MainWindow::updatePortSelectText()
 {
     for (int i = 0; i < deviceSelect->count(); i++)
     {
-        QString portStr = serial->getPortStr(i);
+        QString portStr = coDevice->getDeviceStr(i);
         deviceSelect->setItemText(i, portStr);
         deviceSelect->setItemData(i, portStr.mid(2), Qt::ToolTipRole);
     }
-    deviceSelect->setToolTip(serial->getPortStr(0).mid(2));
+    deviceSelect->setToolTip(coDevice->getDeviceStr(0).mid(2));
 
-    if (ui->openAction->isChecked() && serial->isOpen(serial->currentIndex()) != true)
+    if (ui->openAction->isChecked() && coDevice->isOpen(coDevice->currentIndex()) != true)
     {
         ui->openAction->setChecked(false);
     }
@@ -615,7 +623,7 @@ void MainWindow::updatePortSelectText()
 
 void MainWindow::updateDevicesConfigComboBox()
 {
-    PortConfig config = serial->getConfig();
+    PortConfig config = coDevice->getConfig();
 
     deviceSelect->blockSignals(true);
     baudrateComboBox->blockSignals(true);
@@ -707,7 +715,7 @@ void MainWindow::sendToastMessage(QString msg, int level, int index)
     trayIcon->showMessage(QString(COCOM_APPLICATIONNAME), msg, icon);
 }
 
-void MainWindow::enumPorts()
+void MainWindow::enumDevices()
 {
     QAbstractItemView *view = deviceSelect->view();
     if (view != nullptr && view->isVisible())
@@ -715,7 +723,7 @@ void MainWindow::enumPorts()
         return;
     }
 
-    serial->enumPorts();
+    coDevice->enumDevices();
 
     deviceSelect->blockSignals(true);
 
@@ -724,14 +732,14 @@ void MainWindow::enumPorts()
         deviceSelect->removeItem(deviceSelect->count() - 1);
     }
 
-    for (int i = 0; i < serial->count(); i++)
+    for (int i = 0; i < coDevice->count(); i++)
     {
-        deviceSelect->addItem(serial->getPortStr(i));
+        deviceSelect->addItem(coDevice->getDeviceStr(i));
     }
 
     deviceSelect->blockSignals(false);
 
-    deviceSelect->setCurrentIndex(serial->currentIndex());
+    deviceSelect->setCurrentIndex(coDevice->currentIndex());
 }
 
 void MainWindow::updatePortConfig()
@@ -742,7 +750,7 @@ void MainWindow::updatePortConfig()
     config.parity = parityComboBox->currentIndex();
     config.stopBits = stopBitsComboBox->currentIndex();
     config.flowControl = flowComboBox->currentIndex();
-    bool ret = serial->config(config);
+    bool ret = coDevice->config(config);
     if (!ret)
     {
         qDebug() << "port config fail";
@@ -763,11 +771,11 @@ void MainWindow::sendText(QString text)
 
     if (txTypeComboBox->currentIndex() == TextType)
     {
-        serial->sendTextString(&text, encodingBox->currentText(), (LineBreakType)lineBreakBox->currentIndex());
+        coDevice->sendTextString(&text, encodingBox->currentText(), (LineBreakType)lineBreakBox->currentIndex());
     }
     else
     {
-        serial->sendHexString(&text);
+        coDevice->sendHexString(&text);
     }
 }
 
@@ -866,7 +874,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     if (event->key() == Qt::Key_Enter ||
         event->key() == Qt::Key_Return)
     {
-        if (ui->sendTextEdit->hasFocus())
+        if (ui->sendTextEdit->hasFocus() && ui->openAction->isChecked())
         {
             on_textSendButton_pressed();
         }
@@ -915,7 +923,10 @@ void MainWindow::onRestart()
 
 void MainWindow::on_inputTabWidget_currentChanged(int index)
 {
-    Q_UNUSED(index);
+    static bool fromCommandline = false;
+    static int txIndex = 0;
+    static int rxIndex = 0;
+    static int lineBreakIndex = 0;
 
     for (int i = 0; i < ui->inputTabWidget->count(); i++)
     {
@@ -927,6 +938,45 @@ void MainWindow::on_inputTabWidget_currentChanged(int index)
         {
             ui->inputTabWidget->currentWidget()->setMaximumHeight(0xFFFFFF);
         }
+    }
+
+    switch (index)
+    {
+    case 0:
+    case 2:
+        if (fromCommandline)
+        {
+            lineBreakBox->setDisabled(false);
+            txTypeComboBox->setDisabled(false);
+            rxTypeComboBox->setDisabled(false);
+
+            lineBreakBox->setCurrentIndex(lineBreakIndex);
+            txTypeComboBox->setCurrentIndex(txIndex);
+            rxTypeComboBox->setCurrentIndex(rxIndex);
+        }
+        fromCommandline = false;
+        break;
+
+    case 1:
+        if (!fromCommandline)
+        {
+            txIndex = txTypeComboBox->currentIndex();
+            rxIndex = rxTypeComboBox->currentIndex();
+            lineBreakIndex = lineBreakBox->currentIndex();
+
+            txTypeComboBox->setCurrentIndex(TextType);
+            rxTypeComboBox->setCurrentIndex(TextType);
+            lineBreakBox->setCurrentIndex(LineBreakLF);
+
+            txTypeComboBox->setDisabled(true);
+            rxTypeComboBox->setDisabled(true);
+            lineBreakBox->setDisabled(true);
+        }
+        fromCommandline = true;
+        break;
+
+    default:
+        break;
     }
 }
 
@@ -972,7 +1022,7 @@ void MainWindow::baudrateComboBox_currentTextChanged(const QString &text)
     }
     else
     {
-        if (!serial->setBaudRate(text.toInt()))
+        if (!coDevice->setBaudRate(text.toInt()))
         {
             setStatusInfo(tr("set") + " " + tr("BaudRate") + " " + tr("fail") + "!");
             baudrateComboBox->setCurrentText(lastText);
@@ -987,7 +1037,7 @@ void MainWindow::baudrateComboBox_currentTextChanged(const QString &text)
 void MainWindow::dataBitsComboBox_currentIndexChanged(int index)
 {
     static int lastIndex = 0;
-    if (!serial->setDataBits(index))
+    if (!coDevice->setDataBits(index))
     {
         setStatusInfo(tr("set") + " " + tr("DataBits") + " " + tr("fail") + "!");
         dataBitsComboBox->setCurrentIndex(lastIndex);
@@ -1001,7 +1051,7 @@ void MainWindow::dataBitsComboBox_currentIndexChanged(int index)
 void MainWindow::parityComboBox_currentIndexChanged(int index)
 {
     static int lastIndex = 0;
-    if (!serial->setParity(index))
+    if (!coDevice->setParity(index))
     {
         setStatusInfo(tr("set") + " " + tr("Parity") + " " + tr("fail") + "!");
         parityComboBox->setCurrentIndex(lastIndex);
@@ -1015,7 +1065,7 @@ void MainWindow::parityComboBox_currentIndexChanged(int index)
 void MainWindow::stopBitsComboBox_currentIndexChanged(int index)
 {
     static int lastIndex = 0;
-    if (!serial->setStopBits(index))
+    if (!coDevice->setStopBits(index))
     {
         setStatusInfo(tr("set") + " " + tr("StopBits") + " " + tr("fail") + "!");
         stopBitsComboBox->setCurrentIndex(lastIndex);
@@ -1029,7 +1079,7 @@ void MainWindow::stopBitsComboBox_currentIndexChanged(int index)
 void MainWindow::flowComboBox_currentIndexChanged(int index)
 {
     static int lastIndex = 0;
-    if (!serial->setFlowControl(index))
+    if (!coDevice->setFlowControl(index))
     {
         setStatusInfo(tr("set") + " " + tr("FlowControl") + " " + tr("fail") + "!");
         flowComboBox->setCurrentIndex(lastIndex);
@@ -1068,11 +1118,11 @@ void MainWindow::encodingBox_currentIndexChanged(int index)
 
 void MainWindow::on_openAction_toggled(bool checked)
 {
-    QString portName = serial->getPortStr(serial->currentIndex()).split("|")[0].mid(2);
-    QString portDesc = serial->getPortStr(serial->currentIndex()).split("|")[1];
+    QString portName = coDevice->getDeviceStr(coDevice->currentIndex()).split("|")[0].mid(2);
+    QString portDesc = coDevice->getDeviceStr(coDevice->currentIndex()).split("|")[1];
     if (checked)
     {
-        int ret = serial->open();
+        int ret = coDevice->open();
 
         if (ret != OK)
         {
@@ -1107,7 +1157,7 @@ void MainWindow::on_openAction_toggled(bool checked)
     }
     else
     {
-        serial->close();
+        coDevice->close();
 
         setStatusInfo(tr("Close") + " " + portName + " " + portDesc);
 
@@ -1134,6 +1184,13 @@ void MainWindow::on_goDownAction_triggered(bool checked)
     Q_UNUSED(checked);
     ui->outputTextBrowser->verticalScrollBar()->setValue(
         ui->outputTextBrowser->verticalScrollBar()->maximum());
+}
+
+void MainWindow::on_goUpAction_triggered(bool checked)
+{
+    Q_UNUSED(checked);
+    ui->outputTextBrowser->verticalScrollBar()->setValue(
+        ui->outputTextBrowser->verticalScrollBar()->minimum());
 }
 
 void MainWindow::on_saveToFileAction_triggered(bool checked)
@@ -1330,7 +1387,7 @@ void MainWindow::globalSetting_onSaved()
 
 void MainWindow::portSelectComboBox_currentIndexChanged(int index)
 {
-    serial->setCurrentPort(index);
+    coDevice->setCurrentPort(index);
     updatePortSelectText();
     updateDevicesConfigComboBox();
 }
@@ -1446,9 +1503,9 @@ void MainWindow::showHotkey_activated()
     }
 }
 
-void MainWindow::serial_readyRead(QByteArray *bytes)
+void MainWindow::serial_readyRead(QByteArray bytes)
 {
-    addRxCount(bytes->count());
+    addRxCount(bytes.count());
     textBrowser->insertData(bytes);
     ioDeviceData->appendBytes(bytes);
 }
