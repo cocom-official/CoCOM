@@ -48,14 +48,6 @@ jobs:
         ninja -j $(nproc)
         cpack
 
-    - name: changelog
-      run:  |
-        cd $GITHUB_WORKSPACE
-        changelog=$(cat "CHANGELOG.md")
-        echo "$changelog"
-        echo "::set-output name=changelog::$changelog"
-      id: changelog
-
     - name: release
       uses: actions/create-release@v1
       id: create_release
@@ -64,7 +56,7 @@ jobs:
         # prerelease: true
         release_name: ${{ steps.version.outputs.version }}
         tag_name: ${{ github.ref }}
-        body_path: ${{ steps.changelog.outputs.changelog }}
+        body_path:  ${{ github.workspace }}/CHANGELOG.md
       env:
         GITHUB_TOKEN: ${{ github.token }}
     - name: upload Windows installer release
