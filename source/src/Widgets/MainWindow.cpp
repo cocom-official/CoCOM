@@ -1118,8 +1118,15 @@ void MainWindow::encodingBox_currentIndexChanged(int index)
 
 void MainWindow::on_openAction_toggled(bool checked)
 {
-    QString portName = coDevice->getDeviceStr(coDevice->currentIndex()).split("|")[0].mid(2);
-    QString portDesc = coDevice->getDeviceStr(coDevice->currentIndex()).split("|")[1];
+    QString portName = "";
+    QString portDesc = "";
+
+    if (coDevice->currentIndex() >= 0)
+    {
+        portName = coDevice->getDeviceStr(coDevice->currentIndex()).split("|")[0].mid(2);
+        portDesc = coDevice->getDeviceStr(coDevice->currentIndex()).split("|")[1];
+    }
+
     if (checked)
     {
         int ret = coDevice->open();

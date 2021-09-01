@@ -123,109 +123,129 @@
     </message>
     <message>
         <location filename="../../ui/configDialog.ui" line="161"/>
+        <source>Output Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/configDialog.ui" line="189"/>
+        <source>Default Hint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/configDialog.ui" line="196"/>
+        <source>Terminal Sequences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/configDialog.ui" line="210"/>
+        <source>Custom Hint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/configDialog.ui" line="240"/>
         <source>Shortcut Key</source>
         <translation>快捷键</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="190"/>
+        <location filename="../../ui/configDialog.ui" line="269"/>
         <source>scrollToEndKey</source>
         <translation>滚动到底部</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="207"/>
+        <location filename="../../ui/configDialog.ui" line="286"/>
         <source>Clear Output</source>
         <translation>清空输出</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="234"/>
+        <location filename="../../ui/configDialog.ui" line="313"/>
         <source>Show/Hide</source>
         <translation>显示/隐藏</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="270"/>
+        <location filename="../../ui/configDialog.ui" line="349"/>
         <source>Advanced</source>
         <translation>高级</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="289"/>
+        <location filename="../../ui/configDialog.ui" line="368"/>
         <source>This will delete all settings, and restart application.</source>
         <translation>这会删除所有设置，并重启应用。</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="292"/>
+        <location filename="../../ui/configDialog.ui" line="371"/>
         <source>Restore Default Settings</source>
         <translation>恢复默认设置</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="300"/>
+        <location filename="../../ui/configDialog.ui" line="379"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="335"/>
+        <location filename="../../ui/configDialog.ui" line="414"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;CoCOM&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="364"/>
+        <location filename="../../ui/configDialog.ui" line="443"/>
         <source>Version:</source>
         <translation>版本号：</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="377"/>
+        <location filename="../../ui/configDialog.ui" line="456"/>
         <source>vx.x.x.x</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="410"/>
+        <location filename="../../ui/configDialog.ui" line="489"/>
         <source>Commit:</source>
         <translation>提交：</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="423"/>
-        <location filename="../../ui/configDialog.ui" line="469"/>
-        <location filename="../../ui/configDialog.ui" line="515"/>
-        <location filename="../../ui/configDialog.ui" line="561"/>
+        <location filename="../../ui/configDialog.ui" line="502"/>
+        <location filename="../../ui/configDialog.ui" line="548"/>
+        <location filename="../../ui/configDialog.ui" line="594"/>
+        <location filename="../../ui/configDialog.ui" line="640"/>
         <source>x.x.x.x</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="456"/>
+        <location filename="../../ui/configDialog.ui" line="535"/>
         <source>Build Time:</source>
         <translation>构建时间：</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="502"/>
+        <location filename="../../ui/configDialog.ui" line="581"/>
         <source>Qt:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="548"/>
+        <location filename="../../ui/configDialog.ui" line="627"/>
         <source>Lua:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="618"/>
+        <location filename="../../ui/configDialog.ui" line="697"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/cocom-official/CoCOM&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Home Page&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/cocom-official/CoCOM&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;主页&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="637"/>
+        <location filename="../../ui/configDialog.ui" line="716"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://blog.ztluo.dev/&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Blog&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://blog.ztluo.dev/&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;博客&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="656"/>
+        <location filename="../../ui/configDialog.ui" line="735"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/zt-luo&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;GitHub&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/zt-luo&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;GitHub&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="708"/>
+        <location filename="../../ui/configDialog.ui" line="787"/>
         <source>OK</source>
         <translation>确认</translation>
     </message>
     <message>
-        <location filename="../../ui/configDialog.ui" line="715"/>
+        <location filename="../../ui/configDialog.ui" line="794"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -479,282 +499,292 @@
         <translation>按钮工具栏</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="245"/>
+        <location filename="../../ui/mainWindow.ui" line="246"/>
         <source>pin</source>
         <translation>固定窗口</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="257"/>
+        <location filename="../../ui/mainWindow.ui" line="258"/>
         <source>open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="266"/>
+        <location filename="../../ui/mainWindow.ui" line="267"/>
         <source>clear</source>
         <translation>清除</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="275"/>
+        <location filename="../../ui/mainWindow.ui" line="276"/>
         <source>setting</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="284"/>
+        <location filename="../../ui/mainWindow.ui" line="285"/>
         <source>file</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="293"/>
+        <location filename="../../ui/mainWindow.ui" line="294"/>
         <source>goDown</source>
         <translation>转到底部</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="296"/>
+        <location filename="../../ui/mainWindow.ui" line="297"/>
         <source>go down</source>
         <translation>转到底部</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="305"/>
+        <location filename="../../ui/mainWindow.ui" line="306"/>
         <source>plot</source>
         <translation>画图</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="314"/>
+        <location filename="../../ui/mainWindow.ui" line="315"/>
         <source>apps</source>
         <translation>应用</translation>
     </message>
     <message>
-        <location filename="../../ui/mainWindow.ui" line="323"/>
+        <location filename="../../ui/mainWindow.ui" line="324"/>
         <source>Lua Console</source>
         <translation>Lua解释器</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="84"/>
+        <location filename="../../ui/mainWindow.ui" line="333"/>
+        <source>goUp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/mainWindow.ui" line="336"/>
+        <source>go Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="86"/>
         <source>Serial Port Utility</source>
         <translation>串口调试助手</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="103"/>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1396"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="105"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1417"/>
         <source>Ready</source>
         <translation>就绪</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="152"/>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="156"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="154"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="158"/>
         <source>Show/Hide</source>
         <translation>显示/隐藏</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="152"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="154"/>
         <source>is Registered Success!</source>
         <translation>注册成功</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="156"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="158"/>
         <source>is Registered Failed!</source>
         <translation>注册失败！</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="246"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="253"/>
         <source>Multi Command</source>
         <translation>多条发送</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="250"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="257"/>
         <source>Click &apos;+&apos; to add a new tab</source>
         <translation>单击 “+” 添加新标签页</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="452"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="459"/>
         <source>Find ToolBar</source>
         <translation>查找工具栏</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="473"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="480"/>
         <source>Find</source>
         <translation>查找</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="474"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="481"/>
         <source>Next Match</source>
         <translation>下一个匹配项</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="474"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="481"/>
         <source>Last Match</source>
         <translation>最后一个匹配项</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="475"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="482"/>
         <source>Previous Match</source>
         <translation>上一个匹配项</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="475"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="482"/>
         <source>First Match</source>
         <translation>第一个匹配项</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="476"/>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1155"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="483"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1169"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="489"/>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="490"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="496"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="497"/>
         <source>Double Click to Clear Count!</source>
         <translation>双击清空计数！</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="507"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="514"/>
         <source>Baudrate</source>
         <translation>波特率</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="514"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="521"/>
         <source>Data Bits</source>
         <translation>数据位</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="521"/>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1049"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="528"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1056"/>
         <source>Parity</source>
         <translation>校验位</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="528"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="535"/>
         <source>Stop Bits</source>
         <translation>停止位</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="535"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="542"/>
         <source>Flow Control</source>
         <translation>流控</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="536"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="543"/>
         <source>Flow Control OFF</source>
         <translation>关闭流控</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="537"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="544"/>
         <source>Hardware Flow Control</source>
         <translation>硬件流控</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="538"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="545"/>
         <source>Software Flow Control</source>
         <translation>软件流控</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="543"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="550"/>
         <source>Rx Type</source>
         <translation>接收类型</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="548"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="555"/>
         <source>Tx Type</source>
         <translation>发送类型</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="554"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="561"/>
         <source>Line Break</source>
         <translation>行尾结束符</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="560"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="567"/>
         <source>Encoding</source>
         <translation>编码格式</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="660"/>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1338"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="667"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1359"/>
         <source>Tab</source>
         <translation>标签页</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="660"/>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1338"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="667"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1359"/>
         <source>Double Click to Close</source>
         <translation>双击关闭</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1020"/>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1035"/>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1049"/>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1063"/>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1077"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1027"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1042"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1056"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1070"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1084"/>
         <source>set</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1020"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1027"/>
         <source>BaudRate</source>
         <translation>波特率</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1020"/>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1035"/>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1049"/>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1063"/>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1077"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1027"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1042"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1056"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1070"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1084"/>
         <source>fail</source>
         <translation>失败</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1035"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1042"/>
         <source>DataBits</source>
         <translation>数据位</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1063"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1070"/>
         <source>StopBits</source>
         <translation>停止位</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1077"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1084"/>
         <source>FlowControl</source>
         <translation>流控</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1122"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1136"/>
         <source>Open Failed!</source>
         <translation>打开失败！</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1123"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1137"/>
         <source>,</source>
         <translation>，</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1129"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1143"/>
         <source>Busy</source>
         <translation>忙</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1133"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1147"/>
         <source>Null</source>
         <translation>空</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1137"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1151"/>
         <source>Unknow Reason</source>
         <translation>未知原因</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1144"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1158"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1190"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1211"/>
         <source>Save Output To File</source>
         <translation>保存输出到文件</translation>
     </message>
     <message>
-        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1192"/>
+        <location filename="../../source/src/Widgets/MainWindow.cpp" line="1213"/>
         <source>Text files (*.txt)</source>
         <translation>文本文件 (*.txt)</translation>
     </message>
@@ -873,6 +903,14 @@
         <location filename="../../libs/QHotkey/QHotkey/qhotkey.cpp" line="297"/>
         <source>Failed to unregister %1. Error: %2</source>
         <translation>取消注册 %q 失败。错误：%2</translation>
+    </message>
+</context>
+<context>
+    <name>SourceEditWindow</name>
+    <message>
+        <location filename="../../ui/sourceEditWindow.ui" line="17"/>
+        <source>MainWindow</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

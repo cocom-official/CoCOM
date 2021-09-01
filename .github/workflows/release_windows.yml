@@ -20,7 +20,7 @@ jobs:
       with:
         msystem: MINGW64
         update: true
-        install: base-devel git mingw-w64-x86_64-toolchain mingw64/mingw-w64-x86_64-cmake mingw64/mingw-w64-x86_64-ninja mingw64/mingw-w64-x86_64-python mingw64/mingw-w64-x86_64-qt-creator
+        install: base-devel git mingw64/mingw-w64-x86_64-toolchain mingw64/mingw-w64-x86_64-cmake mingw64/mingw-w64-x86_64-ninja mingw64/mingw-w64-x86_64-python mingw64/mingw-w64-x86_64-qt-creator mingw64/mingw-w64-x86_64-qt5-charts
 
     - name: checkout
       uses: actions/checkout@v2

@@ -94,8 +94,11 @@ int CoDevice::open()
 
 void CoDevice::close()
 {
-    disconnect(currentPort.port);
-    currentPort.port->close();
+    if (currentPort.port != nullptr)
+    {
+        disconnect(currentPort.port);
+        currentPort.port->close();
+    }
 
     deviceDataLock.lock();
     deviceData.clear();
@@ -287,7 +290,9 @@ PortConfig CoDevice::getConfig()
 
 QString CoDevice::getDeviceStr(int index)
 {
-    if (index >= ports.count())
+    if (index >= ports.count() ||
+        index < 0 ||
+        ports.isEmpty())
     {
         return QString("x");
     }
@@ -299,7 +304,8 @@ QString CoDevice::getDeviceStr(int index)
         return QString("x");
     }
 
-    auto statusStr = [=]() {
+    auto statusStr = [=]()
+    {
         if (port.port->isOpen())
         {
             return QString("●");
@@ -423,7 +429,10 @@ void CoDevice::enumDevices()
 
     ports = newPorts;
 
-    currentPort = ports[currentIndex];
+    if (!ports.isEmpty())
+    {
+        currentPort = ports[currentIndex];
+    }
 
     mutex.unlock();
 }
